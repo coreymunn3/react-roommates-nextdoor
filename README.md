@@ -8,4 +8,4 @@ Design and UI for web app
 
 Login UI             |  User Profile / Settings UI
 :-------------------------:|:-------------------------:
-![](https://i.imgur.com/LHZl3QB.png)  |  ![](https://i.imgur.com/LHZl3QB.png)
+![](https://i.imgur.com/LHZl3QB.png)  |  ![]()
