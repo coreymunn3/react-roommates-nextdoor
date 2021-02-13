@@ -16,3 +16,6 @@ Post Feed (Web View)
 
 Post Feed (Mobile)
 ![](https://imgur.com/vnJLdFt.png)
+
+Post Feed with Open Item
+![](https://imgur.com/Ht1M3ER.png)
