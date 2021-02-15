@@ -1,25 +1,21 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useEffect } from 'react';
+import axios from 'axios';
 
-function App() {
+const App = () => {
+  // sample useEffect to show how you can asyncronously pull data from the server
+  useEffect(() => {
+    const getData = async () => {
+      const { data } = await axios.get('/api/posts');
+      console.log(data);
+    };
+    getData();
+  }, []);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      <h1>This is the React App</h1>
     </div>
   );
-}
+};
 
 export default App;
