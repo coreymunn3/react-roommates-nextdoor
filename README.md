@@ -2,6 +2,9 @@
 
 [Brainstorming doc](https://docs.google.com/document/d/1K3vOfS0cWp-fCUPLk7bPFyV6mG-FZxe4IdsRv_nAPJA/edit?usp=sharing)
 
+## How to Run the Development Server
+cd into server/ from root in your terminal and execute "npm run dev". This will run the react server and backend api concurrently, with requests from react being proxied to localhost:5000 (dev server).
+
 ## Wireframes 
 
 Design and UI for web app
