@@ -1,10 +1,10 @@
-import React, { useEffect } from 'react';
-import axios from 'axios';
-
+import React, { useEffect } from "react";
+import axios from "axios";
+import Post from "./post-component/index";
 const App = () => {
   return (
-    <div>
-      <h1>This is the React App</h1>
+    <div className="container">
+      <Post></Post>
     </div>
   );
 };
