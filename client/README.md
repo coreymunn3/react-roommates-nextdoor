@@ -1,70 +1,115 @@
-# Getting Started with Create React App
+# react-modal
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Accessible modal dialog component for React.JS
 
-## Available Scripts
+[![Build Status](https://travis-ci.org/reactjs/react-modal.svg?branch=v1)](https://travis-ci.org/reactjs/react-modal)
+[![Coverage Status](https://coveralls.io/repos/github/reactjs/react-modal/badge.svg?branch=master)](https://coveralls.io/github/reactjs/react-modal?branch=master)
+![gzip size](http://img.badgesize.io/https://unpkg.com/react-modal/dist/react-modal.min.js?compression=gzip)
+[![Join the chat at https://gitter.im/react-modal/Lobby](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/react-modal/Lobby?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
-In the project directory, you can run:
+## Table of Contents
 
-### `yarn start`
+* [Installation](#installation)
+* [API documentation](#api-documentation)
+* [Examples](#examples)
+* [Demos](#demos)
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+## Installation
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+To install, you can use [npm](https://npmjs.org/) or [yarn](https://yarnpkg.com):
 
-### `yarn test`
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+    $ npm install --save react-modal
+    $ yarn add react-modal
 
-### `yarn build`
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+## API documentation
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+The primary documentation for react-modal is the
+[reference book](https://reactjs.github.io/react-modal), which describes the API
+and gives examples of its usage.
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+## Examples
 
-### `yarn eject`
+Here is a simple example of react-modal being used in an app with some custom
+styles and focusable input elements within the modal content:
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+```jsx
+import React from 'react';
+import ReactDOM from 'react-dom';
+import Modal from 'react-modal';
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+const customStyles = {
+  content : {
+    top                   : '50%',
+    left                  : '50%',
+    right                 : 'auto',
+    bottom                : 'auto',
+    marginRight           : '-50%',
+    transform             : 'translate(-50%, -50%)'
+  }
+};
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+// Make sure to bind modal to your appElement (http://reactcommunity.org/react-modal/accessibility/)
+Modal.setAppElement('#yourAppElement')
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+function App(){
+  var subtitle;
+  const [modalIsOpen,setIsOpen] = React.useState(false);
+  function openModal() {
+    setIsOpen(true);
+  }
 
-## Learn More
+  function afterOpenModal() {
+    // references are now sync'd and can be accessed.
+    subtitle.style.color = '#f00';
+  }
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+  function closeModal(){
+    setIsOpen(false);
+  }
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+    return (
+      <div>
+        <button onClick={openModal}>Open Modal</button>
+        <Modal
+          isOpen={modalIsOpen}
+          onAfterOpen={afterOpenModal}
+          onRequestClose={closeModal}
+          style={customStyles}
+          contentLabel="Example Modal"
+        >
 
-### Code Splitting
+          <h2 ref={_subtitle => (subtitle = _subtitle)}>Hello</h2>
+          <button onClick={closeModal}>close</button>
+          <div>I am a modal</div>
+          <form>
+            <input />
+            <button>tab navigation</button>
+            <button>stays</button>
+            <button>inside</button>
+            <button>the modal</button>
+          </form>
+        </Modal>
+      </div>
+    );
+}
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+ReactDOM.render(<App />, appElement);
+```
 
-### Analyzing the Bundle Size
+You can find more examples in the `examples` directory, which you can run in a
+local development server using `npm start` or `yarn run start`.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+## Demos
 
-### Making a Progressive Web App
+There are several demos hosted on [CodePen](https://codepen.io) which
+demonstrate various features of react-modal:
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `yarn build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+* [Minimal example](https://codepen.io/claydiffrient/pen/KNxgav)
+* [Using setAppElement](https://codepen.io/claydiffrient/pen/ENegGJ)
+* [Using onRequestClose](https://codepen.io/claydiffrient/pen/KNjVBx)
+* [Using shouldCloseOnOverlayClick](https://codepen.io/claydiffrient/pen/woLzwo)
+* [Using inline styles](https://codepen.io/claydiffrient/pen/ZBmyKz)
+* [Using CSS classes for styling](https://codepen.io/claydiffrient/pen/KNjVrG)
+* [Customizing the default styles](https://codepen.io/claydiffrient/pen/pNXgqQ)
