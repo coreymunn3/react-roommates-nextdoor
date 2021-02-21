@@ -1,19 +1,20 @@
-import React, { useState } from 'react';
+import React, { useState, Fragment } from 'react';
 
-function Feed(props) { 
-   console.log(props);
-   return<>
-   {
-       props.map((post)=>{
-           const { text, name } = post;
-           return(<div>
-               <p>
-               <b>{ text } </b> <i>{ name }  </i>
-                </p>
-               </div>);
-       })
-   }
-   </>;
-};
+function Feed(props) {
+  return (
+    <Fragment>
+      {props.posts.map((post, idx) => {
+        const { text, name } = post;
+        return (
+          <div key={idx}>
+            <p>
+              <b>{text} </b> <i>{name} </i>
+            </p>
+          </div>
+        );
+      })}
+    </Fragment>
+  );
+}
 
 export default Feed;
