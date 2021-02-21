@@ -1,14 +1,40 @@
 const express = require('express');
-const bodyParser = require('body-parser');
+const mongoose = require('mongoose');
+const session = require('express-session');
+const MongoStore = require('connect-mongo')(session);
 const cors = require('cors');
+const passport = require('passport');
+const connectDb = require('./config/connectDb');
+require('dotenv').config();
+
+// conenct mongoDb
+const connection = connectDb(process.env.MONGO_URI);
+// create express app
+const app = express();
+// MIDDLEWARE ===========================================
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+app.use(cors());
+app.use(
+  session({
+    secret: 'secretcode',
+    saveUninitialized: true,
+    resave: false,
+    cookie: {
+      maxAge: 7 * 24 * 60 * 60 * 1000, // one week, expressed in ms
+    },
+    store: new MongoStore({ mongooseConnection: mongoose.connection }),
+  })
+);
+app.use(passport.initialize());
+app.use(passport.session());
+
 // temp, fake data
 const posts = require('./db/postsDb');
 const areas = require('./db/areasDb');
 const users = require('./db/usersDb');
 
-const app = express();
-app.use(bodyParser.json());
-app.use(cors());
+// ROUTES ===========================================
 
 app.get('/', (req, res) => {
   res.status(200).json({ message: 'App Running' });
@@ -25,6 +51,8 @@ app.get('/api/areas', (req, res) => {
 app.get('/api/users', (req, res) => {
   res.status(200).json(users);
 });
+
+app.use('/auth', require('./routes/auth'));
 
 const PORT = process.env.PORT || 5000;
 

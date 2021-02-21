@@ -5,6 +5,7 @@ const users = [
     firstName: 'Jim',
     lastName: 'Halpert',
     email: 'jHalpert@dunderMifflin.com',
+    _areaId: '111222',
   },
   {
     id: '456123',
@@ -12,6 +13,7 @@ const users = [
     firstName: 'Michael',
     lastName: 'Scott',
     email: 'mScott@gmail.com',
+    _areaId: '111222',
   },
   {
     id: '789789',
@@ -19,6 +21,7 @@ const users = [
     firstName: 'Pam',
     lastName: 'Beesly',
     email: 'pamBees@gmail.com',
+    _areaId: '222333',
   },
 ];
 
