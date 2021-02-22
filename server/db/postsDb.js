@@ -23,10 +23,8 @@ const posts = [
       accepts420: false,
     },
     likes: [{ id: '123456' }, { id: '456123' }, { id: '789789' }],
-    _user: {
-      id: '123456',
-    },
-    _postedInArea: 'Washington, DC',
+    _user: '123456',
+    _postedInArea: '111222',
   },
 ];
 
