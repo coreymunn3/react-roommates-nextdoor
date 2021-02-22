@@ -5,6 +5,14 @@ const bcrypt = require('bcryptjs');
 const User = require('../models/User');
 require('../services/passport')(passport);
 
+router.get('/currentuser', (req, res) => {
+  if (req.user) {
+    res.status(200).json(req.user);
+  } else {
+    res.status(404).json({ message: 'No Current User' });
+  }
+});
+
 router.post('/login', async (req, res, next) => {
   passport.authenticate('local', (err, user) => {
     if (err) {
@@ -41,6 +49,16 @@ router.post('/signup', async (req, res) => {
     console.log(error);
     res.status(500).json(error);
   }
+});
+
+router.get('/logout', (req, res) => {
+  if (req.user) {
+    req.logOut();
+    res.status(200).json({ message: 'You are now logged out' });
+  } else {
+    res.status(400).json({ message: 'No User Logged In' });
+  }
+  // res.redirect('/');
 });
 
 module.exports = router;
