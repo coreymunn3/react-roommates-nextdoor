@@ -10,6 +10,10 @@ const UserSchema = mongoose.Schema({
   email: {
     type: String,
   },
+  _location: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Location',
+  },
 });
 
 module.exports = mongoose.model('User', UserSchema);

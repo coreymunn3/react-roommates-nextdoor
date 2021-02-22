@@ -67,18 +67,18 @@ const PostSchema = mongoose.Schema({
     type: Boolean,
     required: true,
   },
-  liieCount: {
+  likeCount: {
     type: Number,
     default: 0,
   },
   likedBy: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }],
-  _location: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'Location',
-  },
   _user: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'User',
+  },
+  _location: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Location',
   },
 });
 

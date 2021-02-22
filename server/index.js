@@ -40,9 +40,9 @@ app.get('/', (req, res) => {
   res.status(200).json({ message: 'App Running' });
 });
 
-app.get('/api/posts', (req, res) => {
-  res.status(200).json(posts);
-});
+// app.get('/api/posts', (req, res) => {
+//   res.status(200).json(posts);
+// });
 
 app.get('/api/areas', (req, res) => {
   res.status(200).json(areas);
@@ -53,6 +53,8 @@ app.get('/api/users', (req, res) => {
 });
 
 app.use('/auth', require('./routes/auth'));
+app.use('/api/posts', require('./routes/posts'));
+app.use('/api/locations', require('./routes/locations'));
 
 const PORT = process.env.PORT || 5000;
 
