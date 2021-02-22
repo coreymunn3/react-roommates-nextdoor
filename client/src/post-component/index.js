@@ -10,22 +10,13 @@ function Posts() {
   // setup consts and vars
   const [modalOpen, setModal] = useState(false);
   const [posts, setPosts] = useState(data);
-  // instead, use state to hold form values, like this
   const [name, setName] = useState('');
   const [text, setText] = useState('');
-  // var name = 'Mohamed';
-  // var post = 'Today';
 
-  // when submitting a form, use this name
   const handleSubmit = (e) => {
     e.preventDefault();
-    // assemble your new post from hook state holding input values
     const newPost = { name, text };
-    // check...
-    console.log([...posts, newPost]);
-    // add to post array
-    setPosts([...posts, newPost]);
-    // cleanup...
+    setPosts([newPost, ...posts]);
     setName('');
     setText('');
     setModal(false);
