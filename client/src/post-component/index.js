@@ -12,7 +12,7 @@ function Posts() {
   const [posts, setPosts] = useState(data);
   const [name, setName] = useState('');
   const [text, setText] = useState('');
-
+  
   const handleSubmit = (e) => {
     e.preventDefault();
     const newPost = { name, text };
