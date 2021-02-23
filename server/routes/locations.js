@@ -15,7 +15,7 @@ router.post('/', async (req, res) => {
     });
     // location already exists
     if (loc) {
-      res.status(400).json({ message: 'Locaiton Already Exists' });
+      res.status(400).json({ error: 'Locaiton Already Exists' });
     }
     // location doesn't exist, create one
     else {
@@ -28,7 +28,11 @@ router.post('/', async (req, res) => {
     }
   } catch (error) {
     console.log(error);
-    res.status(500).json(error);
+    res
+      .status(500)
+      .json({
+        error: `Cannot find Location matching ${req.body.city} and ${req.body.state}`,
+      });
   }
 });
 

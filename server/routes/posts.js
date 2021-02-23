@@ -11,7 +11,7 @@ router.get('/', async (req, res) => {
     res.status(200).json(posts);
   } catch (error) {
     console.log(error);
-    res.status(500).json(error);
+    res.status(500).json({ error: 'Cannot find posts by this user' });
   }
 });
 
@@ -24,21 +24,21 @@ router.get('/location/:locationId', async (req, res) => {
     const posts = await Post.find({ _location: locationId });
     res.status(200).json(posts);
   } catch (error) {
-    res.status(500).json(error);
+    res.status(500).json({ error: 'No Location with that ID' });
   }
 });
 
 // GET api/posts/post/:post
 // returns single post matching postId passed in params
 // @private
-router.get('/post/:postId', async (req, res) => {
+router.get('/:postId', async (req, res) => {
   try {
     const postId = req.params.postId;
     const post = await Post.findById(postId);
     res.status(200).json(post);
   } catch (error) {
     console.log(error);
-    res.status(500).json(error);
+    res.status(500).json({ error: 'No Post with that ID' });
   }
 });
 
@@ -70,7 +70,7 @@ router.post('/', async (req, res) => {
     res.status(200).json(post);
   } catch (error) {
     console.log(error);
-    res.status(500).json(error);
+    res.status(500).json({ error: 'Cannot POST' });
   }
 });
 

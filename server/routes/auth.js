@@ -13,7 +13,7 @@ router.get('/currentuser', (req, res) => {
   if (req.user) {
     res.status(200).json(req.user);
   } else {
-    res.status(404).json({ message: 'No Current User' });
+    res.status(404).json({ error: 'No Current User' });
   }
 });
 
@@ -22,10 +22,10 @@ router.post('/login', async (req, res, next) => {
     if (err) {
       return next(err);
     }
-    if (!user) res.status(400).json({ message: 'Username Does Not Exist' });
+    if (!user) res.status(400).json({ error: 'Username Does Not Exist' });
     req.login(user, (err) => {
       if (err) return next(err);
-      res.status(200).json({ message: 'Logged In', user });
+      res.status(200).json({ status: 'Logged In', user });
     });
   })(req, res, next);
 });
@@ -34,7 +34,7 @@ router.post('/signup', async (req, res) => {
   try {
     const user = await User.findOne({ username: req.body.username });
     if (user) {
-      return res.status(400).json({ message: 'User Already Exists' });
+      return res.status(400).json({ error: 'User Already Exists' });
     }
     // get location
     try {
@@ -45,7 +45,7 @@ router.post('/signup', async (req, res) => {
       // location doesn't exist, exit
       if (!userLocation) {
         return res.status(400).json({
-          message: 'We Dont Support This Market',
+          error: 'We Dont Support This Market',
         });
       }
       // hash the password
@@ -65,10 +65,10 @@ router.post('/signup', async (req, res) => {
       });
     } catch (error) {
       console.log(error);
-      res.status(500).json(error);
+      res.status(500).json({ error: 'Cannot Find Location' });
     }
   } catch (error) {
-    console.log(error);
+    console.log({ error: 'Cannot find Username' });
     res.status(500).json(error);
   }
 });
@@ -78,7 +78,7 @@ router.get('/logout', (req, res) => {
     req.logOut();
     res.status(200).json({ message: 'You are now logged out' });
   } else {
-    res.status(400).json({ message: 'No User Logged In' });
+    res.status(400).json({ error: 'No User Logged In' });
   }
   // res.redirect('/');
 });
