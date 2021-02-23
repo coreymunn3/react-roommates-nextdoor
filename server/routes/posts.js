@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const Post = require('../models/Post');
 
-// GET /posts
+// GET api/posts
 // returns all posts from a user
 // @private
 router.get('/', async (req, res) => {
@@ -15,10 +15,10 @@ router.get('/', async (req, res) => {
   }
 });
 
-// GET /posts/:location
+// GET api/posts/location/:location
 // returns all posts from current city
 // @private
-router.get('/:locationId', async (req, res) => {
+router.get('/location/:locationId', async (req, res) => {
   try {
     const locationId = req.params.locationId;
     const posts = await Post.find({ _location: locationId });
@@ -28,7 +28,21 @@ router.get('/:locationId', async (req, res) => {
   }
 });
 
-// POST /posts
+// GET api/posts/post/:post
+// returns single post matching postId passed in params
+// @private
+router.get('/post/:postId', async (req, res) => {
+  try {
+    const postId = req.params.postId;
+    const post = await Post.findById(postId);
+    res.status(200).json(post);
+  } catch (error) {
+    console.log(error);
+    res.status(500).json(error);
+  }
+});
+
+// POST api/posts
 // allows user to submit a post
 // @private
 router.post('/', async (req, res) => {
