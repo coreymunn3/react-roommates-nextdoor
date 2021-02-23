@@ -6,6 +6,9 @@ const User = require('../models/User');
 const Location = require('../models/Location');
 require('../services/passport')(passport);
 
+// Hashing Password as described here:
+// https://github.com/dcodeIO/bcrypt.js#usage---async
+
 router.get('/currentuser', (req, res) => {
   if (req.user) {
     res.status(200).json(req.user);
