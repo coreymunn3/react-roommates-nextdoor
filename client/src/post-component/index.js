@@ -1,10 +1,17 @@
 // Post Creation Component
 import React, { useState } from 'react';
-import Modal from 'react-modal';
+//import Modal from 'react-modal';
 import Feed from '../feed-component/index';
 import data from '../feed-component/data';
 
-Modal.setAppElement('#root');
+/// Bootstrap
+import 'bootstrap/dist/css/bootstrap.min.css';
+import Modal from 'react-bootstrap/Modal';
+import Button from 'react-bootstrap/Button';
+import ButtonGroup from 'react-bootstrap/ButtonGroup';
+import Form from 'react-bootstrap/Form';
+import Container from 'react-bootstrap/Container';
+import Navbar from 'react-bootstrap/Navbar';
 
 function Posts() {
   // setup consts and vars
@@ -22,47 +29,61 @@ function Posts() {
     setModal(false);
   };
 
+  const handleClose = () => setModal(false);
+
   return (
     <div>
-      <button className='create_post_button' onClick={() => setModal(true)}>
-        Create Post
-      </button>
+      <Container>
+        <Navbar>
+          <ButtonGroup className="mr-2" aria-label="First group"> 
+            <Button variant="primary" onClick={() => setModal(true)}>
+              Create Post
+            </Button>  
+          </ButtonGroup>
+          <Form inline>
+            <Form.Control type="text" placeholder="Search" className="mr-sm-2" />
+            <Button variant="outline-primary">Search</Button>
+          </Form>
+        </Navbar> 
+      </Container>
       <Feed posts={posts}></Feed>
       <Modal
-        isOpen={modalOpen}
-        shouldCloseOnEsc={true}
-        className='create_post_modal'
+        show={modalOpen}
+        onHide={handleClose}
       >
-        <h2>Create Post</h2>
-        {/*     Avoid creating a component inside another     component.       
-        It becomes difficult to manage scope.  
-        This was causing major errors.      
-        <PostForm></PostForm> */}
-        <article>
-          <form>
-            <input
+        <Modal.Header >
+          <Modal.Title> Create Post </Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <Form.Group>
+            <Form.Control
               placeholder='Name'
               type='text'
               id='name'
               onChange={(e) => setName(e.target.value)}
+              size="sm"
               value={name}
-            ></input>
-            <input
+            ></Form.Control>
+            <br />
+
+            <Form.Control
               type='text'
               placeholder='Your Post'
+              size="lg"
               id='comment'
               onChange={(e) => setText(e.target.value)}
               value={text}
-            ></input>
-            <button className='create_post_button' onClick={handleSubmit}>
-              Post
-            </button>
-          </form>
-        </article>
-
-        <button className='create_post_button' onClick={() => setModal(false)}>
-          Close
-        </button>
+            ></Form.Control>
+          </Form.Group>
+        </Modal.Body>
+        <Modal.Footer> 
+          <Button variant="secondary" onClick={() => setModal(false)}>
+            Close
+          </Button>
+          <Button variant="primary" onClick={handleSubmit}>
+                Post
+          </Button>
+        </Modal.Footer> 
       </Modal>
     </div>
   );

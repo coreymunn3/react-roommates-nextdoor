@@ -1,1 +1,4 @@
 test-post-feature/
+
+# dependencies
+/node_modules
