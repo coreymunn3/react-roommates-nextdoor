@@ -1,4 +1,5 @@
 const express = require('express');
+const { updateOne } = require('../models/Post');
 const router = express.Router();
 const Post = require('../models/Post');
 
@@ -25,20 +26,6 @@ router.get('/location/:locationId', async (req, res) => {
     res.status(200).json(posts);
   } catch (error) {
     res.status(500).json({ error: 'No Location with that ID' });
-  }
-});
-
-// GET api/posts/post/:post
-// returns single post matching postId passed in params
-// @private
-router.get('/:postId', async (req, res) => {
-  try {
-    const postId = req.params.postId;
-    const post = await Post.findById(postId);
-    res.status(200).json(post);
-  } catch (error) {
-    console.log(error);
-    res.status(500).json({ error: 'No Post with that ID' });
   }
 });
 
@@ -74,4 +61,83 @@ router.post('/', async (req, res) => {
   }
 });
 
+// GET api/posts/:post
+// returns single post matching postId passed in params
+// @private
+router.get('/:postId', async (req, res) => {
+  try {
+    const postId = req.params.postId;
+    const post = await Post.findById(postId);
+    res.status(200).json(post);
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ error: 'No Post with that ID' });
+  }
+});
+
+// PATCH api/posts/:post/like
+// incriments the likes of a post by 1 and adds user to likedBy array
+// @private
+router.patch('/:postId/like', async (req, res) => {
+  const postId = req.params.postId;
+  // update post like count & likedBy array
+  try {
+    const updatedPost = await Post.findOneAndUpdate(
+      {
+        _id: postId,
+        likedBy: { $nin: req.user._id },
+      },
+      {
+        $inc: { likeCount: 1 },
+        $push: { likedBy: req.user._id },
+      },
+      { new: true }
+    );
+    if (updatedPost) {
+      res.status(200).json(updatedPost);
+    } else {
+      res.status(400).json({ error: 'Unable to Like Post' });
+    }
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ error: 'Unable to Find or Like Post' });
+  }
+});
+// ==============================================================
+// NOTES: this works but inefficient
+// const post = await Post.findOne({ _id: postId });
+//     post.likeCount += 1;
+//     await post.save();
+// why we don't do this:
+// https://stackoverflow.com/questions/22278761/mongoose-difference-between-save-and-using-update/22278847#:~:text=update()%20is%20server%20side.&text=Some%20differences%3A,new%20document)%20or%20an%20update%20.
+// ==============================================================
+
+// PATCH api/posts/:post/unlike
+// decrements the likes of a post by 1 and removes user from likedBy array
+// @private
+router.patch('/:postId/unlike', async (req, res) => {
+  const postId = req.params.postId;
+  // update post like count & likedBy array
+  try {
+    const updatedPost = await Post.findOneAndUpdate(
+      {
+        _id: postId,
+        likedBy: { $in: req.user._id },
+      },
+      {
+        $inc: { likeCount: -1 },
+        $pull: { likedBy: req.user._id },
+      },
+      { new: true }
+    );
+    if (updatedPost) {
+      res.status(200).json(updatedPost);
+    } else {
+      res.status(400).json({ error: 'Unable to Unlike Post' });
+    }
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ error: 'Unable to Find or Unlike Post' });
+  }
+});
 module.exports = router;
