@@ -4,7 +4,7 @@ import Post from "./post-component/index";
 const App = () => {
   return (
     <div className="container">
-      <Post></Post>
+      <Login></Login>
     </div>
   );
 };
