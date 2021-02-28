@@ -15,9 +15,9 @@ require('../services/passport')(passport);
 // @public
 router.get('/currentuser', (req, res) => {
   if (req.user) {
-    res.status(200).json(req.user);
+    res.status(200).json({ loggedIn: true, user: req.user });
   } else {
-    res.status(404).json({ error: 'No Current User' });
+    res.status(200).json({ loggedIn: false, user: {} });
   }
 });
 
@@ -25,14 +25,20 @@ router.get('/currentuser', (req, res) => {
 // Logs in user with username and password using passport service (see services/passport.js)
 // @public
 router.post('/login', async (req, res, next) => {
+  const { username, password } = req.body;
+  if (!username || !password) {
+    res.status(400).json({
+      error: 'Missing Required Information - username, or password',
+    });
+  }
   passport.authenticate('local', (err, user) => {
     if (err) {
       return next(err);
     }
-    if (!user) res.status(400).json({ error: 'Username Does Not Exist' });
+    if (!user) res.status(400).json({ error: 'User Does Not Exist' });
     req.login(user, (err) => {
       if (err) return next(err);
-      res.status(200).json({ status: 'Logged In', user });
+      res.status(200).json({ loggedIn: true, user });
     });
   })(req, res, next);
 });
@@ -43,12 +49,10 @@ router.post('/login', async (req, res, next) => {
 router.post('/signup', async (req, res) => {
   const { username, password, email, city, state } = req.body;
   if (!username || !password || !city || !state) {
-    res
-      .status(400)
-      .json({
-        error:
-          'Missing Required Information - username, password, city, or state',
-      });
+    res.status(400).json({
+      error:
+        'Missing Required Information - username, password, city, or state',
+    });
   }
   try {
     const user = await User.findOne({ username: username });
@@ -64,7 +68,7 @@ router.post('/signup', async (req, res) => {
       // location doesn't exist, exit
       if (!userLocation) {
         return res.status(400).json({
-          error: 'We Dont Support This Market',
+          error: 'Location Unsupported',
         });
       }
       // hash the password
@@ -73,21 +77,21 @@ router.post('/signup', async (req, res) => {
       const newUser = new User({
         username: username,
         password: hashedPassword,
-        email: req.body.email,
+        email: email,
         _location: userLocation.id,
       });
       await newUser.save();
       // log user in after signup
       req.logIn(newUser, (err) => {
         if (err) throw err;
-        res.status(200).json({ status: 'logged in', newUser });
+        res.status(200).json({ loggedIn: true, user: newUser });
       });
     } catch (error) {
       console.log(error);
-      res.status(500).json({ error: 'Cannot Find Location' });
+      res.status(500).json({ error: 'Location Not Found' });
     }
   } catch (error) {
-    console.log({ error: 'Cannot find Username' });
+    console.log({ error: 'Username Not Found' });
     res.status(500).json(error);
   }
 });
@@ -98,7 +102,7 @@ router.post('/signup', async (req, res) => {
 router.get('/logout', (req, res) => {
   if (req.user) {
     req.logOut();
-    res.status(200).json({ message: 'You are now logged out' });
+    res.status(200).json({ loggedIn: false, message: 'Logout Successful' });
   } else {
     res.status(400).json({ error: 'No User Logged In' });
   }
