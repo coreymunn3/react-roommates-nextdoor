@@ -1,14 +1,18 @@
 const express = require('express');
 const router = express.Router();
 const passport = require('passport');
+// Hashing Password as described here with bcrypt:
+// https://github.com/dcodeIO/bcrypt.js#usage---async
 const bcrypt = require('bcryptjs');
+
+// MODELS
 const User = require('../models/User');
 const Location = require('../models/Location');
 require('../services/passport')(passport);
 
-// Hashing Password as described here:
-// https://github.com/dcodeIO/bcrypt.js#usage---async
-
+// GET auth/currentuser
+// returns the user if user is logged in
+// @public
 router.get('/currentuser', (req, res) => {
   if (req.user) {
     res.status(200).json(req.user);
@@ -17,6 +21,9 @@ router.get('/currentuser', (req, res) => {
   }
 });
 
+// POST auth/login
+// Logs in user with username and password using passport service (see services/passport.js)
+// @public
 router.post('/login', async (req, res, next) => {
   passport.authenticate('local', (err, user) => {
     if (err) {
@@ -30,17 +37,29 @@ router.post('/login', async (req, res, next) => {
   })(req, res, next);
 });
 
+// POST auth/signup
+// Signs up user given signup form data
+// @public
 router.post('/signup', async (req, res) => {
+  const { username, password, email, city, state } = req.body;
+  if (!username || !password || !city || !state) {
+    res
+      .status(400)
+      .json({
+        error:
+          'Missing Required Information - username, password, city, or state',
+      });
+  }
   try {
-    const user = await User.findOne({ username: req.body.username });
+    const user = await User.findOne({ username: username });
     if (user) {
       return res.status(400).json({ error: 'User Already Exists' });
     }
     // get location
     try {
       const userLocation = await Location.findOne({
-        city: req.body.city,
-        state: req.body.state,
+        city: city,
+        state: state,
       });
       // location doesn't exist, exit
       if (!userLocation) {
@@ -52,7 +71,7 @@ router.post('/signup', async (req, res) => {
       const hashedPassword = await bcrypt.hash(req.body.password, 10);
       // create new user
       const newUser = new User({
-        username: req.body.username,
+        username: username,
         password: hashedPassword,
         email: req.body.email,
         _location: userLocation.id,
@@ -73,6 +92,9 @@ router.post('/signup', async (req, res) => {
   }
 });
 
+// GET auth/logout
+// logs out the user
+// @public
 router.get('/logout', (req, res) => {
   if (req.user) {
     req.logOut();

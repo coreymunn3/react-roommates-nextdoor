@@ -1,5 +1,4 @@
 const express = require('express');
-const { updateOne } = require('../models/Post');
 const router = express.Router();
 const Post = require('../models/Post');
 
