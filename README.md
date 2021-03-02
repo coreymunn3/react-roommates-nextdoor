@@ -5,73 +5,86 @@
 ## How to run the development servers
 cd into server/ from root in your terminal and execute "npm run dev". This will run the react frontend server and backend api concurrently, with requests from react being proxied to localhost:5000 (dev server). because I'm using a package called "concurrently" you don't need to start up the react server manually by doing npm start.
 
-## How to Pull Data from the API:
+## API Documentation:
 
-The API is structured with 3 main endpoints responding to GET requests, described below. To hit the endpoint in react, use this statement:
-```
+### Auth Routes
+* POST /auth/signup
+   * Requires: request body must contain username, password, city, and state (email is optional but encouraged)
+   * Success Result: 
+   ```
+   {
+    loggedIn: true,
+    user: {
+      _id: [mongodb-generated unique ID],
+      username: [username from request],
+      password: [hashed password],
+      email: [email from request],
+      _location: [mondb-generated ID from request linking to location collection]
+    }
+   }
+   ```
+   * Error Meanings/Causes: 
+     - "Missing Required Information - username, password, city, or state": You have failed to pass required data in the request body.
+     - "User Already Exists": Can't sign up because this username is already being used in the database. Correct action - link to forgot password or Login
+     - "Location Unsupported": Location does not exist in our database, so user cannot register using that location.
+     - "Location Not Found": Server error where MongoDb was unable to find the location for some reason.
+     - "Username Not Found": Server error where MongoDb was unable to find username
+   
+* POST /auth/login
+   * Requires: request body must contain username and password.
+   * Success Result:
+   ```
+   {
+    loggedIn: true,
+    user: {
+      _id: [mongodb-generated unique ID],
+      username: [username from request],
+      password: [hashed password],
+      email: [email from request],
+      _location: [mondb-generated ID from request linking to location collection]
+    }
+   }
+   ```
+   * Error Meanings/Causes:
+     - "Missing Required Information - username or password": You have failed to pass required data in the request body.
+     - "User Does Not Exist": No user by that username exists. Correct Action - link to signup page
+   
+* GET /auth/logout
+   * Requires: Logged In User
+   * Success Result:
+   ```
+   {
+    loggedIn: false,
+    message: 'Logout Successful'
+   }
+   ```
+   * Error Meanings/Causes:
+     - "No User Logged In": Attempting to log out when no user is logged in.
+   
+* GET /auth/currentuser
+   * Requires: Nothing
+   * Success Result:
+   ```
+   {
+    loggedIn: true,
+    user: {
+      _id: [mongodb-generated unique ID],
+      username: [username from request],
+      password: [hashed password],
+      email: [email from request],
+      _location: [mondb-generated ID from request linking to location collection]
+    }
+   }
+   ```
+   * Fail Result: No User Logged In
+   ```
+   {
+    loggedIn: false,
+    user: {}
+   }
+   ```
+   * Error Meanings/Causes: None
 
-const getData = async () => {
-  const {data} = await axios.get('/api/ENDPOINT') 
-  // from here, save data to state, etc
-}
-
-// this arrow function getData can also be put in a useEffect call
-useEffect(() => {
-  getData()
-}, [])
-
-```
-* /api/posts returns JSON object that describes posts
-```
-{
-    title: 'A New Room Opening at 123 South St',
-    description:
-      'Looking for a fun open minded roommate to fill the room at 123 South St. Parking spot included, but no pets allowed, sorry!',
-    location: {
-      street: '123 South Street',
-      city: 'Washington',
-      state: 'District of Columbia',
-    },
-    // posible types = house, apartment
-    housingType: 'house',
-    amenities: {
-      privateBath: true,
-      roomFurnished: false,
-      parkingIncluded: true,
-      washerDryerInUnit: true,
-      petsAllowed: false,
-      wifi: true,
-      cableTv: false,
-      kitchen: true,
-      poolAccess: false,
-      accepts420: false,
-    },
-    likes: [{ id: '123456' }, { id: '456123' }, { id: '789789' }],
-    _user: {
-      id: '123456',
-    },
-    _postedInArea: 'Washington, DC',
-  },
-```
-* /api/areas returns JSON objects that describe geographic areas. This will be used by users to set their location, and will be used to index posts to specific locations
-```
-{
-    areaId: '111222',
-    cityName: 'Washington',
-    stateProvinceName: 'District of Columbia',
-  },
-```
-* /api/users returns JSON objects describing users
-```
-{
-    id: '123456',
-    userName: 'jimmy123',
-    firstName: 'Jim',
-    lastName: 'Halpert',
-    email: 'jHalpert@dunderMifflin.com',
-    _areaId: '111222',
-  },
-```
 
 ## Wireframes 
 
