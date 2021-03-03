@@ -15,6 +15,10 @@ const PostSchema = mongoose.Schema({
     type: String,
     required: true,
   },
+  streetAddress: {
+    type: String,
+    required: true,
+  },
   datePosted: {
     type: Date,
     default: Date.now(),

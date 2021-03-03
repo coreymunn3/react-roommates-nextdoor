@@ -1,81 +1,110 @@
 const express = require('express');
 const router = express.Router();
 const passport = require('passport');
+// Hashing Password as described here with bcrypt:
+// https://github.com/dcodeIO/bcrypt.js#usage---async
 const bcrypt = require('bcryptjs');
+
+// MODELS
 const User = require('../models/User');
 const Location = require('../models/Location');
 require('../services/passport')(passport);
 
+// GET auth/currentuser
+// returns the user if user is logged in
+// @public
 router.get('/currentuser', (req, res) => {
   if (req.user) {
-    res.status(200).json(req.user);
+    res.status(200).json({ loggedIn: true, user: req.user });
   } else {
-    res.status(404).json({ message: 'No Current User' });
+    res.status(200).json({ loggedIn: false, user: {} });
   }
 });
 
+// POST auth/login
+// Logs in user with username and password using passport service (see services/passport.js)
+// @public
 router.post('/login', async (req, res, next) => {
+  const { username, password } = req.body;
+  if (!username || !password) {
+    res.status(400).json({
+      error: 'Missing Required Information - username, or password',
+    });
+  }
   passport.authenticate('local', (err, user) => {
     if (err) {
       return next(err);
     }
-    if (!user) res.status(400).json({ message: 'Username Does Not Exist' });
+    if (!user) res.status(400).json({ error: 'User Does Not Exist' });
     req.login(user, (err) => {
       if (err) return next(err);
-      res.status(200).json({ message: 'Logged In', user });
+      res.status(200).json({ loggedIn: true, user });
     });
   })(req, res, next);
 });
 
+// POST auth/signup
+// Signs up user given signup form data
+// @public
 router.post('/signup', async (req, res) => {
+  const { username, password, email, city, state } = req.body;
+  if (!username || !password || !city || !state) {
+    res.status(400).json({
+      error:
+        'Missing Required Information - username, password, city, or state',
+    });
+  }
   try {
-    const user = await User.findOne({ username: req.body.username });
+    const user = await User.findOne({ username: username });
     if (user) {
-      return res.status(400).json({ message: 'User Already Exists' });
+      return res.status(400).json({ error: 'User Already Exists' });
     }
     // get location
     try {
       const userLocation = await Location.findOne({
-        city: req.body.city,
-        state: req.body.state,
+        city: city,
+        state: state,
       });
       // location doesn't exist, exit
       if (!userLocation) {
         return res.status(400).json({
-          message: 'We Dont Support This Market',
+          error: 'Location Unsupported',
         });
       }
       // hash the password
       const hashedPassword = await bcrypt.hash(req.body.password, 10);
       // create new user
       const newUser = new User({
-        username: req.body.username,
+        username: username,
         password: hashedPassword,
-        email: req.body.email,
+        email: email,
         _location: userLocation.id,
       });
       await newUser.save();
       // log user in after signup
       req.logIn(newUser, (err) => {
         if (err) throw err;
-        res.status(200).json({ status: 'logged in', newUser });
+        res.status(200).json({ loggedIn: true, user: newUser });
       });
     } catch (error) {
       console.log(error);
-      res.status(500).json(error);
+      res.status(500).json({ error: 'Location Not Found' });
     }
   } catch (error) {
-    console.log(error);
+    console.log({ error: 'Username Not Found' });
     res.status(500).json(error);
   }
 });
 
+// GET auth/logout
+// logs out the user
+// @public
 router.get('/logout', (req, res) => {
   if (req.user) {
     req.logOut();
-    res.status(200).json({ message: 'You are now logged out' });
+    res.status(200).json({ loggedIn: false, message: 'Logout Successful' });
   } else {
-    res.status(400).json({ message: 'No User Logged In' });
+    res.status(400).json({ error: 'No User Logged In' });
   }
   // res.redirect('/');
 });

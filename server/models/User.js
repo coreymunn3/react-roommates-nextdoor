@@ -3,9 +3,11 @@ const mongoose = require('mongoose');
 const UserSchema = mongoose.Schema({
   username: {
     type: String,
+    required: true,
   },
   password: {
     type: String,
+    required: true,
   },
   email: {
     type: String,
@@ -13,6 +15,7 @@ const UserSchema = mongoose.Schema({
   _location: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Location',
+    required: true,
   },
 });
 
