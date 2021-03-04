@@ -3,15 +3,6 @@ const bcrypt = require('bcryptjs');
 const User = require('../models/User');
 
 module.exports = function (passport) {
-  passport.serializeUser(function (user, done) {
-    done(null, user.id);
-  });
-
-  passport.deserializeUser(function (id, done) {
-    User.findById(id, function (err, user) {
-      done(err, user);
-    });
-  });
   passport.use(
     new LocalStrategy((username, password, done) => {
       User.findOne({ username: username }, (err, user) => {
@@ -20,7 +11,7 @@ module.exports = function (passport) {
         }
         // no user found
         if (!user) {
-          return done(null, false);
+          return done(null, false, { error: 'Incorrect Username' });
         }
         // compare password to hashed password
         bcrypt.compare(password, user.password, (err, res) => {
@@ -30,10 +21,19 @@ module.exports = function (passport) {
             return done(null, user);
           } else {
             // no match, bad password
-            return done(null, false);
+            return done(null, false, { error: 'Incorrect Password' });
           }
         });
       });
     })
   );
+  passport.serializeUser(function (user, done) {
+    done(null, user.id);
+  });
+
+  passport.deserializeUser(function (id, done) {
+    User.findById(id, function (err, user) {
+      done(err, user);
+    });
+  });
 };
