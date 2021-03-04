@@ -21,6 +21,19 @@ router.get('/currentuser', (req, res) => {
   }
 });
 
+// GET auth/logout
+// logs out the user
+// @public
+router.get('/logout', (req, res) => {
+  if (req.user) {
+    req.logOut();
+    res.status(200).json({ loggedIn: false, message: 'Logout Successful' });
+  } else {
+    res.status(400).json({ error: 'No User Logged In' });
+  }
+  // res.redirect('/');
+});
+
 // POST auth/login
 // Logs in user with username and password using passport service (see services/passport.js)
 // @public
@@ -94,19 +107,6 @@ router.post('/signup', async (req, res) => {
     console.log({ error: 'Username Not Found' });
     res.status(500).json(error);
   }
-});
-
-// GET auth/logout
-// logs out the user
-// @public
-router.get('/logout', (req, res) => {
-  if (req.user) {
-    req.logOut();
-    res.status(200).json({ loggedIn: false, message: 'Logout Successful' });
-  } else {
-    res.status(400).json({ error: 'No User Logged In' });
-  }
-  // res.redirect('/');
 });
 
 module.exports = router;

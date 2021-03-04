@@ -60,7 +60,7 @@ router.post('/', async (req, res) => {
   }
 });
 
-// GET api/posts/:post
+// GET api/posts/:postId
 // returns single post matching postId passed in params
 // @private
 router.get('/:postId', async (req, res) => {
@@ -74,7 +74,50 @@ router.get('/:postId', async (req, res) => {
   }
 });
 
-// PATCH api/posts/:post/like
+// PATCH api/posts/:postId
+// Updates post at postId with body data
+// @private
+router.patch('/:postId', async (req, res) => {
+  const postId = req.params.postId;
+  // required in req.body: _user field
+  const postContent = req.body;
+  // make sure user calling route owns the post
+  if (postContent._user !== req.user._id.toString()) {
+    return res.status(401).json({ error: 'Unauthorized' });
+  }
+  // update the post with relevant body data
+  try {
+    const updatedPost = await Post.findByIdAndUpdate(
+      postId,
+      { $set: postContent },
+      { new: true }
+    );
+    res.status(200).json(updatedPost);
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ error: 'Could Not Update Post' });
+  }
+});
+
+// DELETE api/posts/:postId
+// Deletes a post with id postId
+// @private
+router.delete('/:postId', async (req, res) => {
+  const postId = req.params.postId;
+  // delete document if id matches and user matches
+  try {
+    const deletedPost = await Post.findOneAndDelete({
+      _id: postId,
+      _user: req.user,
+    });
+    res.status(200).json({ _id: deletedPost._id });
+  } catch (error) {
+    console.log(error);
+    res.status(404).json({ error: 'Post Not Found or Unable to Delete' });
+  }
+});
+
+// PATCH api/posts/:postId/like
 // incriments the likes of a post by 1 and adds user to likedBy array
 // @private
 router.patch('/:postId/like', async (req, res) => {
@@ -111,7 +154,7 @@ router.patch('/:postId/like', async (req, res) => {
 // https://stackoverflow.com/questions/22278761/mongoose-difference-between-save-and-using-update/22278847#:~:text=update()%20is%20server%20side.&text=Some%20differences%3A,new%20document)%20or%20an%20update%20.
 // ==============================================================
 
-// PATCH api/posts/:post/unlike
+// PATCH api/posts/:postId/unlike
 // decrements the likes of a post by 1 and removes user from likedBy array
 // @private
 router.patch('/:postId/unlike', async (req, res) => {
