@@ -29,11 +29,6 @@ app.use(
 app.use(passport.initialize());
 app.use(passport.session());
 
-// temp, fake data
-const posts = require('./db/postsDb');
-const areas = require('./db/areasDb');
-const users = require('./db/usersDb');
-
 // ROUTES ===========================================
 
 app.get('/', (req, res) => {
