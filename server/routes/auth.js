@@ -21,24 +21,43 @@ router.get('/currentuser', (req, res) => {
   }
 });
 
+// GET auth/logout
+// logs out the user
+// @public
+router.get('/logout', (req, res) => {
+  if (req.user) {
+    req.logOut();
+    res.status(200).json({ loggedIn: false, message: 'Logout Successful' });
+  } else {
+    res.status(400).json({ error: 'No User Logged In' });
+  }
+  // res.redirect('/');
+});
+
 // POST auth/login
 // Logs in user with username and password using passport service (see services/passport.js)
 // @public
-router.post('/login', async (req, res, next) => {
+router.post('/login', (req, res, next) => {
   const { username, password } = req.body;
   if (!username || !password) {
     res.status(400).json({
       error: 'Missing Required Information - username, or password',
     });
   }
-  passport.authenticate('local', (err, user) => {
+  passport.authenticate('local', (err, user, info) => {
     if (err) {
       return next(err);
     }
-    if (!user) res.status(400).json({ error: 'User Does Not Exist' });
+    // if username or password is incorrect, exit here
+    if (!user) {
+      // info contains result from local strategy attempt at services/passport.js
+      return res.status(404).json(info);
+    }
     req.login(user, (err) => {
-      if (err) return next(err);
-      res.status(200).json({ loggedIn: true, user });
+      if (err) {
+        return next(err);
+      }
+      return res.status(200).json({ loggedIn: true, user });
     });
   })(req, res, next);
 });
@@ -96,17 +115,32 @@ router.post('/signup', async (req, res) => {
   }
 });
 
-// GET auth/logout
-// logs out the user
-// @public
-router.get('/logout', (req, res) => {
-  if (req.user) {
-    req.logOut();
-    res.status(200).json({ loggedIn: false, message: 'Logout Successful' });
-  } else {
-    res.status(400).json({ error: 'No User Logged In' });
+// POST auth/updateprofile
+// Updates user profile data based on request body
+// @private
+router.patch('/updateprofile', async (req, res) => {
+  const newUserInfo = req.body;
+  // make sure request is not empty
+  if (!newUserInfo) {
+    return res.status(400);
   }
-  // res.redirect('/');
+  // if user wants to update password, hash it
+
+  if (newUserInfo.password) {
+    // hash the password
+    newUserInfo.password = await bcrypt.hash(newUserInfo.password, 10);
+  }
+  try {
+    const updatedUser = await User.findByIdAndUpdate(
+      req.user._id,
+      { $set: newUserInfo },
+      { new: true }
+    );
+    res.status(200).json(updatedUser);
+  } catch (error) {
+    console.log(error);
+    res.status(500).json(error);
+  }
 });
 
 module.exports = router;
