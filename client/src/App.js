@@ -7,7 +7,7 @@ import Signup from "./signup-component/index";
 const App = () => {
   return (
     <div className="container">
-      <Login></Login>
+      <Signup></Signup>
     </div>
   );
 };

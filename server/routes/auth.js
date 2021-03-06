@@ -99,7 +99,9 @@ router.post('/signup', async (req, res) => {
         email: email,
         _location: userLocation.id,
       });
-      await newUser.save();
+      await newUser.save()
+        .then(() => res.json('Successfully added User!'));
+        
       // log user in after signup
       req.logIn(newUser, (err) => {
         if (err) throw err;
