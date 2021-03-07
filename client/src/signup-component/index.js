@@ -171,5 +171,5 @@ export default class Signup extends Component {
         </Button>
       </Form>
     </Fragment>)
-}
+};
 }
