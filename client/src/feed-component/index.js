@@ -1,20 +1,12 @@
-import React, { Fragment } from "react";
+import React from 'react';
+import Container from 'react-bootstrap/esm/Container';
 
-function Feed(props) {
+const index = () => {
   return (
-    <Fragment>
-      {props.posts.map((post, idx) => {
-        const { text, name } = post;
-        return (
-          <div key={idx}>
-            <p>
-              <b>{text} </b> <i>{name} </i>
-            </p>
-          </div>
-        );
-      })}
-    </Fragment>
+    <Container>
+      <h1>This is Feed</h1>
+    </Container>
   );
-}
+};
 
-export default Feed;
+export default index;
