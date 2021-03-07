@@ -1,4 +1,6 @@
-import React, { useState } from "react";
+import React, { Component } from "react";
+// Database management
+import axios from 'axios';
 // styling
 import "bootstrap/dist/css/bootstrap.min.css";
 
@@ -8,59 +10,105 @@ import Form from "react-bootstrap/Form";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
+import Alert from "react-bootstrap/Alert";
 import Signup from "../signup-component/index";
 
-function Login() {
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
+export default class Login extends Component {
+  constructor(props) {
+    super(props);
 
-  // const handleSubmit = (e) => {
-  //     e.preventDefault();
-  //     // validate username and password here
+    this.onChangeUsername = this.onChangeUsername.bind(this);
+    this.onChangePassword = this.onChangePassword.bind(this);
+    this.onError = this.onError.bind(this);
+    this.onSubmit = this.onSubmit.bind(this);
 
-  //     // load post component
-  //     return (
-  //         <Post>
-  //         </Post>
-  //     );
+    this.state = {
+      username: '',
+      password: '',
+      error_message: false,
+    }
+  }
 
-  //   };
+    onChangeUsername(e) {
+      this.setState({
+        username: e.target.value,
+      });
+    }
+  
+    onChangePassword(e) {
+      this.setState({
+        password: e.target.value,
+      });
+    }
 
-  const handleSubmit = () => {
-    // TODO: handle transition from login to post screen
-  };
+    onError() {
+      this.setState({
+        error_message: true,
+        password: '',
+      });
+    }
 
-  const handleRegister = () => {
-    // TODO: handle transition from login to signup
-  };
+    onSubmit(e) {
+      e.preventDefault();
+      // check against the database to make user exists
+      const user = {
+        username: this.state.username,
+        password: this.state.password,
+      };
 
+      // TODO: validate if a user exists in backend. Current method only suppresses the issue
+
+      axios
+        .post('http://localhost:5000/auth/login', user)
+        .then((res) => console.log(res.data))
+        .catch((error) => { this.onError() });
+
+      /**  make sure there is no user logged in already
+       axios
+         .get('http://localhost:5000/auth/logout');
+
+       log in
+         .catch((error) => {
+          return (<Alert variant={'danger'}> User Does Not Exist </Alert>);
+         }); */
+
+      console.log(user);
+    }
+  
+  render() { 
   return (
     <Container>
+      {this.state.error_message 
+      ? <Alert variant="danger"> Invalid username or password </Alert>
+      : <Alert variant="success">  Logging in ... </Alert>
+    }
       <Row className="justify-content-md-center">
         <Col xs={12} sm={4} md={4} className="my-auto">
-          <Form>
+          <Form onSubmit={this.onSubmit}>
             <Form.Group>
               <Form.Text>
                 <h2> React Roommates! </h2>
               </Form.Text>
             </Form.Group>
             <Form.Group controlId="formBasicEmail">
-              <Form.Label>Email address</Form.Label>
+              <Form.Label>Username</Form.Label>
               <Form.Control
-                type="email"
+                required
+                type="username"
                 placeholder="Enter email"
-                onChange={(e) => setUsername(e.target.value)}
-                value={username}
+                onChange={this.onChangeUsername}
+                value={this.state.username}
               />
             </Form.Group>
 
             <Form.Group controlId="formBasicPassword">
               <Form.Label>Password</Form.Label>
               <Form.Control
+                required
                 type="password"
                 placeholder="Password"
-                onChange={(e) => setPassword(e.target.value)}
-                value={password}
+                onChange={this.onChangePassword}
+                value={this.state.password}
               />
             </Form.Group>
             <Form.Row>
@@ -68,20 +116,19 @@ function Login() {
                 <Button
                   variant="primary"
                   type="submit"
-                  onClick={() => handleSubmit()}
                 >
                   Submit
-                </Button>
+                </Button>                
               </Form.Group>
               <Form.Group>
                 <Button variant="secondary">Register</Button>
               </Form.Group>
             </Form.Row>
+            <Form.Label variant="danger"> {this.state.error_message} </Form.Label>              
           </Form>
         </Col>
       </Row>
     </Container>
   );
 }
-
-export default Login;
+}

@@ -7,7 +7,7 @@ import Signup from './signup-component/index';
 import './App.global.scss';
 
 const App = () => {
-  return <Signup></Signup>;
+  return <Login></Login>;
 };
 
 export default App;
