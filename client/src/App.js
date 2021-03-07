@@ -1,15 +1,13 @@
-import React, { useEffect } from "react";
-import axios from "axios";
-import Post from "./post-component/index";
-import Login from "./login-component/index";
-import Signup from "./signup-component/index";
+import React, { useEffect } from 'react';
+import axios from 'axios';
+import Post from './post-component/index';
+import Login from './login-component/index';
+import Signup from './signup-component/index';
+// global sass - contains theming
+import './App.global.scss';
 
 const App = () => {
-  return (
-    <div className="container">
-      <Signup></Signup>
-    </div>
-  );
+  return <Signup></Signup>;
 };
 
 export default App;
