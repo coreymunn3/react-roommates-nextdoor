@@ -1,4 +1,4 @@
-import React, { Component, Fragment } from "react";
+import React, { Component, Fragment, useEffect } from "react";
 
 // Database management
 import axios from "axios";
@@ -171,5 +171,5 @@ export default class Signup extends Component {
         </Button>
       </Form>
     </Fragment>)
-}
+};
 }
