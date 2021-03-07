@@ -1,4 +1,4 @@
-import React, { Component, Fragment, useEffect } from "react";
+import React, { Component, Fragment } from "react";
 
 // Database management
 import axios from "axios";
