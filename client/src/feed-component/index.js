@@ -1,7 +1,7 @@
 import React from 'react';
 import Container from 'react-bootstrap/esm/Container';
 
-const index = () => {
+const Feed = () => {
   return (
     <Container>
       <h1>This is Feed</h1>
@@ -9,4 +9,4 @@ const index = () => {
   );
 };
 
-export default index;
+export default Feed;

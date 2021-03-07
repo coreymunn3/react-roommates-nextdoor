@@ -1,7 +1,4 @@
 import React, { useState } from 'react';
-// styling
-import 'bootstrap/dist/css/bootstrap.min.css';
-
 // Bootstrap compponents
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
