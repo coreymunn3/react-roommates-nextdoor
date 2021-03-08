@@ -1,6 +1,7 @@
-import React, { Component } from "react";
+import React, { Component, useState } from "react";
+import { useHistory } from "react-router-dom";
 // Database management
-import axios from 'axios';
+import axios from "axios";
 // styling
 import "bootstrap/dist/css/bootstrap.min.css";
 
@@ -11,80 +12,84 @@ import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Alert from "react-bootstrap/Alert";
+import Toast from "react-bootstrap/Toast";
 import Signup from "../signup-component/index";
 
-export default class Login extends Component {
-  constructor(props) {
-    super(props);
+// utils
+import validateLogin from "../utils/validateLogin";
 
-    this.onChangeUsername = this.onChangeUsername.bind(this);
-    this.onChangePassword = this.onChangePassword.bind(this);
-    this.onError = this.onError.bind(this);
-    this.onSubmit = this.onSubmit.bind(this);
+const Login = () => {
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState(null);
+  const [showToast, setShowToast] = useState(false);
 
-    this.state = {
-      username: '',
-      password: '',
-      error_message: false,
+  const history = useHistory();
+
+  // removes error and closes the toast
+  const handleCloseToast = () => {
+    setError(null);
+    setShowToast(false);
+  };
+
+  const handleSubmit = async (e) => {
+    // TODO: handle transition from login to post screen or register page
+    e.preventDefault();
+
+    const user = {
+      username: username,
+      password: password,
+    };
+
+    // validation
+    const validationErrors = validateLogin(user);
+
+    if (validationErrors) {
+      setError(validationErrors);
+      setShowToast(true);
+      return;
+    } else {
+      // submit data to server and finish sign up
+      try {
+        const { data } = await axios.post(
+          "http://localhost:5000/auth/login",
+          user
+        );
+        const { loggedIn } = data;
+
+        if (loggedIn) {
+          history.push("/");
+        }
+      } catch (error) {
+        console.log(error.response);
+        setShowToast(true);
+        setError(error.response);
+      }
     }
-  }
+  };
 
-    onChangeUsername(e) {
-      this.setState({
-        username: e.target.value,
-      });
-    }
-  
-    onChangePassword(e) {
-      this.setState({
-        password: e.target.value,
-      });
-    }
-
-    onError() {
-      this.setState({
-        error_message: true,
-        password: '',
-      });
-    }
-
-    onSubmit(e) {
-      e.preventDefault();
-      // check against the database to make user exists
-      const user = {
-        username: this.state.username,
-        password: this.state.password,
-      };
-
-      // TODO: validate if a user exists in backend. Current method only suppresses the issue
-
-      axios
-        .post('http://localhost:5000/auth/login', user)
-        .then((res) => console.log(res.data))
-        .catch((error) => { this.onError() });
-
-      /**  make sure there is no user logged in already
-       axios
-         .get('http://localhost:5000/auth/logout');
-
-       log in
-         .catch((error) => {
-          return (<Alert variant={'danger'}> User Does Not Exist </Alert>);
-         }); */
-
-      console.log(user);
-    }
-  
-  render() { 
   return (
     <Container>
-      {this.state.error_message 
-      ? <Alert variant="danger"> Invalid username or password </Alert>
-      : <Alert variant="success">  Logging in ... </Alert>
-    }
+      <div>
+        {" "}
+        {/** styling needed here once merged */}
+        {error && (
+          <Toast
+            style={{ position: "absolute", top: 10, right: 10 }}
+            onClose={handleCloseToast}
+            show={showToast}
+            delay={3000}
+            autohide
+          >
+            <Toast.Header>Login Error</Toast.Header>
+            <Toast.Body>{error}</Toast.Body>
+          </Toast>
+        )}
+      </div>
+
       <Row className="justify-content-md-center">
         <Col xs={12} sm={4} md={4} className="my-auto">
-          <Form onSubmit={this.onSubmit}>
+          <Form onSubmit={handleSubmit}>
             <Form.Group>
               <Form.Text>
                 <h2> React Roommates! </h2>
@@ -93,42 +98,37 @@ export default class Login extends Component {
             <Form.Group controlId="formBasicEmail">
               <Form.Label>Username</Form.Label>
               <Form.Control
-                required
                 type="username"
-                placeholder="Enter email"
-                onChange={this.onChangeUsername}
-                value={this.state.username}
+                placeholder="Enter username"
+                onChange={(e) => setUsername(e.target.value)}
+                value={username}
               />
             </Form.Group>
 
             <Form.Group controlId="formBasicPassword">
               <Form.Label>Password</Form.Label>
               <Form.Control
-                required
                 type="password"
-                placeholder="Password"
-                onChange={this.onChangePassword}
-                value={this.state.password}
+                placeholder="Enter Password"
+                onChange={(e) => setPassword(e.target.value)}
+                value={password}
               />
             </Form.Group>
             <Form.Row>
               <Form.Group as={Col}>
-                <Button
-                  variant="primary"
-                  type="submit"
-                >
+                <Button variant="primary" type="submit">
                   Submit
-                </Button>                
+                </Button>
               </Form.Group>
               <Form.Group>
                 <Button variant="secondary">Register</Button>
               </Form.Group>
             </Form.Row>
-            <Form.Label variant="danger"> {this.state.error_message} </Form.Label>              
           </Form>
         </Col>
       </Row>
     </Container>
   );
-}
-}
+};
+
+export default Login;
