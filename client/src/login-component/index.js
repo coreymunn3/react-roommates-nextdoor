@@ -1,4 +1,4 @@
-import React, { Component, useState } from "react";
+import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
 // Database management
 import axios from "axios";
@@ -11,9 +11,7 @@ import Form from "react-bootstrap/Form";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
-import Alert from "react-bootstrap/Alert";
 import Toast from "react-bootstrap/Toast";
-import Signup from "../signup-component/index";
 
 // utils
 import validateLogin from "../utils/validateLogin";
@@ -58,12 +56,12 @@ const Login = () => {
         const { loggedIn } = data;
 
         if (loggedIn) {
-          history.push("/");
+          history.push("/home");
         }
       } catch (error) {
-        console.log(error.response);
+        console.log(error.response.data);
         setShowToast(true);
-        setError(error.response);
+        setError(error.response.data.error);
       }
     }
   };
@@ -121,7 +119,12 @@ const Login = () => {
                 </Button>
               </Form.Group>
               <Form.Group>
-                <Button variant="secondary">Register</Button>
+                <Button
+                  variant="secondary"
+                  onClick={() => history.push("/signup")}
+                >
+                  Register
+                </Button>
               </Form.Group>
             </Form.Row>
           </Form>
