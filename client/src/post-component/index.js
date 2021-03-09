@@ -11,7 +11,7 @@ import Form from 'react-bootstrap/Form';
 import Container from 'react-bootstrap/Container';
 import Navbar from 'react-bootstrap/Navbar';
 
-import './post.module.scss';
+//import './post.module.scss';
 
 function Posts() {
   // setup consts and vars
