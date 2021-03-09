@@ -1,7 +1,12 @@
 .container {
   height: 100vh;
+  max-width: 400px;
   margin: auto;
   display: flex;
   flex-direction: column;
   justify-content: center;
+}
+
+.toasts {
+  position: relative;
 }
