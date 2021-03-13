@@ -1,8 +1,8 @@
 import React from 'react';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
-import Login from './login-component/index';
-import Signup from './signup-component/index';
-import Feed from './feed-component/index';
+import Login from './components/pages/login/Login';
+import Signup from './components/pages/signup/Signup';
+import Feed from './components/pages/feed/Feed';
 // global sass - contains theming
 import './App.global.scss';
 
@@ -12,7 +12,7 @@ const App = () => {
       <Switch>
         <Route exact path='/signup' component={Signup} />
         <Route exact path='/login' component={Login} />
-        <Route exact path='/home' component={Feed} />
+        <Route exact path='/' component={Feed} />
       </Switch>
     </Router>
   );

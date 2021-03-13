@@ -1,17 +1,16 @@
-import React, { useEffect, useState } from "react";
-import { useHistory } from "react-router-dom";
-// Database management
-import axios from "axios";
+import React, { useEffect, useState } from 'react';
+import { useHistory } from 'react-router-dom';
+import axios from 'axios';
 // Bootstrap compponents
-import Container from "react-bootstrap/esm/Container";
-import Button from "react-bootstrap/Button";
-import Form from "react-bootstrap/Form";
-import Col from "react-bootstrap/Col";
-import Toast from "react-bootstrap/Toast";
+import Container from 'react-bootstrap/esm/Container';
+import Button from 'react-bootstrap/Button';
+import Form from 'react-bootstrap/Form';
+import Col from 'react-bootstrap/Col';
+import Toast from 'react-bootstrap/Toast';
 // style
-import styles from "./signup.module.scss";
+import styles from './signup.module.scss';
 // util
-import validateSignup from "../utils/validateSignup";
+import validateSignup from '../../utils/validateSignup';
 
 const Signup = () => {
   const history = useHistory();
@@ -19,7 +18,7 @@ const Signup = () => {
   const [locations, setLocations] = useState();
   useEffect(() => {
     const getLocations = async () => {
-      const { data } = await axios.get("/api/locations");
+      const { data } = await axios.get('/api/locations');
       setLocations(data);
     };
     getLocations();
@@ -33,11 +32,11 @@ const Signup = () => {
 
   // form state
   const initialState = {
-    username: "",
-    password: "",
-    confirmPassword: "",
-    city: "",
-    state: "",
+    username: '',
+    password: '',
+    confirmPassword: '',
+    city: '',
+    state: '',
   };
   const [newUser, setNewUser] = useState(initialState);
 
@@ -80,11 +79,11 @@ const Signup = () => {
     } else {
       // submit data to server and finish sign up
       try {
-        const { data } = await axios.post("/auth/signup", newUser);
+        const { data } = await axios.post('/auth/signup', newUser);
         if (data.loggedIn) {
           setLoading(false);
           setNewUser(initialState);
-          history.push("/home");
+          history.push('/home');
         }
       } catch (error) {
         console.log(error.response.data);
@@ -99,7 +98,7 @@ const Signup = () => {
       <div className={styles.toasts}>
         {error && (
           <Toast
-            style={{ position: "absolute", top: 10, right: 10 }}
+            style={{ position: 'absolute', top: 10, right: 10 }}
             onClose={handleCloseToast}
             show={showToast}
             delay={3000}
@@ -114,39 +113,39 @@ const Signup = () => {
       <div className={styles.container}>
         <Form onSubmit={handleSubmit}>
           <Form.Row>
-            <Form.Group as={Col} controlId="formGridEmail">
+            <Form.Group as={Col} controlId='formGridEmail'>
               <Form.Label>UserName</Form.Label>
               <Form.Control
                 required
-                name="username"
-                type="text"
-                placeholder="Enter Username"
+                name='username'
+                type='text'
+                placeholder='Enter Username'
                 value={newUser.username}
                 onChange={handleChange}
               />
             </Form.Group>
           </Form.Row>
           <Form.Row>
-            <Form.Group as={Col} controlId="formGridPassword">
+            <Form.Group as={Col} controlId='formGridPassword'>
               <Form.Label>Password</Form.Label>
               <Form.Control
                 required
-                name="password"
-                type="password"
-                placeholder="Choose Password"
+                name='password'
+                type='password'
+                placeholder='Choose Password'
                 value={newUser.password}
                 onChange={handleChange}
               />
             </Form.Group>
           </Form.Row>
           <Form.Row>
-            <Form.Group as={Col} controlId="formGridConfirmPassword">
+            <Form.Group as={Col} controlId='formGridConfirmPassword'>
               <Form.Label>Confirm Password</Form.Label>
               <Form.Control
                 required
-                name="confirmPassword"
-                type="password"
-                placeholder="Confirm Password"
+                name='confirmPassword'
+                type='password'
+                placeholder='Confirm Password'
                 value={newUser.confirmPassword}
                 onChange={handleChange}
               />
@@ -154,12 +153,12 @@ const Signup = () => {
           </Form.Row>
 
           <Form.Row>
-            <Form.Group as={Col} controlId="formLocation">
+            <Form.Group as={Col} controlId='formLocation'>
               <Form.Label>Select Your Location</Form.Label>
               <Form.Control
                 required
-                name="location"
-                as="select"
+                name='location'
+                as='select'
                 defaultValue={0}
                 value={newUser.location}
                 onChange={handleSetLocation}
@@ -175,8 +174,8 @@ const Signup = () => {
             </Form.Group>
           </Form.Row>
 
-          <Button variant="primary" type="submit" block>
-            {loading ? "Processing..." : "Sign Up"}
+          <Button variant='primary' type='submit' block>
+            {loading ? 'Processing...' : 'Sign Up'}
           </Button>
         </Form>
       </div>
