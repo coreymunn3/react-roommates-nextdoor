@@ -1,16 +1,27 @@
-// change the theme
-$primary: #09cfda;
-$theme-colors: (
-  'primary': $primary,
-);
-
+// import global variables
+@import './variables';
+// font
+@import url('https://fonts.googleapis.com/css2?family=Nunito&display=swap');
 // Import Bootstrap and its default variables
 @import '~bootstrap/scss/bootstrap.scss';
 
 // global overrides
+body {
+  font-family: 'Nunito', sans-serif;
+}
 .alert {
   margin-bottom: 0;
   p {
     margin-bottom: 0;
   }
+  border-radius: $theme-border-radius;
+}
+
+.btn,
+.form-control {
+  border-radius: $theme-border-radius;
+}
+
+label {
+  padding: 0 0.75rem;
 }

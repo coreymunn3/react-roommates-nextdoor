@@ -8,11 +8,12 @@ import Col from 'react-bootstrap/Col';
 import Alert from 'react-bootstrap/Alert';
 // style
 import styles from './signup.module.scss';
-// util
+// util validation
 import validateSignup from '../../utils/validateSignup';
+// fields
+import signupFields from './signupFields';
 
 const Signup = () => {
-  const history = useHistory();
   // pull list of locations when component mounts
   const [locations, setLocations] = useState();
   useEffect(() => {
@@ -32,6 +33,7 @@ const Signup = () => {
   // form state
   const initialFormState = {
     username: '',
+    email: '',
     password: '',
     confirmPassword: '',
     city: '',
@@ -59,6 +61,7 @@ const Signup = () => {
   };
 
   // submit form data
+  const history = useHistory();
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
@@ -95,8 +98,7 @@ const Signup = () => {
             onClose={() => setShowAlert(false)}
             dismissible
           >
-            <Alert.Heading>Unable to Sign Up</Alert.Heading>
-            <p>{error}</p>
+            <p>{`Unable to Sign Up: ${error}`}</p>
           </Alert>
         )}
       </div>
@@ -104,45 +106,21 @@ const Signup = () => {
       <div className={styles.formContainer}>
         <h3 className='text-center'>Sign Up</h3>
         <Form onSubmit={handleSubmit} className={styles.form}>
-          <Form.Row>
-            <Form.Group as={Col} controlId='formGridEmail'>
-              <Form.Label>UserName</Form.Label>
-              <Form.Control
-                required
-                name='username'
-                type='text'
-                placeholder='Enter Username'
-                value={newUser.username}
-                onChange={handleChange}
-              />
-            </Form.Group>
-          </Form.Row>
-          <Form.Row>
-            <Form.Group as={Col} controlId='formGridPassword'>
-              <Form.Label>Password</Form.Label>
-              <Form.Control
-                required
-                name='password'
-                type='password'
-                placeholder='Choose Password'
-                value={newUser.password}
-                onChange={handleChange}
-              />
-            </Form.Group>
-          </Form.Row>
-          <Form.Row>
-            <Form.Group as={Col} controlId='formGridConfirmPassword'>
-              <Form.Label>Confirm Password</Form.Label>
-              <Form.Control
-                required
-                name='confirmPassword'
-                type='password'
-                placeholder='Confirm Password'
-                value={newUser.confirmPassword}
-                onChange={handleChange}
-              />
-            </Form.Group>
-          </Form.Row>
+          {signupFields.map((field) => (
+            <Form.Row key={field.name}>
+              <Form.Group as={Col} controlId={field.controlId}>
+                <Form.Label>{field.label}</Form.Label>
+                <Form.Control
+                  name={field.name}
+                  type={field.type}
+                  required={field.required}
+                  placeholder={field.placeholder}
+                  value={newUser[field.name]}
+                  onChange={handleChange}
+                />
+              </Form.Group>
+            </Form.Row>
+          ))}
 
           <Form.Row>
             <Form.Group as={Col} controlId='formLocation'>
@@ -169,7 +147,7 @@ const Signup = () => {
           <Button variant='primary' type='submit' block disabled={loading}>
             {loading ? 'Processing...' : 'Sign Up'}
           </Button>
-          <Form.Text>
+          <Form.Text className='text-center'>
             {'Already have an account? '}
             <Link to='/login'>Log In</Link>
           </Form.Text>

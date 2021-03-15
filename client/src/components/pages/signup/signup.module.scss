@@ -1,3 +1,5 @@
+@import '../../../App.global.scss';
+
 .signup {
   height: 100vh;
   width: 100vw;
@@ -11,12 +13,14 @@
   width: 90%;
   max-width: 500px;
   padding: 1rem;
-  border-radius: 5px;
-  background: white;
+  border-radius: $theme-border-radius;
+  background-color: rgba($color: white, $alpha: 0.25);
+  backdrop-filter: blur(10px);
+  color: white;
 }
 
 .alertContainer {
-  height: 120px;
+  height: 80px;
   position: relative;
   width: 90%;
   max-width: 500px;
