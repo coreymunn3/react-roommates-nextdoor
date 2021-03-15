@@ -6,7 +6,7 @@ import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import Col from 'react-bootstrap/Col';
 import Alert from 'react-bootstrap/Alert';
-// style
+// style - using same style as signup
 import styles from './signup.module.scss';
 // util validation
 import validateSignup from '../../utils/validateSignup';
@@ -90,7 +90,7 @@ const Signup = () => {
   };
 
   return (
-    <div className={styles.signup}>
+    <div className={styles.pageContainer}>
       <div className={styles.alertContainer}>
         {showAlert && (
           <Alert
