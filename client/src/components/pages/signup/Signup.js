@@ -1,12 +1,11 @@
 import React, { useEffect, useState } from 'react';
-import { useHistory } from 'react-router-dom';
+import { useHistory, Link } from 'react-router-dom';
 import axios from 'axios';
 // Bootstrap compponents
-import Container from 'react-bootstrap/esm/Container';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import Col from 'react-bootstrap/Col';
-import Toast from 'react-bootstrap/Toast';
+import Alert from 'react-bootstrap/Alert';
 // style
 import styles from './signup.module.scss';
 // util
@@ -26,19 +25,19 @@ const Signup = () => {
   }, []);
   // loading state
   const [loading, setLoading] = useState(false);
-  // toast state for handling errors
+  // alert state for handling errors
   const [error, setError] = useState(null);
-  const [showToast, setShowToast] = useState(false);
+  const [showAlert, setShowAlert] = useState(false);
 
   // form state
-  const initialState = {
+  const initialFormState = {
     username: '',
     password: '',
     confirmPassword: '',
     city: '',
     state: '',
   };
-  const [newUser, setNewUser] = useState(initialState);
+  const [newUser, setNewUser] = useState(initialFormState);
 
   // handles form change for all but location
   const handleChange = (e) => {
@@ -59,12 +58,6 @@ const Signup = () => {
     });
   };
 
-  // removes error and closes the toast
-  const handleCloseToast = () => {
-    setError(null);
-    setShowToast(false);
-  };
-
   // submit form data
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -73,7 +66,7 @@ const Signup = () => {
     const validationErrors = validateSignup(newUser);
     if (validationErrors) {
       setError(validationErrors);
-      setShowToast(true);
+      setShowAlert(true);
       setLoading(false);
       return;
     } else {
@@ -82,36 +75,35 @@ const Signup = () => {
         const { data } = await axios.post('/auth/signup', newUser);
         if (data.loggedIn) {
           setLoading(false);
-          setNewUser(initialState);
+          setNewUser(initialFormState);
           history.push('/home');
         }
       } catch (error) {
-        console.log(error.response.data);
-        setShowToast(true);
+        setLoading(false);
+        setShowAlert(true);
         setError(error.response.data.error);
       }
     }
   };
 
   return (
-    <Container>
-      <div className={styles.toasts}>
-        {error && (
-          <Toast
-            style={{ position: 'absolute', top: 10, right: 10 }}
-            onClose={handleCloseToast}
-            show={showToast}
-            delay={3000}
-            autohide
+    <div className={styles.signup}>
+      <div className={styles.alertContainer}>
+        {showAlert && (
+          <Alert
+            variant='danger'
+            onClose={() => setShowAlert(false)}
+            dismissible
           >
-            <Toast.Header>Signup Error</Toast.Header>
-            <Toast.Body>{error}</Toast.Body>
-          </Toast>
+            <Alert.Heading>Unable to Sign Up</Alert.Heading>
+            <p>{error}</p>
+          </Alert>
         )}
       </div>
 
-      <div className={styles.container}>
-        <Form onSubmit={handleSubmit}>
+      <div className={styles.formContainer}>
+        <h3 className='text-center'>Sign Up</h3>
+        <Form onSubmit={handleSubmit} className={styles.form}>
           <Form.Row>
             <Form.Group as={Col} controlId='formGridEmail'>
               <Form.Label>UserName</Form.Label>
@@ -174,12 +166,16 @@ const Signup = () => {
             </Form.Group>
           </Form.Row>
 
-          <Button variant='primary' type='submit' block>
+          <Button variant='primary' type='submit' block disabled={loading}>
             {loading ? 'Processing...' : 'Sign Up'}
           </Button>
+          <Form.Text>
+            {'Already have an account? '}
+            <Link to='/login'>Log In</Link>
+          </Form.Text>
         </Form>
       </div>
-    </Container>
+    </div>
   );
 };
 
