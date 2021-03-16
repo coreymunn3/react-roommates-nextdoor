@@ -8,12 +8,22 @@ import Col from 'react-bootstrap/Col';
 import Alert from 'react-bootstrap/Alert';
 // style - using same style as signup
 import styles from './signup.module.scss';
-// util validation
-import validateSignup from '../../utils/validateSignup';
 // fields
 import signupFields from './signupFields';
+// redux
+import { useDispatch, useSelector } from 'react-redux';
+import { signupUser } from '../../../redux/userSlice';
 
 const Signup = () => {
+  const dispatch = useDispatch();
+  const history = useHistory();
+  const { user, isLoading, isSuccess, isError, errorMessage } = useSelector(
+    (state) => state.user
+  );
+  useEffect(() => {
+    console.log(user);
+  }, [isSuccess, isError]);
+
   // pull list of locations when component mounts
   const [locations, setLocations] = useState();
   useEffect(() => {
@@ -22,13 +32,21 @@ const Signup = () => {
       setLocations(data);
     };
     getLocations();
-    return () => setLoading(null);
   }, []);
-  // loading state
-  const [loading, setLoading] = useState(false);
-  // alert state for handling errors
-  const [error, setError] = useState(null);
+
+  // alert state & toggle
   const [showAlert, setShowAlert] = useState(false);
+  useEffect(() => {
+    if (isError) {
+      setShowAlert(true);
+    }
+    if (!isError) {
+      setShowAlert(false);
+    }
+    if (isSuccess) {
+      history.push('/home');
+    }
+  }, [isError, isSuccess, isLoading]);
 
   // form state
   const initialFormState = {
@@ -61,32 +79,9 @@ const Signup = () => {
   };
 
   // submit form data
-  const history = useHistory();
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setLoading(true);
-    // perform validation
-    const validationErrors = validateSignup(newUser);
-    if (validationErrors) {
-      setError(validationErrors);
-      setShowAlert(true);
-      setLoading(false);
-      return;
-    } else {
-      // submit data to server and finish sign up
-      try {
-        const { data } = await axios.post('/auth/signup', newUser);
-        if (data.loggedIn) {
-          setLoading(false);
-          setNewUser(initialFormState);
-          history.push('/home');
-        }
-      } catch (error) {
-        setLoading(false);
-        setShowAlert(true);
-        setError(error.response.data.error);
-      }
-    }
+    dispatch(signupUser(newUser));
   };
 
   return (
@@ -98,7 +93,7 @@ const Signup = () => {
             onClose={() => setShowAlert(false)}
             dismissible
           >
-            <p>{`Unable to Sign Up: ${error}`}</p>
+            <p>{`Unable to Sign Up: ${errorMessage}`}</p>
           </Alert>
         )}
       </div>
@@ -144,8 +139,8 @@ const Signup = () => {
             </Form.Group>
           </Form.Row>
 
-          <Button variant='primary' type='submit' block disabled={loading}>
-            {loading ? 'Processing...' : 'Sign Up'}
+          <Button variant='primary' type='submit' block disabled={isLoading}>
+            {isLoading ? 'Processing...' : 'Sign Up'}
           </Button>
           <Form.Text className='text-center'>
             {'Already have an account? '}

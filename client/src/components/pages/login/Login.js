@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import { useHistory, Link } from 'react-router-dom';
-import axios from 'axios';
 // Bootstrap compponents
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
@@ -8,61 +7,56 @@ import Col from 'react-bootstrap/Col';
 import Alert from 'react-bootstrap/Alert';
 // style
 import styles from '../signup/signup.module.scss';
-// util validation
-import validateLogin from '../../utils/validateLogin';
-// fields
+// fields to map
 import loginFields from './loginFields';
+// redux
+import { useDispatch, useSelector } from 'react-redux';
+import { loginUser } from '../../../redux/userSlice';
 
 const Login = () => {
-  // loading state
-  const [loading, setLoading] = useState(false);
-  // alert state for handling errors
-  const [error, setError] = useState(null);
-  const [showAlert, setShowAlert] = useState(false);
+  const dispatch = useDispatch();
+  const history = useHistory();
+  const { user, isLoading, isSuccess, isError, errorMessage } = useSelector(
+    (state) => state.user
+  );
+  useEffect(() => {
+    console.log(user);
+  }, [isSuccess, isError]);
 
   // form state
   const initialFormState = {
     username: '',
     password: '',
   };
-  const [user, setUser] = useState(initialFormState);
+  const [userData, setUserData] = useState(initialFormState);
 
   // handles form change for all but location
   const handleChange = (e) => {
-    setUser({
-      ...user,
+    setUserData({
+      ...userData,
       [e.target.name]: e.target.value,
     });
   };
 
   // submit form data
-  const history = useHistory();
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setLoading(true);
-    // perform validation
-    const validationErrors = validateLogin(user);
-    if (validationErrors) {
-      setError(validationErrors);
-      setShowAlert(true);
-      setLoading(false);
-      return;
-    } else {
-      // submit data to server and finish sign up
-      try {
-        const { data } = await axios.post('/auth/login', user);
-        if (data.loggedIn) {
-          setLoading(false);
-          setUser(initialFormState);
-          history.push('/home');
-        }
-      } catch (error) {
-        setLoading(false);
-        setShowAlert(true);
-        setError(error.response.data.error);
-      }
-    }
+    dispatch(loginUser(userData));
   };
+
+  // alert state & toggle
+  const [showAlert, setShowAlert] = useState(false);
+  useEffect(() => {
+    if (isError) {
+      setShowAlert(true);
+    }
+    if (!isError) {
+      setShowAlert(false);
+    }
+    if (isSuccess) {
+      history.push('/home');
+    }
+  }, [isError, isSuccess, isLoading]);
 
   return (
     <div className={styles.pageContainer}>
@@ -73,7 +67,7 @@ const Login = () => {
             onClose={() => setShowAlert(false)}
             dismissible
           >
-            <p>{`Unable to Sign Up: ${error}`}</p>
+            <p>{`Unable to Log In: ${errorMessage}`}</p>
           </Alert>
         )}
       </div>
@@ -90,14 +84,14 @@ const Login = () => {
                   type={field.type}
                   required={field.required}
                   placeholder={field.placeholder}
-                  value={user[field.name]}
+                  value={userData[field.name]}
                   onChange={handleChange}
                 />
               </Form.Group>
             </Form.Row>
           ))}
-          <Button variant='primary' type='submit' block disabled={loading}>
-            {loading ? 'Processing...' : 'Log In'}
+          <Button variant='primary' type='submit' block disabled={isLoading}>
+            {isLoading ? 'Processing...' : 'Log In'}
           </Button>
           <Form.Text className='text-center'>
             {'Still dont have an account? '}
