@@ -1,7 +1,7 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
-import validateLogin from '../components/utils/validateLogin';
-import validateSignup from '../components/utils/validateSignup';
+import validateLogin from '../utils/validateLogin';
+import validateSignup from '../utils/validateSignup';
 
 // thunks
 export const signupUser = createAsyncThunk(
@@ -53,6 +53,9 @@ export const userSlice = createSlice({
     },
     [signupUser.pending]: (state, action) => {
       state.isLoading = true;
+      state.isError = false;
+      state.isSuccess = false;
+      state.errorMessage = null;
     },
     [signupUser.rejected]: (state, action) => {
       state.isError = true;
@@ -66,6 +69,9 @@ export const userSlice = createSlice({
     },
     [loginUser.pending]: (state, action) => {
       state.isLoading = true;
+      state.isError = false;
+      state.isSuccess = false;
+      state.errorMessage = null;
     },
     [loginUser.rejected]: (state, action) => {
       state.isLoading = false;

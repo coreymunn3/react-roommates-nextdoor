@@ -16,12 +16,16 @@ body {
   }
   border-radius: $theme-border-radius;
 }
-
 .btn,
 .form-control {
   border-radius: $theme-border-radius;
 }
-
 label {
   padding: 0 0.75rem;
+}
+.navbar-toggler {
+  border: none;
+}
+.navbar-toggler:hover {
+  color: black;
 }

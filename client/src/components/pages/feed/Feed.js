@@ -1,11 +1,12 @@
 import React from 'react';
-import Container from 'react-bootstrap/esm/Container';
+import Header from '../../layout/header/Header';
 
 const Feed = () => {
   return (
-    <Container>
-      <h1>This is Feed</h1>
-    </Container>
+    <div>
+      <Header />
+      <h4>This is Feed</h4>
+    </div>
   );
 };
 
