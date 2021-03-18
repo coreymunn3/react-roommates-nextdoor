@@ -35,12 +35,21 @@ export const loginUser = createAsyncThunk(
   }
 );
 
+export const getUser = createAsyncThunk('user/getUser', async (thunkAPI) => {
+  try {
+    const { data } = await axios.get('/auth/currentUser');
+    console.log(data);
+    return data;
+  } catch (error) {
+    return thunkAPI.rejectWithValue(error.response.data.error);
+  }
+});
+
 export const userSlice = createSlice({
   name: 'user',
   initialState: {
     user: null,
     isLoading: false,
-    isSuccess: false,
     isError: false,
     errorMessage: null,
   },
@@ -48,13 +57,11 @@ export const userSlice = createSlice({
   extraReducers: {
     [signupUser.fulfilled]: (state, action) => {
       state.isLoading = false;
-      state.isSuccess = true;
       state.user = action.payload;
     },
     [signupUser.pending]: (state, action) => {
       state.isLoading = true;
       state.isError = false;
-      state.isSuccess = false;
       state.errorMessage = null;
     },
     [signupUser.rejected]: (state, action) => {
@@ -64,16 +71,28 @@ export const userSlice = createSlice({
     },
     [loginUser.fulfilled]: (state, action) => {
       state.isLoading = false;
-      state.isSuccess = true;
       state.user = action.payload;
     },
     [loginUser.pending]: (state, action) => {
       state.isLoading = true;
       state.isError = false;
-      state.isSuccess = false;
       state.errorMessage = null;
     },
     [loginUser.rejected]: (state, action) => {
+      state.isLoading = false;
+      state.isError = true;
+      state.errorMessage = action.payload;
+    },
+    [getUser.fulfilled]: (state, action) => {
+      state.isLoading = false;
+      state.user = action.payload;
+    },
+    [getUser.pending]: (state, action) => {
+      state.isLoading = true;
+      state.isError = false;
+      state.errorMessage = null;
+    },
+    [getUser.rejected]: (state, action) => {
       state.isLoading = false;
       state.isError = true;
       state.errorMessage = action.payload;

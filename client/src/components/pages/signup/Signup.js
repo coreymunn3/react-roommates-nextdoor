@@ -17,12 +17,22 @@ import { signupUser } from '../../../redux/userSlice';
 const Signup = () => {
   const dispatch = useDispatch();
   const history = useHistory();
-  const { user, isLoading, isSuccess, isError, errorMessage } = useSelector(
+  const { user, isLoading, isError, errorMessage } = useSelector(
     (state) => state.user
   );
+
+  // alert state & toggle
+  const [showAlert, setShowAlert] = useState(false);
   useEffect(() => {
-    console.log(user);
-  }, [isSuccess, isError]);
+    if (isError) {
+      setShowAlert(true);
+    } else {
+      setShowAlert(false);
+    }
+    if (user?.loggedIn) {
+      history.push('/home');
+    }
+  }, [isError, user, isLoading]);
 
   // pull list of locations when component mounts
   const [locations, setLocations] = useState();
@@ -33,20 +43,6 @@ const Signup = () => {
     };
     getLocations();
   }, []);
-
-  // alert state & toggle
-  const [showAlert, setShowAlert] = useState(false);
-  useEffect(() => {
-    if (isError) {
-      setShowAlert(true);
-    }
-    if (!isError) {
-      setShowAlert(false);
-    }
-    if (isSuccess) {
-      history.push('/home');
-    }
-  }, [isError, isSuccess, isLoading]);
 
   // form state
   const initialFormState = {

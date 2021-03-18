@@ -1,12 +1,19 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import Login from './components/pages/login/Login';
 import Signup from './components/pages/signup/Signup';
 import Feed from './components/pages/feed/Feed';
 // global sass - contains theming
 import './App.global.scss';
+// redux
+import { useDispatch } from 'react-redux';
+import { getUser } from './redux/userSlice';
 
 const App = () => {
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(getUser());
+  }, []);
   return (
     <Router>
       <Switch>
