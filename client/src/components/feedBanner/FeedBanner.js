@@ -17,10 +17,10 @@ const FeedBanner = () => {
     <div className='bg-light'>
       <Container className='py-3'>
         <Row>
-          <Col sm='8' className={styles.bannerTitle}>
+          <Col md='7' className={styles.bannerTitle}>
             <h3 className='my-0'>{`Recent Posts In City, State`}</h3>
           </Col>
-          <Col sm='4' className={styles.settingsContainer}>
+          <Col md='5' className={styles.settingsContainer}>
             <Button className='mx-1'>
               <FaSortAmountDown />
               {' Newest'}
@@ -35,8 +35,6 @@ const FeedBanner = () => {
             </DropdownButton>
           </Col>
         </Row>
-
-        {/* <div className={styles.divider}></div> */}
       </Container>
     </div>
   );

@@ -15,8 +15,14 @@ const Header = () => {
   const { user, isLoading } = useSelector((state) => state.user);
   const iconSize = '1.5rem';
   return (
-    <Navbar collapseOnSelect expand='md' bg='dark' variant='dark'>
-      <Container>
+    <Navbar
+      collapseOnSelect
+      expand='md'
+      bg='white'
+      variant='light'
+      className='shadow-sm'
+    >
+      <Container fluid>
         <Navbar.Brand href='#home'>Roommates</Navbar.Brand>
         <Navbar.Toggle aria-controls='responsive-navbar-nav'>
           <FaBars />
