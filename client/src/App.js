@@ -1,8 +1,8 @@
 import React, { useEffect } from 'react';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
-import Login from './components/pages/login/Login';
-import Signup from './components/pages/signup/Signup';
-import Feed from './components/pages/feed/Feed';
+import Login from './components/login/Login';
+import Signup from './components/signup/Signup';
+import Feed from './components/feed/Feed';
 // global sass - contains theming
 import './App.global.scss';
 // redux
@@ -19,7 +19,7 @@ const App = () => {
       <Switch>
         <Route exact path='/signup' component={Signup} />
         <Route exact path='/login' component={Login} />
-        <Route exact path='/home' component={Feed} />
+        <Route exact path='/feed' component={Feed} />
       </Switch>
     </Router>
   );

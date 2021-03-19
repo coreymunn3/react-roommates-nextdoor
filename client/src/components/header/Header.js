@@ -8,12 +8,15 @@ import Button from 'react-bootstrap/Button';
 import { FaBars, FaUserCircle } from 'react-icons/fa';
 // styles
 import styles from './header.module.scss';
+// redux
+import { useSelector } from 'react-redux';
 
 const Header = () => {
+  const { user, isLoading } = useSelector((state) => state.user);
   const iconSize = '1.5rem';
   return (
-    <Navbar collapseOnSelect expand='md' bg='light' variant='light'>
-      <Container fluid>
+    <Navbar collapseOnSelect expand='md' bg='dark' variant='dark'>
+      <Container>
         <Navbar.Brand href='#home'>Roommates</Navbar.Brand>
         <Navbar.Toggle aria-controls='responsive-navbar-nav'>
           <FaBars />
@@ -30,8 +33,10 @@ const Header = () => {
             </Form>
           </Nav>
           <Nav>
-            <Nav.Link href='#profile'>
-              <span className='mr-1'>Welcome, Corey</span>
+            <Nav.Link href='#profile' className='text-primary'>
+              <span className='mr-1 text-capitalize'>
+                {isLoading ? 'Hello, Guest' : `Hello, ${user?.user?.username}`}
+              </span>
               <FaUserCircle size={iconSize} />
             </Nav.Link>
           </Nav>

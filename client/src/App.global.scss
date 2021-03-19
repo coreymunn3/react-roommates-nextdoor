@@ -9,6 +9,12 @@
 body {
   font-family: 'Nunito', sans-serif;
 }
+@include media-breakpoint-up(sm) {
+  .container {
+    padding: 0;
+  }
+}
+
 .alert {
   margin-bottom: 0;
   p {

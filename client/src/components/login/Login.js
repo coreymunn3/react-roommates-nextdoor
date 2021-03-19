@@ -11,7 +11,7 @@ import styles from '../signup/signup.module.scss';
 import loginFields from './loginFields';
 // redux
 import { useDispatch, useSelector } from 'react-redux';
-import { loginUser } from '../../../redux/userSlice';
+import { loginUser } from '../../redux/userSlice';
 
 const Login = () => {
   const dispatch = useDispatch();
@@ -29,7 +29,7 @@ const Login = () => {
       setShowAlert(false);
     }
     if (user?.loggedIn) {
-      history.push('/home');
+      history.push('/feed');
     }
   }, [isError, user, isLoading]);
 
