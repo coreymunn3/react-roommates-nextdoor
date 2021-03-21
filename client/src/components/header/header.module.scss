@@ -1,6 +1,17 @@
 @import '../../variables';
 
+.headerForm {
+  flex-flow: nowrap;
+  width: 100%;
+}
 .formControl {
   max-width: 400px;
   background: $light !important;
+}
+.navLink {
+  display: flex;
+  align-items: center;
+}
+.dropdown {
+  padding: 0.5rem;
 }

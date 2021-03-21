@@ -2,6 +2,7 @@ import React from 'react';
 import Container from 'react-bootstrap/esm/Container';
 import Navbar from 'react-bootstrap/Navbar';
 import Nav from 'react-bootstrap/Nav';
+import NavDropdown from 'react-bootstrap/NavDropdown';
 import Form from 'react-bootstrap/Form';
 import FormControl from 'react-bootstrap/FormControl';
 import Button from 'react-bootstrap/Button';
@@ -29,7 +30,7 @@ const Header = () => {
         </Navbar.Toggle>
         <Navbar.Collapse id='responsive-navbar-nav'>
           <Nav className='mr-auto flex-grow-1'>
-            <Form inline className='w-100'>
+            <Form inline className={styles.headerForm}>
               <FormControl
                 className={`mr-sm-2 flex-grow-1 ${styles.formControl}`}
                 type='text'
@@ -39,12 +40,17 @@ const Header = () => {
             </Form>
           </Nav>
           <Nav>
-            <Nav.Link href='#profile' className='text-primary'>
-              <span className='mr-1 text-capitalize'>
-                {isLoading ? 'Hello, Guest' : `Hello, ${user?.user?.username}`}
-              </span>
-              <FaUserCircle size={iconSize} />
+            <Nav.Link className={styles.navLink}>
+              <Button variant='danger'>New Post</Button>
             </Nav.Link>
+            <NavDropdown
+              title={`Hello, ${user?.user?.username}`}
+              id='nav-dropdown'
+              className={styles.dropdown}
+            >
+              <NavDropdown.Item href='#'>Action</NavDropdown.Item>
+              <NavDropdown.Item href='#'>Another action</NavDropdown.Item>
+            </NavDropdown>
           </Nav>
         </Navbar.Collapse>
       </Container>
