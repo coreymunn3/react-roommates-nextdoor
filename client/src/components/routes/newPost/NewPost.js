@@ -1,10 +1,12 @@
 import React from 'react';
 import Container from 'react-bootstrap/Container';
+import PostForm from '../../postForm/PostForm';
 
 const NewPost = () => {
   return (
     <Container>
-      <h1>Hello from new post</h1>
+      <h3>Create A New Listing</h3>
+      <PostForm />
     </Container>
   );
 };
