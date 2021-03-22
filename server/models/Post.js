@@ -15,6 +15,22 @@ const PostSchema = mongoose.Schema({
     type: String,
     required: true,
   },
+  rentMonthly: {
+    type: Number,
+    required: true,
+  },
+  securityDeposit: {
+    type: Number,
+    required: true,
+  },
+  otherFeesMonthly: {
+    type: Number,
+    required: true,
+  },
+  moveInDate: {
+    type: Date,
+    required: true,
+  },
   streetAddress: {
     type: String,
     required: true,

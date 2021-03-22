@@ -36,6 +36,10 @@ router.post('/', async (req, res) => {
     const newPost = new Post({
       title: req.body.title,
       body: req.body.body,
+      rentMonthly: req.body.rentMonthly,
+      securityDeposit: req.body.securityDeposit,
+      otherFeesMonthly: req.body.otherFeesMonthly,
+      moveInDate: req.body.moveInDate,
       streetAddress: req.body.streetAddress,
       housingType: req.body.housingType,
       numberOfCohabitants: req.body.numberOfCohabitants,
