@@ -14,12 +14,17 @@ const app = express();
 // MIDDLEWARE ===========================================
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-app.use(cors());
+app.use(
+  cors({
+    origin: 'http://localhost:3000',
+    credentials: true,
+  })
+);
 app.use(
   session({
     secret: 'secretcode',
     saveUninitialized: true,
-    resave: false,
+    resave: true,
     cookie: {
       maxAge: 7 * 24 * 60 * 60 * 1000, // one week, expressed in ms
     },
@@ -42,3 +47,7 @@ app.use('/api/locations', require('./routes/locations'));
 const PORT = process.env.PORT || 5000;
 
 app.listen(PORT, console.log(`server running on port ${PORT}`));
+
+// NOTES ============================================================
+// using CORS middleware setup to enable sending axios requests with credentials
+// https://stackoverflow.com/questions/43002444/make-axios-send-cookies-in-its-requests-automatically

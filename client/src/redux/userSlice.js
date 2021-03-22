@@ -1,8 +1,7 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import axios from 'axios';
 import validateLogin from '../utils/validateLogin';
 import validateSignup from '../utils/validateSignup';
-
+import { userAPI } from '../api';
 // thunks
 export const signupUser = createAsyncThunk(
   'user/signupUser',
@@ -12,7 +11,7 @@ export const signupUser = createAsyncThunk(
       return thunkAPI.rejectWithValue(validationErrors);
     }
     try {
-      const { data } = await axios.post('/auth/signup', newUserData);
+      const { data } = await userAPI.signup(newUserData);
       return data;
     } catch (error) {
       return thunkAPI.rejectWithValue(error.response.data.error);
@@ -27,7 +26,7 @@ export const loginUser = createAsyncThunk(
       return thunkAPI.rejectWithValue(validationErrors);
     }
     try {
-      const { data } = await axios.post('/auth/login', userData);
+      const { data } = await userAPI.login(userData);
       return data;
     } catch (error) {
       return thunkAPI.rejectWithValue(error.response.data.error);
@@ -37,7 +36,7 @@ export const loginUser = createAsyncThunk(
 
 export const getUser = createAsyncThunk('user/getUser', async (thunkAPI) => {
   try {
-    const { data } = await axios.get('/auth/currentUser');
+    const { data } = await userAPI.getCurrentUser();
     return data;
   } catch (error) {
     return thunkAPI.rejectWithValue(error.response.data.error);

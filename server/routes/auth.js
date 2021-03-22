@@ -4,11 +4,11 @@ const passport = require('passport');
 // Hashing Password as described here with bcrypt:
 // https://github.com/dcodeIO/bcrypt.js#usage---async
 const bcrypt = require('bcryptjs');
+require('../services/passport')(passport);
 
 // MODELS
 const User = require('../models/User');
 const Location = require('../models/Location');
-require('../services/passport')(passport);
 
 // GET auth/currentuser
 // returns the user if user is logged in

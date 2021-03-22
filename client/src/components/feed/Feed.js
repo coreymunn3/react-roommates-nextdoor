@@ -8,7 +8,6 @@ const Feed = () => {
       <Header />
       <div>
         <FeedControls />
-        {/* create new post */}
         {/* posts */}
         {/* footer */}
       </div>
