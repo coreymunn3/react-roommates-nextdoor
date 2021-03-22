@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import Container from 'react-bootstrap/esm/Container';
 import Navbar from 'react-bootstrap/Navbar';
 import Nav from 'react-bootstrap/Nav';
@@ -40,7 +41,7 @@ const Header = () => {
             </Form>
           </Nav>
           <Nav>
-            <Nav.Link className={styles.navLink}>
+            <Nav.Link className={styles.navLink} as={Link} to='/new-post'>
               <Button variant='danger'>New Post</Button>
             </Nav.Link>
             <NavDropdown
@@ -48,8 +49,8 @@ const Header = () => {
               id='nav-dropdown'
               className={styles.dropdown}
             >
-              <NavDropdown.Item href='#'>Action</NavDropdown.Item>
-              <NavDropdown.Item href='#'>Another action</NavDropdown.Item>
+              <NavDropdown.Item href='#'>Profile</NavDropdown.Item>
+              <NavDropdown.Item href='#'>Logout</NavDropdown.Item>
             </NavDropdown>
           </Nav>
         </Navbar.Collapse>

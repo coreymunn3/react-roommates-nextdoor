@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import Login from './components/routes/login/Login';
 import Signup from './components/routes/signup/Signup';
 import Feed from './components/routes/feed/Feed';
+import NewPost from './components/routes/newPost/NewPost';
 // global sass - contains theming
 import './App.global.scss';
 // redux
@@ -20,6 +21,7 @@ const App = () => {
         <Route exact path='/signup' component={Signup} />
         <Route exact path='/login' component={Login} />
         <Route exact path='/feed' component={Feed} />
+        <Route exact path='/new-post' component={NewPost} />
       </Switch>
     </Router>
   );
