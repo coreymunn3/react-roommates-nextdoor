@@ -6,12 +6,12 @@ import Form from 'react-bootstrap/Form';
 import Col from 'react-bootstrap/Col';
 import Alert from 'react-bootstrap/Alert';
 // style
-import styles from '../signup/signup.module.scss';
+import styles from './login.module.scss';
 // fields to map
 import loginFields from './loginFields';
 // redux
 import { useDispatch, useSelector } from 'react-redux';
-import { loginUser } from '../../redux/userSlice';
+import { loginUser } from '../../../redux/userSlice';
 
 const Login = () => {
   const dispatch = useDispatch();

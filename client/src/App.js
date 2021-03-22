@@ -1,8 +1,8 @@
 import React, { useEffect } from 'react';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
-import Login from './components/login/Login';
-import Signup from './components/signup/Signup';
-import Feed from './components/feed/Feed';
+import Login from './components/routes/login/Login';
+import Signup from './components/routes/signup/Signup';
+import Feed from './components/routes/feed/Feed';
 // global sass - contains theming
 import './App.global.scss';
 // redux

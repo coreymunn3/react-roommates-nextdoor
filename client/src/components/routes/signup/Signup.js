@@ -12,7 +12,7 @@ import styles from './signup.module.scss';
 import signupFields from './signupFields';
 // redux
 import { useDispatch, useSelector } from 'react-redux';
-import { signupUser } from '../../redux/userSlice';
+import { signupUser } from '../../../redux/userSlice';
 
 const Signup = () => {
   const dispatch = useDispatch();
