@@ -22,7 +22,7 @@ const Header = () => {
       expand='md'
       bg='white'
       variant='light'
-      className='shadow-sm'
+      className='shadow-sm mb-3'
     >
       <Container fluid>
         <Navbar.Brand href='#home'>Roommates</Navbar.Brand>

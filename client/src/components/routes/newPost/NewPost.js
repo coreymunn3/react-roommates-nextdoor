@@ -1,10 +1,11 @@
 import React from 'react';
+import Container from 'react-bootstrap/Container';
 
 const NewPost = () => {
   return (
-    <div>
+    <Container>
       <h1>Hello from new post</h1>
-    </div>
+    </Container>
   );
 };
 

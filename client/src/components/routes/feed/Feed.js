@@ -1,14 +1,13 @@
 import React, { Fragment } from 'react';
+import Container from 'react-bootstrap/Container';
 import FeedControls from '../../feedControls/FeedControls';
 
 const Feed = () => {
   return (
-    <Fragment>
-      <div>
-        <FeedControls />
-        {/* posts */}
-      </div>
-    </Fragment>
+    <Container>
+      <FeedControls />
+      {/* posts */}
+    </Container>
   );
 };
 
