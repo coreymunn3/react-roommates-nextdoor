@@ -8,14 +8,17 @@ export const housingOptions = [
 ];
 
 export const amenities = [
-  'Private Bathroom',
-  'Furnished Room',
-  'Parking Included',
-  'Washer/Dryer In Unit',
-  'Pets Allowed',
-  'Wifi',
-  'Cable Television',
-  'Kitchen Access',
-  'Pool Access',
-  'Cohabitants are Drug-Tolerant',
+  { name: 'hasPrivateBath', label: 'Private Bathroom' },
+  { name: 'hasFurnishedRoom', label: 'Furnished Room' },
+  { name: 'hasParkingIncluded', label: 'Parking Included' },
+  { name: 'hasWasherDryerInUnit', label: 'Washer/Dryer In Unit' },
+  { name: 'hasPetsAllowed', label: 'Pets Allowed' },
+  { name: 'hasWifi', label: 'Wifi' },
+  { name: 'hasCableTelevision', label: 'Cable Television' },
+  { name: 'hasKitchenAccess', label: 'Kitchen Access' },
+  { name: 'hasPoolAccess', label: 'Pool Access' },
+  {
+    name: 'hasDrugTolerantCohabitants',
+    label: 'Cohabitants are Drug-Tolerant',
+  },
 ];

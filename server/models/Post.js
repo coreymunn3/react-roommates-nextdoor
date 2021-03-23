@@ -23,6 +23,10 @@ const PostSchema = mongoose.Schema({
     type: Number,
     required: true,
   },
+  totalMoveInCost: {
+    type: Number,
+    required: true,
+  },
   otherFeesMonthly: {
     type: Number,
     required: true,
@@ -32,6 +36,10 @@ const PostSchema = mongoose.Schema({
     required: true,
   },
   streetAddress: {
+    type: String,
+    required: true,
+  },
+  zipCode: {
     type: String,
     required: true,
   },

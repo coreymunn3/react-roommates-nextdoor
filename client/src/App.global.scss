@@ -26,6 +26,9 @@ body {
   border-radius: $theme-border-radius;
   border: none;
 }
+input[type='file'] {
+  width: 100%;
+}
 label {
   padding: 0 0.75rem;
 }
