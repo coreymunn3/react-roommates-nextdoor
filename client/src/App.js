@@ -4,7 +4,7 @@ import Login from './components/routes/login/Login';
 import Signup from './components/routes/signup/Signup';
 import Feed from './components/routes/feed/Feed';
 import NewPost from './components/routes/newPost/NewPost';
-import Layout from './components/layout/Layout';
+import PageLayout from './components/layout/PageLayout';
 // global sass - contains theming
 import './App.global.scss';
 // redux
@@ -21,10 +21,10 @@ const App = () => {
       <Switch>
         <Route exact path='/signup' component={Signup} />
         <Route exact path='/login' component={Login} />
-        <Layout>
+        <PageLayout>
           <Route exact path='/feed' component={Feed} />
           <Route exact path='/new-post' component={NewPost} />
-        </Layout>
+        </PageLayout>
       </Switch>
     </Router>
   );

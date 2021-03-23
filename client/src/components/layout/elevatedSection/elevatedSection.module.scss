@@ -1,0 +1,12 @@
+@import '../../../variables.scss';
+
+.container {
+  // background: $light;
+  border-radius: $theme-border-radius;
+  padding: 1rem 0.5rem;
+  input,
+  textarea,
+  select {
+    background: $light;
+  }
+}

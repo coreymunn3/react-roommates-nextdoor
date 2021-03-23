@@ -1,8 +1,13 @@
 export const housingOptions = [
-  'House, TownHouse, Apartment, Condominium, Cabin/Rustic, Duplex',
+  'House',
+  'TownHouse',
+  'Apartment',
+  'Condominium',
+  'Cabin/Rustic',
+  'Duplex',
 ];
 
-export const Amenities = [
+export const amenities = [
   'Private Bathroom',
   'Furnished Room',
   'Parking Included',
