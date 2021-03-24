@@ -43,6 +43,7 @@ router.post('/', async (req, res) => {
       totalMoveInCost: req.body.totalMoveInCost,
       otherFeesMonthly: req.body.otherFeesMonthly,
       housingType: req.body.housingType,
+      roomPrivacy: req.body.roomPrivacy,
       moveInDate: req.body.moveInDate,
       numberOfCohabitants: req.body.numberOfCohabitants,
       hasPrivateBath: req.body.hasPrivateBath,

@@ -22,6 +22,7 @@ const postValidationSchema = yup.object({
     .required('Required'),
   body: yup.string().min(10, 'Min 10 Chars').required('Required'),
   housingType: yup.string().required('Required'),
+  roomPrivacy: yup.string().required('Required'),
   moveInDate: yup.date().required('Required'),
   numberOfCohabitants: yup
     .number()

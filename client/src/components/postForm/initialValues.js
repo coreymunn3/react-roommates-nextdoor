@@ -8,6 +8,7 @@ const initialValues = {
   totalMoveInCost: '',
   otherFeesMonthly: '',
   housingType: '',
+  roomPrivacy: '',
   moveInDate: '',
   numberOfCohabitants: '',
   hasPrivateBath: false,

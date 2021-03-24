@@ -7,6 +7,8 @@ export const housingOptions = [
   'Duplex',
 ];
 
+export const privacyOptions = ['Room Private', 'Room Not Private'];
+
 export const amenitiesOptions = [
   { name: 'hasPrivateBath', label: 'Private Bathroom' },
   { name: 'hasFurnishedRoom', label: 'Furnished Room' },

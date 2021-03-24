@@ -31,10 +31,6 @@ const PostSchema = mongoose.Schema({
     type: Number,
     required: true,
   },
-  moveInDate: {
-    type: Date,
-    required: true,
-  },
   streetAddress: {
     type: String,
     required: true,
@@ -49,6 +45,14 @@ const PostSchema = mongoose.Schema({
   },
   housingType: {
     type: String,
+    required: true,
+  },
+  roomPrivacy: {
+    type: String,
+    required: true,
+  },
+  moveInDate: {
+    type: Date,
     required: true,
   },
   numberOfCohabitants: {

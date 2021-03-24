@@ -12,7 +12,11 @@ import InputField from '../inputField/InputField';
 import InputFieldSelect from '../inputFieldSelect/InputFieldSelect';
 import FileBase64 from 'react-file-base64';
 // mappable arrays for form options
-import { housingOptions, amenitiesOptions } from './formOptions';
+import {
+  housingOptions,
+  privacyOptions,
+  amenitiesOptions,
+} from './formOptions';
 import styles from './postForm.module.scss';
 
 const PostForm = () => {
@@ -162,18 +166,17 @@ const PostForm = () => {
               options={housingOptions}
             />
           </Form.Group>
-          <Form.Group as={Col} md={6} controlId='formGridNumberCohabitants'>
-            <InputField
-              label='Number of Cohabitants/Housemates'
-              type='text'
-              name='numberOfCohabitants'
-              value={values.numberOfCohabitants}
+          <Form.Group as={Col} md={6} controlId='formGridRoomPrivacy'>
+            <InputFieldSelect
+              label='Is the Room Private?'
+              as='select'
+              name='roomPrivacy'
+              value={values.roomPrivacy}
               onChange={handleChange}
               onBlur={handleBlur}
-              isInvalid={
-                touched.numberOfCohabitants && errors.numberOfCohabitants
-              }
-              error={errors.numberOfCohabitants}
+              isInvalid={touched.roomPrivacy && errors.roomPrivacy}
+              error={errors.roomPrivacy}
+              options={privacyOptions}
             />
           </Form.Group>
         </Form.Row>
@@ -189,6 +192,20 @@ const PostForm = () => {
               onBlur={handleBlur}
               isInvalid={touched.moveInDate && errors.moveInDate}
               error={errors.moveInDate}
+            />
+          </Form.Group>
+          <Form.Group as={Col} md={6} controlId='formGridNumberCohabitants'>
+            <InputField
+              label='Number of Cohabitants/Housemates'
+              type='text'
+              name='numberOfCohabitants'
+              value={values.numberOfCohabitants}
+              onChange={handleChange}
+              onBlur={handleBlur}
+              isInvalid={
+                touched.numberOfCohabitants && errors.numberOfCohabitants
+              }
+              error={errors.numberOfCohabitants}
             />
           </Form.Group>
         </Form.Row>
