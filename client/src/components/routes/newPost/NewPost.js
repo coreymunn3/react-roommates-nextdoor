@@ -8,7 +8,7 @@ const NewPost = () => {
   const { user } = useSelector((state) => state.user);
   return (
     <Container>
-      <h3>{`Create A New Listing In ${user.user._location}`}</h3>
+      <h3>{`Create A New Listing In ${user?.user?._location}`}</h3>
       <PostForm />
     </Container>
   );

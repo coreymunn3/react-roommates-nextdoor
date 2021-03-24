@@ -29,11 +29,13 @@ const PostForm = () => {
       streetAddress: '',
       zipCode: '',
       body: '',
-      housingType: '',
       rentMonthly: '',
       securityDeposit: '',
       totalMoveInCost: '',
       otherFeesMonthly: '',
+      housingType: '',
+      moveInDate: '',
+      numberOfCohabitants: '',
       hasPrivateBath: false,
       hasFurnishedRoom: false,
       hasParkingIncluded: false,
@@ -67,6 +69,11 @@ const PostForm = () => {
         .required('Required'),
       body: yup.string().min(10, 'Min 10 Chars').required('Required'),
       housingType: yup.string().required('Required'),
+      moveInDate: yup.date().required('Required'),
+      numberOfCohabitants: yup
+        .number()
+        .min(0, 'Cannot Be Negative')
+        .required('Required'),
       hasPrivateBath: yup.boolean(),
       hasFurnishedRoom: yup.boolean(),
       hasParkingIncluded: yup.boolean(),
@@ -96,7 +103,7 @@ const PostForm = () => {
               onChange={handleChange}
               onBlur={handleBlur}
               isInvalid={touched.title && errors.title}
-              errors={errors}
+              error={errors.title}
               length={values.title.length}
             />
           </Form.Group>
@@ -112,7 +119,7 @@ const PostForm = () => {
               onChange={handleChange}
               onBlur={handleBlur}
               isInvalid={touched.streetAddress && errors.streetAddress}
-              errors={errors}
+              error={errors.streetAddress}
               length={values.streetAddress.length}
             />
           </Form.Group>
@@ -125,14 +132,14 @@ const PostForm = () => {
               onChange={handleChange}
               onBlur={handleBlur}
               isInvalid={touched.zipCode && errors.zipCode}
-              errors={errors}
+              error={errors.zipCode}
               length={values.zipCode.length}
             />
           </Form.Group>
         </Form.Row>
 
         <Form.Row>
-          <Form.Group as={Col} md={3}>
+          <Form.Group as={Col} sm={6} md={3}>
             <InputField
               label='Monthly Rent'
               type='text'
@@ -141,10 +148,10 @@ const PostForm = () => {
               onChange={handleChange}
               onBlur={handleBlur}
               isInvalid={touched.rentMonthly && errors.rentMonthly}
-              errors={errors}
+              error={errors.rentMonthly}
             />
           </Form.Group>
-          <Form.Group as={Col} md={3}>
+          <Form.Group as={Col} sm={6} md={3}>
             <InputField
               label='Security Deposit'
               type='text'
@@ -153,10 +160,10 @@ const PostForm = () => {
               onChange={handleChange}
               onBlur={handleBlur}
               isInvalid={touched.securityDeposit && errors.securityDeposit}
-              errors={errors}
+              error={errors.securityDeposit}
             />
           </Form.Group>
-          <Form.Group as={Col} md={3}>
+          <Form.Group as={Col} sm={6} md={3}>
             <InputField
               label='Total Move In'
               type='text'
@@ -165,10 +172,10 @@ const PostForm = () => {
               onChange={handleChange}
               onBlur={handleBlur}
               isInvalid={touched.totalMoveInCost && errors.totalMoveInCost}
-              errors={errors}
+              error={errors.totalMoveInCost}
             />
           </Form.Group>
-          <Form.Group as={Col} md={3}>
+          <Form.Group as={Col} sm={6} md={3}>
             <InputField
               label='Other Monthly Fees'
               type='text'
@@ -177,7 +184,7 @@ const PostForm = () => {
               onChange={handleChange}
               onBlur={handleBlur}
               isInvalid={touched.otherFeesMonthly && errors.otherFeesMonthly}
-              errors={errors}
+              error={errors.otherFeesMonthly}
             />
           </Form.Group>
         </Form.Row>
@@ -194,14 +201,14 @@ const PostForm = () => {
               placeholder='Get people interested!'
               rows={4}
               isInvalid={touched.body && errors.body}
-              errors={errors}
+              error={errors.body}
               length={values.body.length}
             />
           </Form.Group>
         </Form.Row>
 
         <Form.Row>
-          <Form.Group as={Col} controlId='formGridHousingType'>
+          <Form.Group as={Col} md={6} controlId='formGridHousingType'>
             <InputFieldSelect
               label='Housing Type'
               as='select'
@@ -210,9 +217,37 @@ const PostForm = () => {
               onChange={handleChange}
               onBlur={handleBlur}
               isInvalid={touched.housingType && errors.housingType}
-              errors={errors}
+              error={errors.housingType}
               length={values.housingType.length}
               options={housingOptions}
+            />
+          </Form.Group>
+          <Form.Group as={Col} md={6} controlId='formGridNumberCohabitants'>
+            <InputField
+              label='Number of Cohabitants/Housemates'
+              name='numberOfCohabitants'
+              value={values.numberOfCohabitants}
+              onChange={handleChange}
+              onBlur={handleBlur}
+              isInvalid={
+                touched.numberOfCohabitants && errors.numberOfCohabitants
+              }
+              error={errors.numberOfCohabitants}
+            />
+          </Form.Group>
+        </Form.Row>
+
+        <Form.Row>
+          <Form.Group as={Col} controlId='formGridMoveInDate'>
+            <InputField
+              label='Move In Date'
+              type='date'
+              name='moveInDate'
+              value={values.moveInDate}
+              onChange={handleChange}
+              onBlur={handleBlur}
+              isInvalid={touched.moveInDate && errors.moveInDate}
+              error={errors.moveInDate}
             />
           </Form.Group>
         </Form.Row>
@@ -241,6 +276,16 @@ const PostForm = () => {
               multiple={false}
               onDone={({ base64 }) => setFeatureImage(base64)}
             />
+          </Form.Group>
+        </Form.Row>
+
+        <Form.Row>
+          <Form.Group as={Col}>
+            <p>
+              **Please Note, when you submit this post, others will have a
+              change to contact you via your email listed under your user
+              profile.
+            </p>
           </Form.Group>
         </Form.Row>
 

@@ -1,7 +1,7 @@
 import React, { Fragment } from 'react';
 import Form from 'react-bootstrap/Form';
 
-const InputFieldSelect = ({ label, name, errors, options, ...rest }) => {
+const InputFieldSelect = ({ label, name, error, options, ...rest }) => {
   return (
     <Fragment>
       <Form.Label>{label}</Form.Label>
@@ -13,9 +13,7 @@ const InputFieldSelect = ({ label, name, errors, options, ...rest }) => {
           <option key={idx}>{opt}</option>
         ))}
       </Form.Control>
-      <Form.Control.Feedback type='invalid'>
-        {errors[name]}
-      </Form.Control.Feedback>
+      <Form.Control.Feedback type='invalid'>{error}</Form.Control.Feedback>
     </Fragment>
   );
 };
