@@ -29,13 +29,13 @@ const PostForm = () => {
       streetAddress: '',
       zipCode: '',
       body: '',
-      rentMonthly: '',
-      securityDeposit: '',
-      totalMoveInCost: '',
-      otherFeesMonthly: '',
+      rentMonthly: 0,
+      securityDeposit: 0,
+      totalMoveInCost: 0,
+      otherFeesMonthly: 0,
       housingType: '',
       moveInDate: '',
-      numberOfCohabitants: '',
+      numberOfCohabitants: 0,
       hasPrivateBath: false,
       hasFurnishedRoom: false,
       hasParkingIncluded: false,
@@ -50,7 +50,10 @@ const PostForm = () => {
     validationSchema: yup.object({
       title: yup.string().min(5, 'Min 5 Chars').required('Required'),
       streetAddress: yup.string().required('Required'),
-      zipCode: yup.string().min(5, '5 Digit Zip').required('Required'),
+      zipCode: yup
+        .string()
+        .matches(/^[0-9]{5}$/, 'Must be exactly 5 Digits')
+        .required('Required'),
       rentMonthly: yup
         .number()
         .min(0, 'Cannot Be Negative')
