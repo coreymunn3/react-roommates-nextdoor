@@ -95,6 +95,10 @@ const PostSchema = mongoose.Schema({
     type: Boolean,
     required: true,
   },
+  featureImage: {
+    type: String,
+    required: true,
+  },
   likeCount: {
     type: Number,
     default: 0,

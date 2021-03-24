@@ -55,6 +55,7 @@ router.post('/', async (req, res) => {
       hasKitchenAccess: req.body.hasKitchenAccess,
       hasPoolAccess: req.body.hasPoolAccess,
       hasDrugTolerantCohabitants: req.body.hasDrugTolerantCohabitants,
+      featureImage: req.body.featureImage,
       _user: req.user._id,
       _location: req.user._location,
     });

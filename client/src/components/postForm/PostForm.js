@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { useFormik } from 'formik';
-import * as yup from 'yup';
+import postValidationSchema from './validationSchema';
+import initialValues from './initialValues';
+import submitPostData from './SubmitPostData';
 // components
 import Col from 'react-bootstrap/esm/Col';
 import Form from 'react-bootstrap/Form';
@@ -24,74 +26,9 @@ const PostForm = () => {
     isValid,
     errors,
   } = useFormik({
-    initialValues: {
-      title: '',
-      streetAddress: '',
-      zipCode: '',
-      body: '',
-      rentMonthly: 0,
-      securityDeposit: 0,
-      totalMoveInCost: 0,
-      otherFeesMonthly: 0,
-      housingType: '',
-      moveInDate: '',
-      numberOfCohabitants: 0,
-      hasPrivateBath: false,
-      hasFurnishedRoom: false,
-      hasParkingIncluded: false,
-      hasWasherDryerInUnit: false,
-      hasPetsAllowed: false,
-      hasWifi: false,
-      hasCableTelevision: false,
-      hasKitchenAccess: false,
-      hasPoolAccess: false,
-      hasDrugTolerantCohabitants: false,
-    },
-    validationSchema: yup.object({
-      title: yup.string().min(5, 'Min 5 Chars').required('Required'),
-      streetAddress: yup.string().required('Required'),
-      zipCode: yup
-        .string()
-        .matches(/^[0-9]{5}$/, 'Must be exactly 5 Digits')
-        .required('Required'),
-      rentMonthly: yup
-        .number()
-        .min(0, 'Cannot Be Negative')
-        .required('Required'),
-      securityDeposit: yup
-        .number()
-        .min(0, 'Cannot Be Negative')
-        .required('Required'),
-      totalMoveInCost: yup
-        .number()
-        .min(0, 'Cannot Be Negative')
-        .required('Required'),
-      otherFeesMonthly: yup
-        .number()
-        .min(0, 'Cannot Be Negative')
-        .required('Required'),
-      body: yup.string().min(10, 'Min 10 Chars').required('Required'),
-      housingType: yup.string().required('Required'),
-      moveInDate: yup.date().required('Required'),
-      numberOfCohabitants: yup
-        .number()
-        .min(0, 'Cannot Be Negative')
-        .required('Required'),
-      hasPrivateBath: yup.boolean(),
-      hasFurnishedRoom: yup.boolean(),
-      hasParkingIncluded: yup.boolean(),
-      hasWasherDryerInUnit: yup.boolean(),
-      hasPetsAllowed: yup.boolean(),
-      hasWifi: yup.boolean(),
-      hasCableTelevision: yup.boolean(),
-      hasKitchenAccess: yup.boolean(),
-      hasPoolAccess: yup.boolean(),
-      hasDrugTolerantCohabitants: yup.boolean(),
-    }),
-    onSubmit: (values) => {
-      console.log(values);
-      console.log(featureImage);
-    },
+    initialValues: initialValues,
+    validationSchema: postValidationSchema,
+    onSubmit: (values) => submitPostData(values, featureImage),
   });
   return (
     <ElevatedSection>
@@ -228,6 +165,7 @@ const PostForm = () => {
           <Form.Group as={Col} md={6} controlId='formGridNumberCohabitants'>
             <InputField
               label='Number of Cohabitants/Housemates'
+              type='text'
               name='numberOfCohabitants'
               value={values.numberOfCohabitants}
               onChange={handleChange}
