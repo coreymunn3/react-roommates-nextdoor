@@ -12,7 +12,7 @@ import InputField from '../inputField/InputField';
 import InputFieldSelect from '../inputFieldSelect/InputFieldSelect';
 import FileBase64 from 'react-file-base64';
 // mappable arrays for form options
-import { housingOptions, amenities } from './formOptions';
+import { housingOptions, amenitiesOptions } from './formOptions';
 import styles from './postForm.module.scss';
 
 const PostForm = () => {
@@ -197,7 +197,7 @@ const PostForm = () => {
           <Form.Group as={Col} controlId='formGridAmenities'>
             <Form.Label>What Amenities Does The Space Offer?</Form.Label>
             <div className={styles.checkboxContainer}>
-              {amenities.map((amenity, idx) => (
+              {amenitiesOptions.map((amenity, idx) => (
                 <Form.Check
                   key={idx}
                   label={amenity.label}

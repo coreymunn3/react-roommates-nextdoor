@@ -7,7 +7,7 @@ export const housingOptions = [
   'Duplex',
 ];
 
-export const amenities = [
+export const amenitiesOptions = [
   { name: 'hasPrivateBath', label: 'Private Bathroom' },
   { name: 'hasFurnishedRoom', label: 'Furnished Room' },
   { name: 'hasParkingIncluded', label: 'Parking Included' },
