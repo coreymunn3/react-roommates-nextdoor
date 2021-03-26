@@ -38,9 +38,10 @@ const PostForm = ({ user }) => {
   } = useFormik({
     initialValues: initialValues,
     validationSchema: postValidationSchema,
-    onSubmit: (values) => {
+    onSubmit: (values, actions) => {
       const transformedPostData = transformPostData(values, featureImage);
       dispatch(createPost(transformedPostData));
+      actions.resetForm({});
     },
   });
   return (
@@ -258,7 +259,7 @@ const PostForm = ({ user }) => {
 
         <Form.Row>
           <Form.Group as={Col}>
-            <Button type='submit' block disabled={isValid && !isValidating}>
+            <Button type='submit' block>
               Submit
             </Button>
           </Form.Group>
