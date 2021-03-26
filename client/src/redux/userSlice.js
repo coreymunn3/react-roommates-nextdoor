@@ -97,7 +97,3 @@ export const userSlice = createSlice({
     },
   },
 });
-
-// Action creators are generated for each case reducer function
-
-export default userSlice.reducer;

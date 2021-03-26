@@ -14,3 +14,8 @@ export const userAPI = {
   getCurrentUser: () =>
     axios.get(`${baseUrl}/auth/currentuser`, { withCredentials: true }),
 };
+
+export const postAPI = {
+  createPost: (postFormData) =>
+    axios.post(`${baseUrl}/api/posts`, postFormData, { withCredentials: true }),
+};

@@ -9,7 +9,7 @@ const NewPost = () => {
   return (
     <Container>
       <h3>{`Create A New Listing In ${user?.user?._location}`}</h3>
-      <PostForm />
+      <PostForm user={user} />
     </Container>
   );
 };

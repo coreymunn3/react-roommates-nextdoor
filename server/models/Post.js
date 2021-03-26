@@ -111,10 +111,12 @@ const PostSchema = mongoose.Schema({
   _user: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'User',
+    required: true,
   },
   _location: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Location',
+    required: true,
   },
 });
 

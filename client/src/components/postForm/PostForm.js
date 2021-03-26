@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
+// formik stuff
 import { useFormik } from 'formik';
 import postValidationSchema from './validationSchema';
 import initialValues from './initialValues';
-import submitPostData from './SubmitPostData';
+import transformPostData from './TransformPostData';
 // components
 import Col from 'react-bootstrap/esm/Col';
 import Form from 'react-bootstrap/Form';
@@ -18,8 +19,12 @@ import {
   amenitiesOptions,
 } from './formOptions';
 import styles from './postForm.module.scss';
+// redux
+import { useDispatch } from 'react-redux';
+import { createPost } from '../../redux/postSlice';
 
-const PostForm = () => {
+const PostForm = ({ user }) => {
+  const dispatch = useDispatch();
   const [featureImage, setFeatureImage] = useState('');
   const {
     handleSubmit,
@@ -28,11 +33,15 @@ const PostForm = () => {
     values,
     touched,
     isValid,
+    isValidating,
     errors,
   } = useFormik({
     initialValues: initialValues,
     validationSchema: postValidationSchema,
-    onSubmit: (values) => submitPostData(values, featureImage),
+    onSubmit: (values) => {
+      const transformedPostData = transformPostData(values, featureImage);
+      dispatch(createPost(transformedPostData));
+    },
   });
   return (
     <ElevatedSection>
@@ -249,7 +258,7 @@ const PostForm = () => {
 
         <Form.Row>
           <Form.Group as={Col}>
-            <Button type='submit' block>
+            <Button type='submit' block disabled={isValid && !isValidating}>
               Submit
             </Button>
           </Form.Group>
