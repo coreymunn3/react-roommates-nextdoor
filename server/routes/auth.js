@@ -31,7 +31,7 @@ router.get('/currentuser', async (req, res) => {
 router.get('/logout', (req, res) => {
   if (req.user) {
     req.logOut();
-    res.status(200).json({ loggedIn: false, message: 'Logout Successful' });
+    res.status(200).json({ loggedIn: false, user: {} });
   } else {
     res.status(400).json({ error: 'No User Logged In' });
   }

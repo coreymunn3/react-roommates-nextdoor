@@ -11,11 +11,15 @@ import { FaBars, FaUserCircle } from 'react-icons/fa';
 // styles
 import styles from './header.module.scss';
 // redux
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
+import { logoutUser } from '../../redux/userSlice';
 
 const Header = () => {
+  const dispatch = useDispatch();
   const { user, isLoading } = useSelector((state) => state.user);
-  const iconSize = '1.5rem';
+  const handleLogout = () => {
+    dispatch(logoutUser());
+  };
   return (
     <Navbar
       collapseOnSelect
@@ -49,8 +53,17 @@ const Header = () => {
               id='nav-dropdown'
               className={styles.dropdown}
             >
-              <NavDropdown.Item href='#'>Profile</NavDropdown.Item>
-              <NavDropdown.Item href='#'>Logout</NavDropdown.Item>
+              <NavDropdown.Item eventKey={1} href='#'>
+                Profile
+              </NavDropdown.Item>
+              <NavDropdown.Divider />
+              <NavDropdown.Item
+                eventKey={2}
+                href='/login'
+                onClick={handleLogout}
+              >
+                Logout
+              </NavDropdown.Item>
             </NavDropdown>
           </Nav>
         </Navbar.Collapse>

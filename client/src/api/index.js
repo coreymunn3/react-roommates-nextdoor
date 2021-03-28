@@ -13,6 +13,7 @@ export const userAPI = {
     }),
   getCurrentUser: () =>
     axios.get(`${baseUrl}/auth/currentuser`, { withCredentials: true }),
+  logout: () => axios.get(`${baseUrl}/auth/logout`, { withCredentials: true }),
 };
 
 export const postAPI = {
