@@ -4,6 +4,8 @@ import Container from 'react-bootstrap/esm/Container';
 import Navbar from 'react-bootstrap/Navbar';
 import Nav from 'react-bootstrap/Nav';
 import NavDropdown from 'react-bootstrap/NavDropdown';
+import DropdownButton from 'react-bootstrap/DropdownButton';
+import Dropdown from 'react-bootstrap/Dropdown';
 import Form from 'react-bootstrap/Form';
 import FormControl from 'react-bootstrap/FormControl';
 import Button from 'react-bootstrap/Button';
@@ -17,7 +19,7 @@ import { logoutUser } from '../../redux/userSlice';
 const Header = () => {
   const dispatch = useDispatch();
   const { user, isLoading } = useSelector((state) => state.user);
-  const handleLogout = () => {
+  const handleLogout = (e) => {
     dispatch(logoutUser());
   };
   return (
@@ -48,23 +50,25 @@ const Header = () => {
             <Nav.Link className={styles.navLink} as={Link} to='/new-post'>
               <Button variant='danger'>New Post</Button>
             </Nav.Link>
-            <NavDropdown
+            <DropdownButton
+              className={styles.navLink}
+              menuAlign='right'
               title={`Hello, ${user?.user?.username}`}
-              id='nav-dropdown'
-              className={styles.dropdown}
+              id='dropdown-menu-align-right'
+              variant='outlined'
             >
-              <NavDropdown.Item eventKey={1} href='#'>
-                Profile
-              </NavDropdown.Item>
-              <NavDropdown.Divider />
-              <NavDropdown.Item
-                eventKey={2}
-                href='/login'
+              <Dropdown.Item eventKey='1'>Action</Dropdown.Item>
+              <Dropdown.Item eventKey='2'>Another action</Dropdown.Item>
+              <Dropdown.Divider />
+              <Dropdown.Item
+                as={Link}
+                to='/login'
+                eventKey='4'
                 onClick={handleLogout}
               >
                 Logout
-              </NavDropdown.Item>
-            </NavDropdown>
+              </Dropdown.Item>
+            </DropdownButton>
           </Nav>
         </Navbar.Collapse>
       </Container>

@@ -28,7 +28,7 @@ const Login = () => {
     } else {
       setShowAlert(false);
     }
-    if (user?.loggedIn) {
+    if (!isLoading && user?.loggedIn) {
       history.push('/feed');
     }
   }, [isError, user, isLoading]);
