@@ -5,16 +5,10 @@ import { FaSortAmountDown } from 'react-icons/fa';
 import { MdClose, MdAdd } from 'react-icons/md';
 // styles
 import styles from './feedcontrols.module.scss';
-// redux
-import { useSelector } from 'react-redux';
 
 const FeedControls = () => {
-  const { user, isLoading } = useSelector((state) => state.user);
   return (
     <Fragment>
-      <div>
-        <h3>{`Recent Posts In City, State`}</h3>
-      </div>
       <div className={styles.pillContainer}>
         <Button className={styles.pill} variant='light'>
           <FaSortAmountDown />

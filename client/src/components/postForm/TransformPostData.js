@@ -6,11 +6,10 @@ const submitPostData = (formValues, featureImage) => {
   formValues.totalMoveInCost = parseInt(formValues.totalMoveInCost);
   formValues.otherFeesMonthly = parseInt(formValues.otherFeesMonthly);
   formValues.moveInDate = parseDate(formValues.moveInDate);
-  const postFormData = {
+  return {
     ...formValues,
     featureImage,
   };
-  return postFormData;
 };
 
 const parseDate = (dateString) => {

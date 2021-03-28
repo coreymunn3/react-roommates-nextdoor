@@ -251,7 +251,7 @@ const PostForm = ({ user }) => {
           <Form.Group as={Col}>
             <p>
               **Please Note, when you submit this post, others will have a
-              change to contact you via your email listed under your user
+              chance to contact you via your email listed under your user
               profile.
             </p>
           </Form.Group>

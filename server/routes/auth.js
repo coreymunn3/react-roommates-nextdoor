@@ -13,9 +13,13 @@ const Location = require('../models/Location');
 // GET auth/currentuser
 // returns the user if user is logged in
 // @public
-router.get('/currentuser', (req, res) => {
+router.get('/currentuser', async (req, res) => {
   if (req.user) {
-    res.status(200).json({ loggedIn: true, user: req.user });
+    // res.status(200).json({ loggedIn: true, user: req.user });
+    const currentUser = await User.findOne({ _id: req.user._id })
+      .populate('_location')
+      .exec();
+    res.status(200).json({ loggedIn: true, user: currentUser });
   } else {
     res.status(200).json({ loggedIn: false, user: {} });
   }
@@ -110,8 +114,8 @@ router.post('/signup', async (req, res) => {
       res.status(500).json({ error: 'Location Not Found' });
     }
   } catch (error) {
-    console.log({ error: 'Username Not Found' });
-    res.status(500).json(error);
+    console.log(error);
+    res.status(500).json({ error: 'Username Not Found' });
   }
 });
 
