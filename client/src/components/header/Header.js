@@ -31,7 +31,9 @@ const Header = () => {
       className='shadow-sm mb-3'
     >
       <Container fluid>
-        <Navbar.Brand href='#home'>Roommates</Navbar.Brand>
+        <Navbar.Brand as={Link} to={'/feed'}>
+          Roommates
+        </Navbar.Brand>
         <Navbar.Toggle aria-controls='responsive-navbar-nav'>
           <FaBars />
         </Navbar.Toggle>
