@@ -19,4 +19,8 @@ export const userAPI = {
 export const postAPI = {
   createPost: (postFormData) =>
     axios.post(`${baseUrl}/api/posts`, postFormData, { withCredentials: true }),
+  getPostsByLocation: (locationId) =>
+    axios.get(`${baseUrl}/api/posts/location/${locationId}`, {
+      withCredentials: true,
+    }),
 };

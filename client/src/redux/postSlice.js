@@ -8,7 +8,19 @@ export const createPost = createAsyncThunk(
       const { data } = await postAPI.createPost(postFormData);
       return data;
     } catch (error) {
-      return thunkAPI.rejectWithValue(error.message);
+      return thunkAPI.rejectWithValue(error.response.data.error);
+    }
+  }
+);
+
+export const getFeedPosts = createAsyncThunk(
+  'post/getFeedPosts',
+  async (locationId, thunkAPI) => {
+    try {
+      const { data } = await postAPI.getPostsByLocation(locationId);
+      return data;
+    } catch (error) {
+      thunkAPI.rejectWithValue(error.response.data.error);
     }
   }
 );
@@ -16,7 +28,8 @@ export const createPost = createAsyncThunk(
 export const postSlice = createSlice({
   name: 'post',
   initialState: {
-    posts: null,
+    userPosts: [],
+    feedPosts: [],
     isLoading: false,
     isError: false,
     errorMessage: null,
@@ -26,13 +39,28 @@ export const postSlice = createSlice({
     [createPost.pending]: (state, action) => {
       state.isLoading = true;
       state.isError = false;
-      state.errorMessage = false;
+      state.errorMessage = null;
     },
     [createPost.fulfilled]: (state, action) => {
       state.isLoading = false;
-      state.posts = action.payload;
+      state.userPosts.push(action.payload);
+      state.feedPosts.push(action.payload);
     },
     [createPost.rejected]: (state, action) => {
+      state.isLoading = false;
+      state.isError = true;
+      state.errorMessage = action.payload;
+    },
+    [getFeedPosts.pending]: (state, action) => {
+      state.isLoading = true;
+      state.isError = false;
+      state.errorMessage = null;
+    },
+    [getFeedPosts.fulfilled]: (state, action) => {
+      state.isLoading = false;
+      state.feedPosts = action.payload;
+    },
+    [getFeedPosts.rejected]: (state, action) => {
       state.isLoading = false;
       state.isError = true;
       state.errorMessage = action.payload;
