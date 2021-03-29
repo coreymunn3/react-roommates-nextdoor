@@ -1,7 +1,8 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import Container from 'react-bootstrap/Container';
 import FeedControls from '../../feedControls/FeedControls';
 import { FaSortDown } from 'react-icons/fa';
+import PostsContainer from '../../postsContainer/PostsContainer';
 // redux
 import { useSelector, useDispatch } from 'react-redux';
 import { getFeedPosts } from '../../../redux/postSlice';
@@ -12,7 +13,7 @@ const Feed = () => {
   const dispatch = useDispatch();
   const { user, isLoading: userLoading } = useSelector((state) => state.user);
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (!userLoading && user) {
       dispatch(getFeedPosts(user.user._location._id));
     }
@@ -30,6 +31,7 @@ const Feed = () => {
           />
         </div>
         <FeedControls />
+        <PostsContainer />
       </div>
     </Container>
   );
