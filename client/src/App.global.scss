@@ -6,6 +6,10 @@
 @import '~bootstrap/scss/bootstrap.scss';
 
 // global overrides
+html,
+body {
+  overflow-x: hidden;
+}
 body {
   font-family: 'Nunito', sans-serif;
 }
