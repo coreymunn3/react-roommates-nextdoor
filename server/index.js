@@ -12,8 +12,8 @@ const connection = connectDb(process.env.MONGO_URI);
 // create express app
 const app = express();
 // MIDDLEWARE ===========================================
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
+app.use(express.json({ limit: '30mb', extended: true }));
+app.use(express.urlencoded({ limit: '30mb', extended: true }));
 app.use(
   cors({
     origin: 'http://localhost:3000',
