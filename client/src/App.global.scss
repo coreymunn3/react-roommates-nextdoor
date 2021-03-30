@@ -40,4 +40,14 @@ label {
 }
 .card {
   border: none;
+  border-radius: $theme-border-radius;
+  @include media-breakpoint-up(md) {
+    flex-direction: row;
+  }
+}
+.card-img {
+  border-radius: $theme-border-radius;
+  @include media-breakpoint-up(md) {
+    width: 50%;
+  }
 }
