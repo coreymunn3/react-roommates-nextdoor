@@ -4,13 +4,22 @@
   flex-flow: nowrap;
   width: 100%;
 }
-.formControl {
+.searchBarGroup {
+  flex-grow: 1;
   max-width: 400px;
-  background: $light !important;
+  position: relative;
 }
-.navLink {
-  display: flex;
-  align-items: center;
+.searchBarButton {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  z-index: 9;
+}
+.searchBar {
+  padding-right: 75px !important;
+  width: 100%;
+  background: $light !important;
 }
 .dropdown {
   padding: 0.5rem;

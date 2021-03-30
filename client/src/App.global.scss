@@ -32,6 +32,12 @@ input[type='file'] {
 label {
   padding: 0 0.75rem;
 }
+.navbar-nav {
+  // align-items: flex-start;
+  @include media-breakpoint-up(sm) {
+    align-items: center;
+  }
+}
 .navbar-toggler {
   border: none;
 }

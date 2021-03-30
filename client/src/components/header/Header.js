@@ -3,13 +3,13 @@ import { Link } from 'react-router-dom';
 import Container from 'react-bootstrap/esm/Container';
 import Navbar from 'react-bootstrap/Navbar';
 import Nav from 'react-bootstrap/Nav';
-import NavDropdown from 'react-bootstrap/NavDropdown';
 import DropdownButton from 'react-bootstrap/DropdownButton';
 import Dropdown from 'react-bootstrap/Dropdown';
 import Form from 'react-bootstrap/Form';
 import FormControl from 'react-bootstrap/FormControl';
 import Button from 'react-bootstrap/Button';
-import { FaBars, FaUserCircle } from 'react-icons/fa';
+import InputGroup from 'react-bootstrap/InputGroup';
+import { FaBars } from 'react-icons/fa';
 // styles
 import styles from './header.module.scss';
 // redux
@@ -39,21 +39,24 @@ const Header = () => {
         </Navbar.Toggle>
         <Navbar.Collapse id='responsive-navbar-nav'>
           <Nav className='mr-auto flex-grow-1'>
-            <Form inline className={styles.headerForm}>
-              <FormControl
-                className={`mr-sm-2 flex-grow-1 ${styles.formControl}`}
-                type='text'
-                placeholder='Search Listings'
-              ></FormControl>
-              <Button>Search</Button>
+            <Form className={styles.headerForm}>
+              <div className={styles.searchBarGroup}>
+                <div className={styles.searchBarButton}>
+                  <Button>Search</Button>
+                </div>
+                <FormControl
+                  className={styles.searchBar}
+                  type='text'
+                  placeholder='Search Listings'
+                />
+              </div>
             </Form>
           </Nav>
           <Nav>
-            <Nav.Link className={styles.navLink} as={Link} to='/new-post'>
+            <Nav.Link as={Link} to='/new-post'>
               <Button variant='danger'>New Post</Button>
             </Nav.Link>
             <DropdownButton
-              className={styles.navLink}
               menuAlign='right'
               title={`Hello, ${user?.user?.username}`}
               id='dropdown-menu-align-right'
