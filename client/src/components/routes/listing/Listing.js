@@ -4,7 +4,7 @@ import React, { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { getPostById } from '../../../redux/postSlice';
 
-const SingleListing = ({ match }) => {
+const Listing = ({ match }) => {
   const dispatch = useDispatch();
   const { id: postId } = match.params;
   // fetch the relevant post information on load
@@ -18,4 +18,4 @@ const SingleListing = ({ match }) => {
   );
 };
 
-export default SingleListing;
+export default Listing;
