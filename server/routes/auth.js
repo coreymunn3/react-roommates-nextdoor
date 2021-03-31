@@ -104,10 +104,13 @@ router.post('/signup', async (req, res) => {
         _location: userLocation.id,
       });
       await newUser.save();
-      // log user in after signup
-      req.logIn(newUser, (err) => {
+      // get user with location and log them in
+      req.logIn(newUser, async (err) => {
         if (err) throw err;
-        res.status(200).json({ loggedIn: true, user: newUser });
+        const newUserWithLocation = await User.findOne({ _id: req.user._id })
+          .populate('_location')
+          .exec();
+        res.status(200).json({ loggedIn: true, user: newUserWithLocation });
       });
     } catch (error) {
       console.log(error);

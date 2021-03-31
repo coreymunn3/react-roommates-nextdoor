@@ -13,7 +13,7 @@ const Feed = () => {
   const { user, isLoading: userLoading } = useSelector((state) => state.user);
 
   useEffect(() => {
-    if (!userLoading && user) {
+    if (!userLoading && user?.loggedIn) {
       dispatch(getPostsByLocation(user.user._location._id));
     }
   }, [userLoading]);

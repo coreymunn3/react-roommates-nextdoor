@@ -20,10 +20,10 @@ const PostsContainer = () => {
   return (
     <div className='my-2'>
       {postsLoading && <PostCardSkeleton />}
-      {!postsLoading && locationPosts ? (
-        locationPosts.map((post, idx) => <PostCard key={idx} post={post} />)
-      ) : (
+      {!postsLoading && locationPosts.length === 0 ? (
         <NoPostsYet />
+      ) : (
+        locationPosts.map((post) => <PostCard key={post._id} post={post} />)
       )}
     </div>
   );
