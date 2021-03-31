@@ -1,4 +1,5 @@
 import React from 'react';
+import Container from 'react-bootstrap/esm/Container';
 import Header from '../header/Header';
 
 // adapted from:
@@ -8,8 +9,10 @@ const Layout = ({ children }) => {
   return (
     <div>
       <Header />
-      {children}
-      {/* add footer when done... */}
+      <Container>
+        {children}
+        {/* add footer when done... */}
+      </Container>
     </div>
   );
 };

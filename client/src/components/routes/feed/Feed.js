@@ -20,20 +20,18 @@ const Feed = () => {
   }, [userLoading]);
 
   return (
-    <Container>
-      <div>
-        <div className={styles.titleContainer}>
-          <h3>{`Recent Posts In ${user?.user?._location?.city}, ${user?.user?._location?.state}`}</h3>
-          <FaSortDown
-            size='2em'
-            className={styles.feedControlToggle}
-            onClick={() => console.log('open controls')}
-          />
-        </div>
-        <FeedControls />
-        <PostsContainer />
+    <div>
+      <div className={styles.titleContainer}>
+        <h3>{`Recent Posts In ${user?.user?._location?.city}, ${user?.user?._location?.state}`}</h3>
+        <FaSortDown
+          size='2em'
+          className={styles.feedControlToggle}
+          onClick={() => console.log('open controls')}
+        />
       </div>
-    </Container>
+      <FeedControls />
+      <PostsContainer />
+    </div>
   );
 };
 

@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import Card from 'react-bootstrap/Card';
 import Button from 'react-bootstrap/Button';
 import Badge from 'react-bootstrap/Badge';
@@ -7,6 +8,7 @@ import styles from './postCard.module.scss';
 
 const PostCard = ({
   post: {
+    _id,
     title,
     body,
     featureImage,
@@ -46,7 +48,12 @@ const PostCard = ({
             <small className='text-muted'>{moment(datePosted).fromNow()}</small>
           </div>
           <Card.Text>{body}</Card.Text>
-          <Button variant='success' className='shadow-sm'>
+          <Button
+            as={Link}
+            to={`feed/${_id}`}
+            variant='success'
+            className='shadow-sm'
+          >
             See Full Post
           </Button>
         </Card.Body>
