@@ -1,23 +1,30 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
 import PostCard from '../postCard/PostCard';
+import PostCardSkeleton from '../postCard/PostCardSkeleton';
 import styles from './postsContainer.module.scss';
+
+const NoPostsYet = () => {
+  return (
+    <div className={styles.noPostsContainer}>
+      <h6 className='text-muted'>No Posts Here Yet!</h6>
+    </div>
+  );
+};
 
 const PostsContainer = () => {
   const { locationPosts, isLoading: postsLoading } = useSelector(
     (state) => state.post
   );
-  const noPostsYet = locationPosts?.length === 0;
 
   return (
     <div className='my-2'>
-      {noPostsYet && (
-        <div className={styles.noPostsContainer}>
-          <h6 className='text-muted'>There Aren't Any Posts Here Yet!</h6>
-        </div>
+      {postsLoading && <PostCardSkeleton />}
+      {!postsLoading && locationPosts ? (
+        locationPosts.map((post, idx) => <PostCard key={idx} post={post} />)
+      ) : (
+        <NoPostsYet />
       )}
-      {!noPostsYet &&
-        locationPosts.map((post, idx) => <PostCard key={idx} post={post} />)}
     </div>
   );
 };
