@@ -29,7 +29,7 @@ const PostCard = ({
           <Card.Text>Last updated 3 mins ago</Card.Text>
         </Card.ImgOverlay> */}
         <Card.Body>
-          <div className={styles.badges}>
+          <div>
             <Badge
               variant='primary'
               className='mr-1'

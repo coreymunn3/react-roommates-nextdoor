@@ -48,16 +48,36 @@ label {
 .navbar-toggler:hover {
   color: black;
 }
+// Modifications to Card CSS
 .card {
   border: none;
   border-radius: $theme-border-radius;
-  @include media-breakpoint-up(md) {
-    flex-direction: row;
-  }
 }
 .card-img {
   border-radius: $theme-border-radius;
-  @include media-breakpoint-up(md) {
+}
+@include media-breakpoint-up(sm) {
+  .card {
+    flex-direction: row;
+  }
+  .card-body {
     width: 50%;
+  }
+  .card-img {
+    max-width: 50%;
+    max-height: 325px;
+    height: auto;
+    object-fit: cover;
+  }
+}
+.card-text {
+  @include media-breakpoint-only(sm) {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  @include media-breakpoint-up(md) {
+    max-height: 100px;
+    overflow: scroll;
   }
 }
