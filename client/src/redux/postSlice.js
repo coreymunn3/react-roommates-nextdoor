@@ -13,11 +13,23 @@ export const createPost = createAsyncThunk(
   }
 );
 
-export const getFeedPosts = createAsyncThunk(
-  'post/getFeedPosts',
+export const getPostsByLocation = createAsyncThunk(
+  'post/getPostsByLocation',
   async (locationId, thunkAPI) => {
     try {
       const { data } = await postAPI.getPostsByLocation(locationId);
+      return data;
+    } catch (error) {
+      thunkAPI.rejectWithValue(error.response.data.error);
+    }
+  }
+);
+
+export const getPostById = createAsyncThunk(
+  'posts/getPostById',
+  async (postId, thunkAPI) => {
+    try {
+      const { data } = await postAPI.getPostById(postId);
       return data;
     } catch (error) {
       thunkAPI.rejectWithValue(error.response.data.error);
@@ -29,7 +41,8 @@ export const postSlice = createSlice({
   name: 'post',
   initialState: {
     userPosts: [],
-    feedPosts: [],
+    currentPost: {},
+    locationPosts: [],
     isLoading: false,
     isError: false,
     errorMessage: null,
@@ -44,23 +57,37 @@ export const postSlice = createSlice({
     [createPost.fulfilled]: (state, action) => {
       state.isLoading = false;
       state.userPosts.push(action.payload);
-      state.feedPosts.push(action.payload);
+      state.locationPosts.push(action.payload);
     },
     [createPost.rejected]: (state, action) => {
       state.isLoading = false;
       state.isError = true;
       state.errorMessage = action.payload;
     },
-    [getFeedPosts.pending]: (state, action) => {
+    [getPostsByLocation.pending]: (state, action) => {
       state.isLoading = true;
       state.isError = false;
       state.errorMessage = null;
     },
-    [getFeedPosts.fulfilled]: (state, action) => {
+    [getPostsByLocation.fulfilled]: (state, action) => {
       state.isLoading = false;
-      state.feedPosts = action.payload;
+      state.locationPosts = action.payload;
     },
-    [getFeedPosts.rejected]: (state, action) => {
+    [getPostsByLocation.rejected]: (state, action) => {
+      state.isLoading = false;
+      state.isError = true;
+      state.errorMessage = action.payload;
+    },
+    [getPostById.pending]: (state, action) => {
+      state.isLoading = true;
+      state.isError = false;
+      state.errorMessage = null;
+    },
+    [getPostById.fulfilled]: (state, action) => {
+      state.isLoading = false;
+      state.currentPost = action.payload;
+    },
+    [getPostById.rejected]: (state, action) => {
       state.isLoading = false;
       state.isError = true;
       state.errorMessage = action.payload;

@@ -1,11 +1,10 @@
 import React, { useEffect } from 'react';
-import Container from 'react-bootstrap/Container';
 import FeedControls from '../../feedControls/FeedControls';
 import { FaSortDown } from 'react-icons/fa';
 import PostsContainer from '../../postsContainer/PostsContainer';
 // redux
 import { useSelector, useDispatch } from 'react-redux';
-import { getFeedPosts } from '../../../redux/postSlice';
+import { getPostsByLocation } from '../../../redux/postSlice';
 // styles
 import styles from './feed.module.scss';
 
@@ -15,7 +14,7 @@ const Feed = () => {
 
   useEffect(() => {
     if (!userLoading && user) {
-      dispatch(getFeedPosts(user.user._location._id));
+      dispatch(getPostsByLocation(user.user._location._id));
     }
   }, [userLoading]);
 

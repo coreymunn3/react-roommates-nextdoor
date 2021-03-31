@@ -4,10 +4,10 @@ import PostCard from '../postCard/PostCard';
 import styles from './postsContainer.module.scss';
 
 const PostsContainer = () => {
-  const { feedPosts, isLoading: postsLoading } = useSelector(
+  const { locationPosts, isLoading: postsLoading } = useSelector(
     (state) => state.post
   );
-  const noPostsYet = feedPosts.length === 0;
+  const noPostsYet = locationPosts.length === 0;
 
   return (
     <div className='my-2'>
@@ -16,7 +16,7 @@ const PostsContainer = () => {
           <h6 className='text-muted'>There Aren't Any Posts Here Yet!</h6>
         </div>
       )}
-      {feedPosts.map((post, idx) => (
+      {locationPosts.map((post, idx) => (
         <PostCard key={idx} post={post} />
       ))}
     </div>

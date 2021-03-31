@@ -23,4 +23,8 @@ export const postAPI = {
     axios.get(`${baseUrl}/api/posts/location/${locationId}`, {
       withCredentials: true,
     }),
+  getPostById: (postId) =>
+    axios.get(`${baseUrl}/api/posts/${postId}`, {
+      withCredentials: true,
+    }),
 };
