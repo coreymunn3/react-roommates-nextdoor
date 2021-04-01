@@ -43,7 +43,7 @@ const PostCard = ({
             >{`${numberOfCohabitants} Other Person`}</Badge>
           </div>
           <div className={styles.cardTitle}>
-            <h4 className='my-0'>{title}</h4>
+            <h4 className='card-title'>{title}</h4>
             <small className='text-muted'>{moment(datePosted).fromNow()}</small>
           </div>
           <Card.Text>{body}</Card.Text>

@@ -1,6 +1,7 @@
 @import 'node_modules/bootstrap/scss/functions';
 @import 'node_modules/bootstrap/scss/variables';
 @import 'node_modules/bootstrap/scss/mixins/_breakpoints';
+@import './../../variables';
 
 .cardTitle {
   margin-bottom: 1rem;
@@ -10,10 +11,11 @@
   border-bottom: 1px lightgray solid;
 }
 .skeletonImg {
+  margin-bottom: 0.25rem;
   @include media-breakpoint-up(xs) {
-    height: 250px;
+    height: $card-img-xs-height;
   }
-  @include media-breakpoint-up(md) {
-    height: 325px;
+  @include media-breakpoint-up(sm) {
+    height: $card-img-sm-height;
   }
 }

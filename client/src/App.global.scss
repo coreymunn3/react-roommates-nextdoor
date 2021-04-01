@@ -56,11 +56,24 @@ img {
   border: none;
   border-radius: $theme-border-radius;
 }
+.card-title {
+  @include media-breakpoint-only(sm) {
+    max-height: $card-title-max-height;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+}
 .card-img {
   border-radius: $theme-border-radius;
 }
 .card-body {
   padding: 0 1rem;
+}
+@include media-breakpoint-up(xs) {
+  .card-img {
+    height: $card-img-xs-height;
+  }
 }
 @include media-breakpoint-up(sm) {
   .card {
@@ -71,19 +84,16 @@ img {
   }
   .card-img {
     max-width: 50%;
-    max-height: 325px;
-    height: auto;
+    height: $card-img-sm-height;
     object-fit: cover;
   }
 }
 .card-text {
-  @include media-breakpoint-only(sm) {
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
+  overflow: scroll;
+  @include media-breakpoint-up(xs) {
+    max-height: 150px;
   }
-  @include media-breakpoint-up(md) {
-    max-height: 100px;
-    overflow: scroll;
+  @include media-breakpoint-up(sm) {
+    max-height: 50px;
   }
 }
