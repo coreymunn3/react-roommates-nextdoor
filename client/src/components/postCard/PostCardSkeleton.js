@@ -5,10 +5,13 @@ import styles from './postCard.module.scss';
 
 const PostCardSkeleton = () => {
   return (
-    <div className='my-3'>
-      <Card className='shadow-sm'>
+    <div className={styles.cardSpacing}>
+      <Card>
         <div className='card-img'>
-          <Skeleton height={325} style={{ borderRadius: '20px' }} />
+          <Skeleton
+            className={styles.skeletonImg}
+            style={{ borderRadius: '20px' }}
+          />
         </div>
         <Card.Body>
           <div>

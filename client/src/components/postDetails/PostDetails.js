@@ -7,6 +7,7 @@ import DetailSection from '../layout/detailSection/DetailSection';
 import FeatureItem from '../layout/featureItem/FeatureItem';
 import SplitColumnSection from '../layout/splitColumnSection/SplitColumnSection';
 import moment from 'moment';
+import transformAmenities from '../../utils/transformAmenities';
 // icons
 import {
   FaHome,
@@ -14,16 +15,8 @@ import {
   FaUnlock,
   FaUsers,
   FaCalendarCheck,
-  FaBath,
-  FaCouch,
-  FaParking,
-  FaPaw,
-  FaWifi,
-  FaTv,
-  FaSwimmer,
-  FaCannabis,
 } from 'react-icons/fa';
-import { MdLocalLaundryService, MdKitchen } from 'react-icons/md';
+
 // redux
 import { useSelector } from 'react-redux';
 
@@ -39,80 +32,19 @@ const PostDetails = () => {
       roomPrivacy,
       numberOfCohabitants,
       moveInDate,
-      hasPrivateBath,
-      hasFurnishedRoom,
-      hasParkingIncluded,
-      hasWasherDryerInUnit,
-      hasPetsAllowed,
-      hasWifi,
-      hasCableTelevision,
-      hasKitchenAccess,
-      hasPoolAccess,
-      hasDrugTolerantCohabitants,
+      ...otherDetails
     },
   } = useSelector((state) => state.post);
-  // create list of amenities where value is only true
-  const amenityList = [
-    {
-      title: 'Private Bathroom',
-      value: hasPrivateBath,
-      icon: <FaBath size='2rem' />,
-    },
-    {
-      title: 'Furnished Bedroom',
-      value: hasFurnishedRoom,
-      icon: <FaCouch size='2rem' />,
-    },
-    {
-      title: 'Parking On Premises',
-      value: hasParkingIncluded,
-      icon: <FaParking size='2rem' />,
-    },
-    {
-      title: 'Washer/Dryer In Unit',
-      value: hasWasherDryerInUnit,
-      icon: <MdLocalLaundryService size='2rem' />,
-    },
-    {
-      title: 'Pets Allowed',
-      value: hasPetsAllowed,
-      icon: <FaPaw size='2rem' />,
-    },
-    { title: 'Wifi', value: hasWifi, icon: <FaWifi size='2rem' /> },
-    {
-      title: 'Cable TV',
-      value: hasCableTelevision,
-      icon: <FaTv size='2rem' />,
-    },
-    {
-      title: 'Full Kitchen Access',
-      value: hasKitchenAccess,
-      icon: <MdKitchen size='2rem' />,
-    },
-    {
-      title: 'Swimming Pool',
-      value: hasPoolAccess,
-      icon: <FaSwimmer size='2rem' />,
-    },
-    {
-      title: '420 Friendly',
-      value: hasDrugTolerantCohabitants,
-      icon: <FaCannabis size='2rem' />,
-    },
-  ].reduce((result, amenity) => {
-    if (amenity.value) {
-      result.push(amenity);
-    }
-    return result;
-  }, []);
+
+  const amenityList = transformAmenities(otherDetails);
 
   return (
     <div>
       <h3>{title}</h3>
       <div className={styles.headerDetails}>
-        <small className='mr-3 text-muted'>
-          {moment(datePosted).fromNow()}
-        </small>
+        <small className='mr-3 text-muted'>{`${moment(
+          datePosted
+        ).fromNow()}, by user ...`}</small>
         <small className='mr-3 text-muted'>{`${likeCount} likes`}</small>
       </div>
       <div className={styles.imageContainer}>

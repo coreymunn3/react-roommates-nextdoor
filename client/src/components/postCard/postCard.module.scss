@@ -1,7 +1,19 @@
+@import 'node_modules/bootstrap/scss/functions';
+@import 'node_modules/bootstrap/scss/variables';
+@import 'node_modules/bootstrap/scss/mixins/_breakpoints';
+
 .cardTitle {
   margin-bottom: 1rem;
 }
 .cardSpacing {
   padding: 1rem 0;
   border-bottom: 1px lightgray solid;
+}
+.skeletonImg {
+  @include media-breakpoint-up(xs) {
+    height: 250px;
+  }
+  @include media-breakpoint-up(md) {
+    height: 325px;
+  }
 }
