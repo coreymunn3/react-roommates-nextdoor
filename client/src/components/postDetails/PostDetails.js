@@ -32,6 +32,8 @@ const PostDetails = () => {
       roomPrivacy,
       numberOfCohabitants,
       moveInDate,
+      _user: postingUser,
+      _location,
       ...otherDetails
     },
   } = useSelector((state) => state.post);
@@ -44,7 +46,7 @@ const PostDetails = () => {
       <div className={styles.headerDetails}>
         <small className='mr-3 text-muted'>{`${moment(
           datePosted
-        ).fromNow()}, by user ...`}</small>
+        ).fromNow()}, by user ${postingUser.username}`}</small>
         <small className='mr-3 text-muted'>{`${likeCount} likes`}</small>
       </div>
       <div className={styles.imageContainer}>

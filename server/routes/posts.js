@@ -52,7 +52,10 @@ router.post('/', async (req, res) => {
 router.get('/:postId', async (req, res) => {
   try {
     const postId = req.params.postId;
-    const post = await Post.findById(postId);
+    const post = await Post.findOne({ _id: postId })
+      .populate('_location')
+      .populate('_user')
+      .exec();
     res.status(200).json(post);
   } catch (error) {
     console.log(error);
