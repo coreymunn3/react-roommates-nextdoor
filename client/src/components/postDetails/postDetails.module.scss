@@ -1,0 +1,25 @@
+@import 'node_modules/bootstrap/scss/functions';
+@import 'node_modules/bootstrap/scss/variables';
+@import 'node_modules/bootstrap/scss/mixins/_breakpoints';
+.headerDetails {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  margin-bottom: 0.5rem;
+}
+.imageContainer {
+  margin-bottom: 2rem;
+  height: 250px;
+  width: 100%;
+  @include media-breakpoint-up(sm) {
+    height: 350px;
+  }
+  @include media-breakpoint-up(lg) {
+    height: 500px;
+  }
+}
+.featureImage {
+  height: 100%;
+  width: 100%;
+  object-fit: cover;
+}

@@ -36,6 +36,9 @@ input[type='file'] {
 label {
   padding: 0 0.75rem;
 }
+img {
+  border-radius: $theme-border-radius;
+}
 .navbar-nav {
   // align-items: flex-start;
   @include media-breakpoint-up(sm) {
@@ -55,6 +58,9 @@ label {
 }
 .card-img {
   border-radius: $theme-border-radius;
+}
+.card-body {
+  padding: 0 1rem;
 }
 @include media-breakpoint-up(sm) {
   .card {

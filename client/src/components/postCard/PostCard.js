@@ -13,15 +13,14 @@ const PostCard = ({
     body,
     featureImage,
     rentMonthly,
-    securityDeposit,
     totalMoveInCost,
     datePosted,
     numberOfCohabitants,
   },
 }) => {
   return (
-    <div className='my-3'>
-      <Card className='shadow-sm'>
+    <div className={styles.cardSpacing}>
+      <Card>
         <Card.Img src={featureImage} alt='featureImage' />
         {/* <Card.ImgOverlay>
           <Card.Title>{title}</Card.Title>

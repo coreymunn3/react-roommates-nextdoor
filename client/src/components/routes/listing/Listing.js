@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-
+import PostDetails from '../../postDetails/PostDetails';
 // redux
 import { useDispatch } from 'react-redux';
 import { getPostById } from '../../../redux/postSlice';
@@ -13,7 +13,7 @@ const Listing = ({ match }) => {
   }, []);
   return (
     <div>
-      <h1>This is a Single Listing</h1>
+      <PostDetails />
     </div>
   );
 };
