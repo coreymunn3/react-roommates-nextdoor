@@ -1,10 +1,7 @@
 import React from 'react';
 import styles from './postDetails.module.scss';
 import Image from 'react-bootstrap/Image';
-import Row from 'react-bootstrap/Row';
-import Col from 'react-bootstrap/Col';
 import DetailSection from '../layout/detailSection/DetailSection';
-import FeatureItem from '../layout/featureItem/FeatureItem';
 import SplitColumnSection from '../layout/splitColumnSection/SplitColumnSection';
 import Map from '../map/Map';
 import moment from 'moment';
@@ -51,7 +48,12 @@ const PostDetails = () => {
     },
     {
       title: roomPrivacy,
-      icon: <FaLock size={iconSize} />,
+      icon:
+        roomPrivacy === 'Room Private' ? (
+          <FaLock size={iconSize} />
+        ) : (
+          <FaUnlock size={iconSize} />
+        ),
     },
     {
       title: `${numberOfCohabitants} Other Person (${

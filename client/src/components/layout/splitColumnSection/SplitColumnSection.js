@@ -17,18 +17,18 @@ const SplitColumnSection = ({ items }) => {
   return (
     <Row className='py-2'>
       <Col sm={6}>
-        {col1.map((item) => (
+        {col1.map((item, idx) => (
           <FeatureItem
-            key={item.title}
+            key={idx}
             featureIcon={item.icon}
             featureContent={item.title}
           />
         ))}
       </Col>
       <Col sm={6}>
-        {col2.map((item) => (
+        {col2.map((item, idx) => (
           <FeatureItem
-            key={item.title}
+            key={idx}
             featureIcon={item.icon}
             featureContent={item.title}
           />
