@@ -70,7 +70,7 @@ img {
 .card-body {
   padding: 0 1rem;
 }
-@include media-breakpoint-up(xs) {
+@include media-breakpoint-only(xs) {
   .card-img {
     height: $card-img-xs-height;
   }

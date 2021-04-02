@@ -15,8 +15,8 @@ import {
   FaUnlock,
   FaUsers,
   FaCalendarCheck,
+  FaDollarSign,
 } from 'react-icons/fa';
-
 // redux
 import { useSelector } from 'react-redux';
 
@@ -32,13 +32,47 @@ const PostDetails = () => {
       roomPrivacy,
       numberOfCohabitants,
       moveInDate,
+      rentMonthly,
+      securityDeposit,
+      totalMoveInCost,
+      otherFeesMonthly,
       _user: postingUser,
       _location,
       ...otherDetails
     },
   } = useSelector((state) => state.post);
 
-  const amenityList = transformAmenities(otherDetails);
+  const iconSize = '1.5rem';
+  const amenityList = transformAmenities(otherDetails, iconSize);
+  const costList = [
+    {
+      title: `Total Move In Cost $${totalMoveInCost.toLocaleString(undefined, {
+        maximumFractionDigits: 2,
+      })}`,
+      icon: <FaDollarSign size={iconSize} />,
+    },
+    {
+      title: `Monthly Rent $${rentMonthly.toLocaleString(undefined, {
+        maximumFractionDigits: 2,
+      })}`,
+      icon: <FaDollarSign size={iconSize} />,
+    },
+    {
+      title: `Security Deposit $${securityDeposit.toLocaleString(undefined, {
+        maximumFractionDigits: 2,
+      })}`,
+      icon: <FaDollarSign size={iconSize} />,
+    },
+    {
+      title: `Other Monthly Expenses (approx) $${otherFeesMonthly.toLocaleString(
+        undefined,
+        {
+          maximumFractionDigits: 2,
+        }
+      )}`,
+      icon: <FaDollarSign size={iconSize} />,
+    },
+  ];
 
   return (
     <div>
@@ -46,7 +80,7 @@ const PostDetails = () => {
       <div className={styles.headerDetails}>
         <small className='mr-3 text-muted'>{`${moment(
           datePosted
-        ).fromNow()}, by user ${postingUser.username}`}</small>
+        ).fromNow()}, by ${postingUser?.username}`}</small>
         <small className='mr-3 text-muted'>{`${likeCount} likes`}</small>
       </div>
       <div className={styles.imageContainer}>
@@ -57,25 +91,29 @@ const PostDetails = () => {
         <Row>
           <Col sm={6}>
             <FeatureItem
-              featureIcon={<FaHome size='2rem' />}
+              featureIcon={<FaHome size={iconSize} />}
               featureContent={housingType}
             />
             <FeatureItem
               featureIcon={
-                roomPrivacy ? <FaLock size='2rem' /> : <FaUnlock size='2rem' />
+                roomPrivacy ? (
+                  <FaLock size={iconSize} />
+                ) : (
+                  <FaUnlock size={iconSize} />
+                )
               }
               featureContent={roomPrivacy}
             />
           </Col>
           <Col sm={6}>
             <FeatureItem
-              featureIcon={<FaUsers size='2rem' />}
+              featureIcon={<FaUsers size={iconSize} />}
               featureContent={`${
                 numberOfCohabitants + 1
               } Total Inhabitants (Including You)`}
             />
             <FeatureItem
-              featureIcon={<FaCalendarCheck size='2rem' />}
+              featureIcon={<FaCalendarCheck size={iconSize} />}
               featureContent={`Move In on ${new Date(
                 moveInDate
               ).toLocaleDateString()} `}
@@ -86,6 +124,10 @@ const PostDetails = () => {
 
       <DetailSection title='Other Features & Amenities'>
         <SplitColumnSection items={amenityList} />
+      </DetailSection>
+
+      <DetailSection title='Costs & Expenses'>
+        <SplitColumnSection items={costList} />
       </DetailSection>
     </div>
   );

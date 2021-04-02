@@ -12,7 +12,7 @@ import {
   FaCannabis,
 } from 'react-icons/fa';
 import { MdLocalLaundryService, MdKitchen } from 'react-icons/md';
-const transformAmenities = (details) => {
+const transformAmenities = (details, iconSize) => {
   const {
     hasPrivateBath,
     hasFurnishedRoom,
@@ -30,48 +30,48 @@ const transformAmenities = (details) => {
     {
       title: 'Private Bathroom',
       value: hasPrivateBath,
-      icon: <FaBath size='2rem' />,
+      icon: <FaBath size={iconSize} />,
     },
     {
       title: 'Furnished Bedroom',
       value: hasFurnishedRoom,
-      icon: <FaCouch size='2rem' />,
+      icon: <FaCouch size={iconSize} />,
     },
     {
       title: 'Parking On Premises',
       value: hasParkingIncluded,
-      icon: <FaParking size='2rem' />,
+      icon: <FaParking size={iconSize} />,
     },
     {
       title: 'Washer/Dryer In Unit',
       value: hasWasherDryerInUnit,
-      icon: <MdLocalLaundryService size='2rem' />,
+      icon: <MdLocalLaundryService size={iconSize} />,
     },
     {
       title: 'Pets Allowed',
       value: hasPetsAllowed,
-      icon: <FaPaw size='2rem' />,
+      icon: <FaPaw size={iconSize} />,
     },
-    { title: 'Wifi', value: hasWifi, icon: <FaWifi size='2rem' /> },
+    { title: 'Wifi', value: hasWifi, icon: <FaWifi size={iconSize} /> },
     {
       title: 'Cable TV',
       value: hasCableTelevision,
-      icon: <FaTv size='2rem' />,
+      icon: <FaTv size={iconSize} />,
     },
     {
       title: 'Full Kitchen Access',
       value: hasKitchenAccess,
-      icon: <MdKitchen size='2rem' />,
+      icon: <MdKitchen size={iconSize} />,
     },
     {
       title: 'Swimming Pool',
       value: hasPoolAccess,
-      icon: <FaSwimmer size='2rem' />,
+      icon: <FaSwimmer size={iconSize} />,
     },
     {
       title: '420 Friendly',
       value: hasDrugTolerantCohabitants,
-      icon: <FaCannabis size='2rem' />,
+      icon: <FaCannabis size={iconSize} />,
     },
   ];
   return amenityList.reduce((result, amenity) => {
