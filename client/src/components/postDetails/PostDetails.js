@@ -44,6 +44,28 @@ const PostDetails = () => {
   } = useSelector((state) => state.post);
 
   const iconSize = '1.5rem';
+  const descriptionList = [
+    {
+      title: housingType,
+      icon: <FaHome size={iconSize} />,
+    },
+    {
+      title: roomPrivacy,
+      icon: <FaLock size={iconSize} />,
+    },
+    {
+      title: `${numberOfCohabitants} Other Person (${
+        numberOfCohabitants + 1
+      } Total Residents)`,
+      icon: <FaUsers size={iconSize} />,
+    },
+    {
+      title: `Move In ${new Date(moveInDate).toLocaleDateString()}, ${moment(
+        moveInDate
+      ).fromNow()}`,
+      icon: <FaCalendarCheck size={iconSize} />,
+    },
+  ];
   const amenityList = transformAmenities(otherDetails, iconSize);
   const costList = [
     {
@@ -89,38 +111,7 @@ const PostDetails = () => {
       </div>
       <DetailSection title='Room Description'>
         <p>{body}</p>
-        <Row>
-          <Col sm={6}>
-            <FeatureItem
-              featureIcon={<FaHome size={iconSize} />}
-              featureContent={housingType}
-            />
-            <FeatureItem
-              featureIcon={
-                roomPrivacy ? (
-                  <FaLock size={iconSize} />
-                ) : (
-                  <FaUnlock size={iconSize} />
-                )
-              }
-              featureContent={roomPrivacy}
-            />
-          </Col>
-          <Col sm={6}>
-            <FeatureItem
-              featureIcon={<FaUsers size={iconSize} />}
-              featureContent={`${
-                numberOfCohabitants + 1
-              } Total Inhabitants (Including You)`}
-            />
-            <FeatureItem
-              featureIcon={<FaCalendarCheck size={iconSize} />}
-              featureContent={`Move In on ${new Date(
-                moveInDate
-              ).toLocaleDateString()} `}
-            />
-          </Col>
-        </Row>
+        <SplitColumnSection items={descriptionList} />
       </DetailSection>
 
       <DetailSection title='Other Features & Amenities'>
