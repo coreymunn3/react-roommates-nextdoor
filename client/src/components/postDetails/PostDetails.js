@@ -6,6 +6,7 @@ import Col from 'react-bootstrap/Col';
 import DetailSection from '../layout/detailSection/DetailSection';
 import FeatureItem from '../layout/featureItem/FeatureItem';
 import SplitColumnSection from '../layout/splitColumnSection/SplitColumnSection';
+import Map from '../map/Map';
 import moment from 'moment';
 import transformAmenities from '../../utils/transformAmenities';
 // icons
@@ -46,33 +47,33 @@ const PostDetails = () => {
   const amenityList = transformAmenities(otherDetails, iconSize);
   const costList = [
     {
-      title: `Total Move In Cost $${totalMoveInCost.toLocaleString(undefined, {
-        maximumFractionDigits: 2,
-      })}`,
+      title: `Total Move In Cost $${totalMoveInCost}`,
       icon: <FaDollarSign size={iconSize} />,
     },
     {
-      title: `Monthly Rent $${rentMonthly.toLocaleString(undefined, {
-        maximumFractionDigits: 2,
-      })}`,
+      title: `Monthly Rent $${rentMonthly}`,
       icon: <FaDollarSign size={iconSize} />,
     },
     {
-      title: `Security Deposit $${securityDeposit.toLocaleString(undefined, {
-        maximumFractionDigits: 2,
-      })}`,
+      title: `Security Deposit $${securityDeposit}`,
       icon: <FaDollarSign size={iconSize} />,
     },
     {
-      title: `Other Monthly Expenses (approx) $${otherFeesMonthly.toLocaleString(
-        undefined,
-        {
-          maximumFractionDigits: 2,
-        }
-      )}`,
+      title: `Other Monthly Expenses (approx) $${otherFeesMonthly}`,
       icon: <FaDollarSign size={iconSize} />,
     },
   ];
+
+  const mapCircle = {
+    center: {
+      lat: -34.397,
+      lng: 150.644,
+    },
+    radius: 3000,
+    options: {
+      strokeColor: '#ff0000',
+    },
+  };
 
   return (
     <div>
@@ -128,6 +129,15 @@ const PostDetails = () => {
 
       <DetailSection title='Costs & Expenses'>
         <SplitColumnSection items={costList} />
+      </DetailSection>
+
+      <DetailSection title='Location'>
+        <Map
+          zoom={11}
+          center={mapCircle.center}
+          radius={mapCircle.radius}
+          options={mapCircle.options}
+        />
       </DetailSection>
     </div>
   );
