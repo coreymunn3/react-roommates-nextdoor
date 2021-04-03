@@ -19,7 +19,13 @@ const PostsContainer = () => {
 
   return (
     <div className='my-2'>
-      {postsLoading && <PostCardSkeleton />}
+      {postsLoading && (
+        <div>
+          <PostCardSkeleton />
+          <PostCardSkeleton />
+          <PostCardSkeleton />
+        </div>
+      )}
       {!postsLoading && locationPosts.length === 0 ? (
         <NoPostsYet />
       ) : (

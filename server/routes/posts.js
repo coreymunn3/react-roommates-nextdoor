@@ -32,6 +32,15 @@ router.get('/location/:locationId', async (req, res) => {
 // allows user to submit a post
 // @private
 router.post('/', async (req, res) => {
+  // const {zipCode, streetAddress, ...postData} = req.body
+  // async function w/try catch to reverse geocode zip code. data = json obj
+  // then ...
+  // const newPost = new Post({
+  //   postData,
+  //   geocodeLatLon: {lat, lng},
+  //   _user: req.user._id,
+  //   _locaiton: req.user._location
+  // })
   try {
     const newPost = new Post({
       ...req.body,

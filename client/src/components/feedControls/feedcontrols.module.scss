@@ -8,10 +8,10 @@
 //   flex-direction: row;
 //   align-items: center;
 // }
-
+@import '../../variables';
 .pillContainer {
   padding: 0.5rem 0;
-  border-bottom: 1px solid #ebe9e9;
+  border-bottom: 1px solid $theme-border-color;
 }
 .pill {
   margin: 0.25rem;

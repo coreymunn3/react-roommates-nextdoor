@@ -7,7 +7,7 @@ const PostCardSkeleton = () => {
   return (
     <div className={styles.cardSpacing}>
       <Card>
-        <div className='card-img'>
+        <div className='card-img mb-1'>
           <Skeleton
             className={styles.skeletonImg}
             style={{ borderRadius: '20px' }}

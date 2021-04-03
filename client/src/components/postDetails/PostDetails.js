@@ -1,6 +1,7 @@
 import React from 'react';
 import styles from './postDetails.module.scss';
 import Image from 'react-bootstrap/Image';
+import Spinner from 'react-bootstrap/Spinner';
 import DetailSection from '../layout/detailSection/DetailSection';
 import SplitColumnSection from '../layout/splitColumnSection/SplitColumnSection';
 import Map from '../map/Map';
@@ -38,6 +39,7 @@ const PostDetails = () => {
       _location,
       ...otherDetails
     },
+    isLoading,
   } = useSelector((state) => state.post);
 
   const iconSize = '1.5rem';
@@ -90,50 +92,61 @@ const PostDetails = () => {
 
   const mapCircle = {
     center: {
-      lat: -34.397,
-      lng: 150.644,
+      lat: 38.9113407,
+      lng: -77.0393808,
     },
-    radius: 3000,
+    radius: 400,
     options: {
       strokeColor: '#ff0000',
     },
   };
 
-  return (
-    <div>
-      <h3>{title}</h3>
-      <div className={styles.headerDetails}>
-        <small className='mr-3 text-muted'>{`${moment(
-          datePosted
-        ).fromNow()}, by ${postingUser?.username}`}</small>
-        <small className='mr-3 text-muted'>{`${likeCount} likes`}</small>
+  if (isLoading) {
+    return (
+      <div
+        className='d-flex justify-content-center align-items-center'
+        style={{ height: '50vh', width: '100%' }}
+      >
+        <Spinner animation='border' variant='dark' />
       </div>
-      <div className={styles.imageContainer}>
-        <Image className={styles.featureImage} src={featureImage}></Image>
+    );
+  } else {
+    return (
+      <div>
+        <h3>{title}</h3>
+        <div className={styles.headerDetails}>
+          <small className='mr-3 text-muted'>
+            {`${moment(datePosted).fromNow()}, by ${postingUser?.username}`}
+          </small>
+          <small className='mr-3 text-muted'>{`${likeCount} likes`}</small>
+        </div>
+        <div className={styles.imageContainer}>
+          <Image className={styles.featureImage} src={featureImage}></Image>
+        </div>
+        <DetailSection title='Room Description'>
+          <p>{body}</p>
+          <SplitColumnSection items={descriptionList} />
+        </DetailSection>
+
+        <DetailSection title='Other Features & Amenities'>
+          <SplitColumnSection items={amenityList} />
+        </DetailSection>
+
+        <DetailSection title='Costs & Expenses'>
+          <SplitColumnSection items={costList} />
+        </DetailSection>
+
+        <DetailSection title='Location'>
+          <Map
+            zoom={14}
+            center={mapCircle.center}
+            radius={mapCircle.radius}
+            options={mapCircle.options}
+          />
+        </DetailSection>
       </div>
-      <DetailSection title='Room Description'>
-        <p>{body}</p>
-        <SplitColumnSection items={descriptionList} />
-      </DetailSection>
-
-      <DetailSection title='Other Features & Amenities'>
-        <SplitColumnSection items={amenityList} />
-      </DetailSection>
-
-      <DetailSection title='Costs & Expenses'>
-        <SplitColumnSection items={costList} />
-      </DetailSection>
-
-      <DetailSection title='Location'>
-        <Map
-          zoom={11}
-          center={mapCircle.center}
-          radius={mapCircle.radius}
-          options={mapCircle.options}
-        />
-      </DetailSection>
-    </div>
-  );
+    );
+  }
 };
 
 export default PostDetails;
