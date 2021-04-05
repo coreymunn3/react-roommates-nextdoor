@@ -1,6 +1,8 @@
 const express = require('express');
 const router = express.Router();
 const Post = require('../models/Post');
+const axios = require('axios');
+const geocodeAPIkey = process.env.GEOCODE_API_KEY;
 
 // GET api/posts
 // returns all posts from a user
@@ -32,26 +34,34 @@ router.get('/location/:locationId', async (req, res) => {
 // allows user to submit a post
 // @private
 router.post('/', async (req, res) => {
-  // const {zipCode, streetAddress, ...postData} = req.body
-  // async function w/try catch to reverse geocode zip code. data = json obj
-  // then ...
-  // const newPost = new Post({
-  //   postData,
-  //   geocodeLatLon: {lat, lng},
-  //   _user: req.user._id,
-  //   _locaiton: req.user._location
-  // })
+  const { zipCode, streetAddress, ...postData } = req.body;
+  // Get Lat Lon from google reverse geocoding API
   try {
-    const newPost = new Post({
-      ...req.body,
-      _user: req.user._id,
-      _location: req.user._location,
-    });
-    const post = await newPost.save();
-    res.status(200).json(post);
+    const { data: geocoded } = await axios.get(
+      `https://maps.googleapis.com/maps/api/geocode/json?address=${streetAddress}+${zipCode}&key=${geocodeAPIkey}`
+    );
+    console.log(geocoded.results[0].geometry.location);
+    // create the post and save to DB
+    try {
+      const newPost = new Post({
+        ...postData,
+        streetAddress,
+        zipCode,
+        geographicCoordinates: geocoded.results[0].geometry.location,
+        _user: req.user._id,
+        _location: req.user._location,
+      });
+      const post = await newPost.save();
+      res.status(200).json(post);
+    } catch (error) {
+      console.log(error);
+      res.status(500).json({ error: 'Cannot POST' });
+    }
   } catch (error) {
-    console.log(error);
-    res.status(500).json({ error: 'Cannot POST' });
+    console.log(error.response);
+    res
+      .status(500)
+      .json({ error: 'Error Attempting to Geocode', message: error.response });
   }
 });
 

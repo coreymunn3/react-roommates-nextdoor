@@ -24,6 +24,7 @@ const PostDetails = () => {
     currentPost: {
       title,
       body,
+      geographicCoordinates,
       datePosted,
       likeCount,
       featureImage,
@@ -91,10 +92,7 @@ const PostDetails = () => {
   ];
 
   const mapCircle = {
-    center: {
-      lat: 38.9113407,
-      lng: -77.0393808,
-    },
+    center: geographicCoordinates,
     radius: 400,
     options: {
       strokeColor: '#ff0000',
