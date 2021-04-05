@@ -1,7 +1,7 @@
 import React, { Fragment } from 'react';
 // bootstrap
 import Button from 'react-bootstrap/esm/Button';
-import { FaSortAmountDown } from 'react-icons/fa';
+import { FaSortAmountDown, FaFilter } from 'react-icons/fa';
 import { MdClose, MdAdd } from 'react-icons/md';
 // styles
 import styles from './feedcontrols.module.scss';
@@ -12,28 +12,21 @@ const FeedControls = () => {
       <div className={styles.pillContainer}>
         <Button className={styles.pill} variant='light'>
           <FaSortAmountDown />
-          {' Newest'}
+          <span> Newest</span>
         </Button>
         <Button className={styles.pill}>
           <FaSortAmountDown />
-          {' Likes'}
+          <span> Likes</span>
         </Button>
       </div>
       <div className={styles.pillContainer}>
         <Button className={styles.pill} variant='light'>
-          <span>Add Filters</span>
+          <FaFilter />
+          <span> Add Filters</span>
           <MdAdd />
         </Button>
         <Button className={styles.pill}>
           <span>Price</span>
-          <MdClose />
-        </Button>
-        <Button className={styles.pill}>
-          <span>Location</span>
-          <MdClose />
-        </Button>
-        <Button className={styles.pill}>
-          <span>Location</span>
           <MdClose />
         </Button>
       </div>

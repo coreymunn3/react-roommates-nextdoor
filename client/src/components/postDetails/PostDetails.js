@@ -2,6 +2,7 @@ import React from 'react';
 import styles from './postDetails.module.scss';
 import Image from 'react-bootstrap/Image';
 import Spinner from 'react-bootstrap/Spinner';
+import Button from 'react-bootstrap/Button';
 import DetailSection from '../layout/detailSection/DetailSection';
 import SplitColumnSection from '../layout/splitColumnSection/SplitColumnSection';
 import Map from '../map/Map';
@@ -141,6 +142,14 @@ const PostDetails = () => {
             radius={mapCircle.radius}
             options={mapCircle.options}
           />
+        </DetailSection>
+
+        <DetailSection title='Next Steps'>
+          <p>
+            Interested and Looking to take the next steps? Contact the Poster
+            using one of the methods below to get started
+          </p>
+          <Button>Message Author</Button>
         </DetailSection>
       </div>
     );

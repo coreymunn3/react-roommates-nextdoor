@@ -2,6 +2,13 @@
   display: flex;
   align-items: center;
 }
-.feedControlToggle {
-  margin-bottom: 1rem;
+.accordionContainer {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+.accordionTitle {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
 }
