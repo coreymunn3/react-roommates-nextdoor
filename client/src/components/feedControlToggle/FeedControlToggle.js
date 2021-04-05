@@ -6,9 +6,7 @@ import styles from './feedControlToggle.module.scss';
 
 const FeedControlToggle = ({ children, eventKey }) => {
   const handleOpen = useAccordionToggle(eventKey, () => {
-    console.log(rotated);
     setRotated(!rotated);
-    console.log(rotated);
   });
   const [rotated, setRotated] = useState(false);
 
