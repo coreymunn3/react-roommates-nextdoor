@@ -5,6 +5,7 @@ import Spinner from 'react-bootstrap/Spinner';
 import Button from 'react-bootstrap/Button';
 import DetailSection from '../layout/detailSection/DetailSection';
 import SplitColumnSection from '../layout/splitColumnSection/SplitColumnSection';
+import ElevatedSection from '../layout/elevatedSection/ElevatedSection';
 import Map from '../map/Map';
 import moment from 'moment';
 import transformAmenities from '../../utils/transformAmenities';
@@ -122,6 +123,7 @@ const PostDetails = () => {
         <div className={styles.imageContainer}>
           <Image className={styles.featureImage} src={featureImage}></Image>
         </div>
+
         <DetailSection title='Room Description'>
           <p>{body}</p>
           <SplitColumnSection items={descriptionList} />

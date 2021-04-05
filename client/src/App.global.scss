@@ -64,17 +64,10 @@ img {
     text-overflow: ellipsis;
   }
 }
-.card-img {
-  border-radius: $theme-border-radius;
-}
 .card-body {
   padding: 0 1rem;
 }
-@include media-breakpoint-only(xs) {
-  .card-img {
-    height: $card-img-xs-height;
-  }
-}
+
 @include media-breakpoint-up(sm) {
   .card {
     flex-direction: row;
@@ -82,18 +75,30 @@ img {
   .card-body {
     width: 50%;
   }
-  .card-img {
+}
+.card-img {
+  border-radius: $theme-border-radius;
+  @include media-breakpoint-only(xs) {
+    height: $card-img-xs-height;
+  }
+  @include media-breakpoint-up(sm) {
     max-width: 50%;
     height: $card-img-sm-height;
     object-fit: cover;
+  }
+  @include media-breakpoint-up(md) {
+    height: $card-img-md-height;
   }
 }
 .card-text {
   overflow: scroll;
   @include media-breakpoint-up(xs) {
-    max-height: 150px;
+    max-height: $card-text-xs-max-height;
   }
   @include media-breakpoint-up(sm) {
-    max-height: 50px;
+    max-height: $card-text-sm-max-height;
+  }
+  @include media-breakpoint-up(lg) {
+    max-height: $card-text-lg-max-height;
   }
 }
