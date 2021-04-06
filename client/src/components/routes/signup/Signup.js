@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import { useHistory, Link } from 'react-router-dom';
-import axios from 'axios';
 // Bootstrap compponents
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
@@ -20,6 +19,7 @@ const Signup = () => {
   const { user, isLoading, isError, errorMessage } = useSelector(
     (state) => state.user
   );
+  const { locations } = useSelector((state) => state.location);
 
   // alert state & toggle
   const [showAlert, setShowAlert] = useState(false);
@@ -33,16 +33,6 @@ const Signup = () => {
       history.push('/feed');
     }
   }, [isError, user, isLoading]);
-
-  // pull list of locations when component mounts
-  const [locations, setLocations] = useState();
-  useEffect(() => {
-    const getLocations = async () => {
-      const { data } = await axios.get('/api/locations');
-      setLocations(data);
-    };
-    getLocations();
-  }, []);
 
   // form state
   const initialFormState = {
@@ -124,12 +114,15 @@ const Signup = () => {
                 value={newUser.location}
                 onChange={handleSetLocation}
               >
-                <option value={0} disabled>
-                  Choose...
+                <option hidden value>
+                  Choose Browsing Location...
                 </option>
                 {locations &&
-                  locations.map(({ _id, city, state }) => (
-                    <option key={_id} value={_id}>{`${city}, ${state}`}</option>
+                  locations.map((location) => (
+                    <option
+                      key={location._id}
+                      value={location._id}
+                    >{`${location.city}, ${location.state}`}</option>
                   ))}
               </Form.Control>
             </Form.Group>
