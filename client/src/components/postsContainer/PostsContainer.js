@@ -26,7 +26,7 @@ const PostsContainer = () => {
           <PostCardSkeleton />
         </div>
       )}
-      {!postsLoading && locationPosts.length === 0 ? (
+      {!postsLoading && locationPosts?.length === 0 ? (
         <NoPostsYet />
       ) : (
         locationPosts.map((post) => <PostCard key={post._id} post={post} />)

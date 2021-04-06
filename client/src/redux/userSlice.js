@@ -55,6 +55,18 @@ export const logoutUser = createAsyncThunk(
   }
 );
 
+export const updateProfile = createAsyncThunk(
+  'user/updateProfile',
+  async (newUserData, thunkAPI) => {
+    try {
+      const { data } = await userAPI.updateProfile(newUserData);
+      return data;
+    } catch (error) {
+      thunkAPI.rejectWithValue(error.response.data.error);
+    }
+  }
+);
+
 export const userSlice = createSlice({
   name: 'user',
   initialState: {
@@ -117,6 +129,20 @@ export const userSlice = createSlice({
       state.errorMessage = null;
     },
     [logoutUser.rejected]: (state, action) => {
+      state.isLoading = false;
+      state.isError = true;
+      state.errorMessage = action.payload;
+    },
+    [updateProfile.pending]: (state, action) => {
+      state.isLoading = true;
+      state.isError = false;
+      state.errorMessage = null;
+    },
+    [updateProfile.fulfilled]: (state, action) => {
+      state.isLoading = false;
+      state.user = action.payload;
+    },
+    [updateProfile.rejected]: (state, action) => {
       state.isLoading = false;
       state.isError = true;
       state.errorMessage = action.payload;

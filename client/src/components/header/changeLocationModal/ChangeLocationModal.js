@@ -1,13 +1,31 @@
 import React, { useState } from 'react';
 import CustomModal from '../../customModal/CustomModal';
 import Form from 'react-bootstrap/Form';
+import Button from 'react-bootstrap/Button';
+// redux
+import { useDispatch } from 'react-redux';
+import { updateProfile } from '../../../redux/userSlice';
 
 const ChangeLocationModal = ({ user, locations, open, handleClose }) => {
+  const dispatch = useDispatch();
+  const [newUserLocation, setNewUserLocation] = useState(null);
+  const isDisabled = newUserLocation === null;
+  const handleChange = (e) => {
+    setNewUserLocation(e.target.value);
+  };
+  const handleSubmit = () => {
+    dispatch(updateProfile({ _location: newUserLocation }));
+    setNewUserLocation(null);
+    handleClose();
+  };
   return (
     <CustomModal
-      title='Change Current Location'
+      title='Update Current Location?'
       open={open}
-      handleClose={handleClose}
+      handleClose={() => {
+        setNewUserLocation(null);
+        handleClose();
+      }}
     >
       <p>
         By updating the current location, you will which posts you see. Only
@@ -16,10 +34,9 @@ const ChangeLocationModal = ({ user, locations, open, handleClose }) => {
       </p>
       <Form>
         <Form.Group>
-          <Form.Label>Select Location</Form.Label>
-          <Form.Control as='select'>
-            <option hidden value={user?.user?._location?._id}>
-              {`${user?.user?._location?.city}, ${user?.user?._location?.state}`}
+          <Form.Control as='select' onChange={handleChange}>
+            <option value={0} hidden>
+              Choose New Location
             </option>
             {locations.map((location) => (
               <option
@@ -30,6 +47,9 @@ const ChangeLocationModal = ({ user, locations, open, handleClose }) => {
           </Form.Control>
         </Form.Group>
       </Form>
+      <Button block disabled={isDisabled} onClick={handleSubmit}>
+        Save Changes
+      </Button>
     </CustomModal>
   );
 };

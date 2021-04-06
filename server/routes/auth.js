@@ -122,14 +122,14 @@ router.post('/signup', async (req, res) => {
   }
 });
 
-// POST auth/updateprofile
+// PATCH auth/updateprofile
 // Updates user profile data based on request body
 // @private
 router.patch('/updateprofile', async (req, res) => {
   const newUserInfo = req.body;
   // make sure request is not empty
   if (!newUserInfo) {
-    return res.status(400);
+    return res.status(400).json({ error: 'Incorrect Request, Body Missing' });
   }
   // if user wants to update password, hash it
 
@@ -142,11 +142,13 @@ router.patch('/updateprofile', async (req, res) => {
       req.user._id,
       { $set: newUserInfo },
       { new: true }
-    );
-    res.status(200).json(updatedUser);
+    )
+      .populate('_location')
+      .exec();
+    res.status(200).json({ loggedIn: true, user: updatedUser });
   } catch (error) {
     console.log(error);
-    res.status(500).json(error);
+    res.status(500).json({ error: 'Unable to Update User Profile' });
   }
 });
 

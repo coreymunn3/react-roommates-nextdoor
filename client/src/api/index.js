@@ -14,6 +14,10 @@ export const userAPI = {
   getCurrentUser: () =>
     axios.get(`${baseUrl}/auth/currentuser`, { withCredentials: true }),
   logout: () => axios.get(`${baseUrl}/auth/logout`, { withCredentials: true }),
+  updateProfile: (newUserData) =>
+    axios.patch(`${baseUrl}/auth/updateprofile`, newUserData, {
+      withCredentials: true,
+    }),
 };
 
 export const postAPI = {
