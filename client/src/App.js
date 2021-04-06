@@ -11,11 +11,13 @@ import './App.global.scss';
 // redux
 import { useDispatch } from 'react-redux';
 import { getUser } from './redux/userSlice';
+import { getAllLocations } from './redux/locationSlice';
 
 const App = () => {
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(getUser());
+    dispatch(getAllLocations());
   }, []);
   return (
     <Router>

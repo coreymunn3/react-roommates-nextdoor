@@ -28,3 +28,10 @@ export const postAPI = {
       withCredentials: true,
     }),
 };
+
+export const locationAPI = {
+  getAllLocations: () =>
+    axios.get(`${baseUrl}/api/locations`, {
+      withCredentials: true,
+    }),
+};

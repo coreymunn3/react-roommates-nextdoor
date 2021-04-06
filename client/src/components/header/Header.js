@@ -8,8 +8,8 @@ import Dropdown from 'react-bootstrap/Dropdown';
 import Form from 'react-bootstrap/Form';
 import FormControl from 'react-bootstrap/FormControl';
 import Button from 'react-bootstrap/Button';
-import Modal from 'react-bootstrap/Modal';
 import { FaBars } from 'react-icons/fa';
+import ChangeLocationModal from './changeLocationModal/ChangeLocationModal';
 // styles
 import styles from './header.module.scss';
 // redux
@@ -18,13 +18,13 @@ import { logoutUser } from '../../redux/userSlice';
 
 const Header = () => {
   const dispatch = useDispatch();
-  const { user, isLoading } = useSelector((state) => state.user);
-  const [open, setOpen] = useState(false);
-
+  const { user } = useSelector((state) => state.user);
+  const { locations } = useSelector((state) => state.location);
   const handleLogout = (e) => {
     dispatch(logoutUser());
   };
-
+  // ChangeLocationModal state & handlers
+  const [open, setOpen] = useState(false);
   const handleClose = () => setOpen(false);
   const handleOpen = () => setOpen(true);
   return (
@@ -68,9 +68,13 @@ const Header = () => {
               variant='outlined'
             >
               <Dropdown.Item
-                onClick={handleOpen}
                 onSelect={() => console.log('selected')}
-              >{`Change Location (${user?.user?._location?.city})`}</Dropdown.Item>
+                disabled
+              >{`Current Location: ${user?.user?._location?.city}`}</Dropdown.Item>
+              <Dropdown.Divider />
+              <Dropdown.Item onClick={handleOpen}>
+                Change Location
+              </Dropdown.Item>
               <Dropdown.Item as={Link} to='/myprofile'>
                 My Profile
               </Dropdown.Item>
@@ -82,22 +86,13 @@ const Header = () => {
                 Logout
               </Dropdown.Item>
             </DropdownButton>
-            <Modal show={open} onHide={handleClose}>
-              <Modal.Header closeButton>
-                <Modal.Title>Change Current Location</Modal.Title>
-              </Modal.Header>
-              <Modal.Body>
-                By updating the current location, you will which posts appear in
-                your feed. For example, by changing your location to 'New York'
-                you will only see posts made at or near that geographic
-                location.
-              </Modal.Body>
-              <Modal.Footer>
-                <Button variant='primary' onClick={handleClose}>
-                  Save Changes
-                </Button>
-              </Modal.Footer>
-            </Modal>
+
+            <ChangeLocationModal
+              user={user}
+              locations={locations}
+              open={open}
+              handleClose={handleClose}
+            />
           </Nav>
         </Navbar.Collapse>
       </Container>

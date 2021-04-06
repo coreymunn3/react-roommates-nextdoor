@@ -102,3 +102,10 @@ img {
     max-height: $card-text-lg-max-height;
   }
 }
+.modal-body {
+  input,
+  textarea,
+  select {
+    background: $light;
+  }
+}
