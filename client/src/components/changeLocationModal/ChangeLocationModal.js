@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
-import CustomModal from '../../customModal/CustomModal';
+import CustomModal from '../customModal/CustomModal';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 // redux
 import { useDispatch } from 'react-redux';
-import { updateProfile } from '../../../redux/userSlice';
+import { updateProfile } from '../../redux/userSlice';
 
 const ChangeLocationModal = ({ user, locations, open, handleClose }) => {
   const dispatch = useDispatch();

@@ -10,9 +10,16 @@
   width: 100%;
   padding: 1rem;
 }
+.profileTableRow {
+  display: flex;
+  align-items: center;
+}
 .profileControl {
   display: flex;
   flex-direction: column;
   width: 100%;
   max-width: 400px;
+}
+.clickable {
+  cursor: pointer;
 }

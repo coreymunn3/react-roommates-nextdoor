@@ -9,7 +9,7 @@ import Form from 'react-bootstrap/Form';
 import FormControl from 'react-bootstrap/FormControl';
 import Button from 'react-bootstrap/Button';
 import { FaBars } from 'react-icons/fa';
-import ChangeLocationModal from './changeLocationModal/ChangeLocationModal';
+import ChangeLocationModal from '../changeLocationModal/ChangeLocationModal';
 // styles
 import styles from './header.module.scss';
 // redux

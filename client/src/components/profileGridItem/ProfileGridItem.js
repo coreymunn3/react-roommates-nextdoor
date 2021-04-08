@@ -10,12 +10,12 @@ const ProfileGridItem = ({
   isLoading,
 }) => {
   return (
-    <Row className='bottomDivider py-3'>
-      <Col sm={4} className={styles.profileGroupTitle}>
+    <Row className='py-3'>
+      <Col sm={6} className={styles.profileGroupTitle}>
         {icon}
         <h4 className='my-0 mx-1'>{property}</h4>
       </Col>
-      <Col sm={8} className={styles.profileGridValue}>
+      <Col sm={6} className={styles.profileGridValue}>
         <h5 className='text-primary my-0'>
           {isLoading ? <Skeleton /> : value}
         </h5>
