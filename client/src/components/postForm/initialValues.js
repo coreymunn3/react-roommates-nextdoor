@@ -3,10 +3,10 @@ const initialValues = {
   streetAddress: '',
   zipCode: '',
   body: '',
-  rentMonthly: 0,
-  securityDeposit: 0,
-  totalMoveInCost: 0,
-  otherFeesMonthly: 0,
+  rentMonthly: '',
+  securityDeposit: '',
+  totalMoveInCost: '',
+  otherFeesMonthly: '',
   housingType: '',
   roomPrivacy: '',
   moveInDate: '',
@@ -21,6 +21,7 @@ const initialValues = {
   hasKitchenAccess: false,
   hasPoolAccess: false,
   hasDrugTolerantCohabitants: false,
+  base64Image: '',
 };
 
 export default initialValues;

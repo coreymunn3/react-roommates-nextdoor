@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 // formik stuff
 import { useFormik } from 'formik';
 import postValidationSchema from './validationSchema';
@@ -30,10 +30,11 @@ const PostForm = ({ user }) => {
     handleSubmit,
     handleChange,
     handleBlur,
+    resetForm,
+    setSubmitting,
+    setFieldValue,
     values,
     touched,
-    isValid,
-    isValidating,
     errors,
   } = useFormik({
     initialValues: initialValues,
@@ -41,9 +42,15 @@ const PostForm = ({ user }) => {
     onSubmit: (values, actions) => {
       const transformedPostData = transformPostData(values, featureImage);
       dispatch(createPost(transformedPostData));
-      actions.resetForm({});
+      resetForm();
+      setSubmitting(false);
     },
   });
+
+  useEffect(() => {
+    console.log(values);
+    console.log(errors);
+  }, [values, errors]);
   return (
     <ElevatedSection>
       <Form noValidate onSubmit={handleSubmit}>
@@ -241,9 +248,18 @@ const PostForm = ({ user }) => {
           <Form.Group as={Col}>
             <Form.Label>Choose A Feature Image</Form.Label>
             <FileBase64
+              name='base64Image'
+              value={values.base64Image}
+              onBlur={handleBlur}
+              isInvalid={touched.base64Image && errors.base64Image}
+              error={errors.base64Image}
               multiple={false}
-              onDone={({ base64 }) => setFeatureImage(base64)}
+              onDone={({ base64 }) => {
+                // setFeatureImage(base64);
+                setFieldValue('base64Image', base64);
+              }}
             />
+            <Form.Text style={{ color: 'red' }}>{errors.base64Image}</Form.Text>
           </Form.Group>
         </Form.Row>
 
