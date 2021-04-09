@@ -4,6 +4,7 @@ import Button from 'react-bootstrap/Button';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import { FaUser, FaLock, FaEnvelope, FaEdit } from 'react-icons/fa';
+import FullHeightContainer from '../../layout/fullHeightContainer/FullHeightContainer';
 import ProfileGridItem from '../../profileGridItem/ProfileGridItem';
 import UpdateProfileModal from '../../updateProfileModal/UpdateProfileModal';
 
@@ -43,7 +44,7 @@ const MyProfile = () => {
     },
   ];
   return (
-    <div className={styles.fullHeightContainer}>
+    <FullHeightContainer>
       <div className={styles.profileTable}>
         <p className='text-center'>Username cannot be updated.</p>
         {profileTableData.map((data, idx) => (
@@ -73,7 +74,7 @@ const MyProfile = () => {
         handleClose={handleClose}
         title={modalTitle}
       />
-    </div>
+    </FullHeightContainer>
   );
 };
 
