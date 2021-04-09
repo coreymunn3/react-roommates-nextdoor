@@ -28,7 +28,7 @@ const FeedControlToggle = ({ children, eventKey }) => {
     <motion.div variants={toggleVariants} animate={rotated ? 'open' : 'closed'}>
       <FaSortDown
         size='2em'
-        className={styles.accordionToggle}
+        className={`clickable ${styles.accordionToggle}`}
         onClick={handleOpen}
       >
         {children}

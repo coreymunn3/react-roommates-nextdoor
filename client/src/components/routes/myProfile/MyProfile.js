@@ -55,6 +55,7 @@ const MyProfile = () => {
             <Col xs={2}>
               {data.editable && (
                 <FaEdit
+                  className='clickable'
                   size={iconSize}
                   onClick={() => handleOpen(data.property)}
                 />

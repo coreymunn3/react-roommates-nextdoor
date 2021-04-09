@@ -20,10 +20,10 @@ const PostCardSkeleton = () => {
             <Skeleton height={18} width={75} style={{ margin: '0 0.25rem' }} />
           </div>
           <div className={styles.cardTitle}>
-            <Skeleton height={52} />
+            <Skeleton height={80} />
           </div>
           <div className='my-2'>
-            <Skeleton count={3} />
+            <Skeleton count={6} />
           </div>
           <Skeleton width={120} height={36} />
         </Card.Body>
