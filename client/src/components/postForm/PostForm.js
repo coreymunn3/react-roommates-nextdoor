@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useHistory } from 'react-router-dom';
 // formik stuff
 import { useFormik } from 'formik';
 import postValidationSchema from './validationSchema';
@@ -25,7 +26,7 @@ import { createPost } from '../../redux/postSlice';
 
 const PostForm = ({ user }) => {
   const dispatch = useDispatch();
-  const [featureImage, setFeatureImage] = useState('');
+  const history = useHistory();
   const {
     handleSubmit,
     handleChange,
@@ -40,17 +41,19 @@ const PostForm = ({ user }) => {
     initialValues: initialValues,
     validationSchema: postValidationSchema,
     onSubmit: (values, actions) => {
-      const transformedPostData = transformPostData(values, featureImage);
+      const transformedPostData = transformPostData(values);
+      console.log(transformedPostData);
       dispatch(createPost(transformedPostData));
       resetForm();
       setSubmitting(false);
+      history.push('/feed');
     },
   });
 
-  useEffect(() => {
-    console.log(values);
-    console.log(errors);
-  }, [values, errors]);
+  // useEffect(() => {
+  //   console.log(values);
+  //   console.log(errors);
+  // }, [values, errors]);
   return (
     <ElevatedSection>
       <Form noValidate onSubmit={handleSubmit}>
@@ -248,18 +251,20 @@ const PostForm = ({ user }) => {
           <Form.Group as={Col}>
             <Form.Label>Choose A Feature Image</Form.Label>
             <FileBase64
-              name='base64Image'
-              value={values.base64Image}
+              name='featureImage'
+              value={values.featureImage}
               onBlur={handleBlur}
-              isInvalid={touched.base64Image && errors.base64Image}
-              error={errors.base64Image}
+              isInvalid={touched.featureImage && errors.featureImage}
+              error={errors.featureImage}
               multiple={false}
               onDone={({ base64 }) => {
                 // setFeatureImage(base64);
-                setFieldValue('base64Image', base64);
+                setFieldValue('featureImage', base64);
               }}
             />
-            <Form.Text style={{ color: 'red' }}>{errors.base64Image}</Form.Text>
+            <Form.Text style={{ color: 'red' }}>
+              {touched.featureImage && errors.featureImage}
+            </Form.Text>
           </Form.Group>
         </Form.Row>
 

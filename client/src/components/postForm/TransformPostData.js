@@ -1,4 +1,4 @@
-const submitPostData = (formValues, featureImage) => {
+const submitPostData = (formValues) => {
   // change data types for Post model
   formValues.numberOfCohabitants = parseInt(formValues.numberOfCohabitants);
   formValues.rentMonthly = parseInt(formValues.rentMonthly);
@@ -8,7 +8,6 @@ const submitPostData = (formValues, featureImage) => {
   formValues.moveInDate = parseDate(formValues.moveInDate);
   return {
     ...formValues,
-    featureImage,
   };
 };
 
