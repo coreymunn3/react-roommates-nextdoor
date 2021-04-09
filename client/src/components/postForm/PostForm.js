@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { useHistory } from 'react-router-dom';
 // formik stuff
 import { useFormik } from 'formik';
@@ -50,10 +50,6 @@ const PostForm = ({ user }) => {
     },
   });
 
-  // useEffect(() => {
-  //   console.log(values);
-  //   console.log(errors);
-  // }, [values, errors]);
   return (
     <ElevatedSection>
       <Form noValidate onSubmit={handleSubmit}>
