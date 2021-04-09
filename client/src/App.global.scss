@@ -30,6 +30,10 @@ body {
   border-radius: $theme-border-radius;
   border: none;
 }
+.form-text,
+.invalid-feedback {
+  padding-left: 10px;
+}
 input[type='file'] {
   width: 100%;
 }

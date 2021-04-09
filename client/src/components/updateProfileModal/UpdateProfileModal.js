@@ -10,8 +10,8 @@ const UpdateProfileModal = ({ open, handleClose, title }) => {
       open={open}
       handleClose={handleClose}
     >
-      {title === 'Password' && <UpdatePasswordForm />}
-      {title === 'Email' && <UpdateEmailForm />}
+      {title === 'Password' && <UpdatePasswordForm handleClose={handleClose} />}
+      {title === 'Email' && <UpdateEmailForm handleClose={handleClose} />}
     </CustomModal>
   );
 };

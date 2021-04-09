@@ -1,15 +1,22 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { useFormik } from 'formik';
 import * as yup from 'yup';
 import Form from 'react-bootstrap/Form';
 import Col from 'react-bootstrap/Col';
 import Button from 'react-bootstrap/Button';
 import InputField from '../inputField/InputField';
+// redux
+import { useDispatch } from 'react-redux';
+import { updateProfile } from '../../redux/userSlice';
 
-const UpdatePasswordForm = () => {
-  //const { user, isLoading } = useSelector((state) => state.user);
+const UpdatePasswordForm = ({ handleClose }) => {
+  const dispatch = useDispatch();
   const userValidationSchema = yup.object({
-    password: yup.string().required('Required'),
+    password: yup
+      .string()
+      .min(8, 'Must be at least 8 characters')
+      .max(20, 'Cannot be more than 20 characters')
+      .required('Required'),
     confirmPassword: yup
       .string()
       .oneOf([yup.ref('password')], 'Passwords Must Match')
@@ -19,10 +26,12 @@ const UpdatePasswordForm = () => {
     handleSubmit,
     handleChange,
     handleBlur,
+    setSubmitting,
     values,
     touched,
     isValid,
     errors,
+    isSubmitting,
   } = useFormik({
     initialValues: {
       password: '',
@@ -31,13 +40,11 @@ const UpdatePasswordForm = () => {
     validationSchema: userValidationSchema,
     onSubmit: (values, actions) => {
       console.log(values);
+      dispatch(updateProfile(values));
+      setSubmitting(false);
+      handleClose();
     },
   });
-  useEffect(() => {
-    console.log(values);
-    console.log(errors);
-    console.log(isValid);
-  }, [values, errors]);
 
   return (
     <Form onSubmit={handleSubmit}>
@@ -53,6 +60,10 @@ const UpdatePasswordForm = () => {
             isInvalid={touched.password && errors.password}
             error={errors.password}
           />
+          <Form.Text className='text-muted'>
+            Passwords must be at least 8 but no more than 20 characters in
+            length
+          </Form.Text>
         </Form.Group>
       </Form.Row>
       <Form.Row>
@@ -69,11 +80,8 @@ const UpdatePasswordForm = () => {
           />
         </Form.Group>
       </Form.Row>
-      <Button type='submit' className='mx-1'>
-        Save Password
-      </Button>
-      <Button variant='secondary' className='mx-1'>
-        Cancel
+      <Button type='submit' className='mx-1' disabled={isSubmitting}>
+        {isSubmitting ? 'Saving...' : 'Save Password'}
       </Button>
     </Form>
   );

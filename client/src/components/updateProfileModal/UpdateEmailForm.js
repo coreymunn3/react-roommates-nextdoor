@@ -1,13 +1,16 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { useFormik } from 'formik';
 import * as yup from 'yup';
 import Form from 'react-bootstrap/Form';
 import Col from 'react-bootstrap/Col';
 import Button from 'react-bootstrap/Button';
 import InputField from '../inputField/InputField';
+// redux
+import { useDispatch } from 'react-redux';
+import { updateProfile } from '../../redux/userSlice';
 
-const UpdateEmailForm = () => {
-  //const { user, isLoading } = useSelector((state) => state.user);
+const UpdateEmailForm = ({ handleClose }) => {
+  const dispatch = useDispatch();
   const validationSchema = yup.object({
     email: yup
       .string()
@@ -18,10 +21,12 @@ const UpdateEmailForm = () => {
     handleSubmit,
     handleChange,
     handleBlur,
+    setSubmitting,
+    resetForm,
     values,
     touched,
-    isValid,
     errors,
+    isSubmitting,
   } = useFormik({
     initialValues: {
       email: '',
@@ -29,13 +34,11 @@ const UpdateEmailForm = () => {
     validationSchema: validationSchema,
     onSubmit: (values, actions) => {
       console.log(values);
+      dispatch(updateProfile(values));
+      setSubmitting(false);
+      handleClose();
     },
   });
-  useEffect(() => {
-    console.log(values);
-    console.log(errors);
-    console.log(isValid);
-  }, [values, errors]);
 
   return (
     <Form onSubmit={handleSubmit}>
@@ -53,11 +56,8 @@ const UpdateEmailForm = () => {
           />
         </Form.Group>
       </Form.Row>
-      <Button type='submit' className='mx-1'>
-        Save Email
-      </Button>
-      <Button variant='secondary' className='mx-1'>
-        Cancel
+      <Button type='submit' className='mx-1' disabled={isSubmitting}>
+        {isSubmitting ? 'Saving...' : 'Save Email'}
       </Button>
     </Form>
   );
