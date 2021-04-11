@@ -23,6 +23,8 @@ import styles from './postForm.module.scss';
 // redux
 import { useDispatch } from 'react-redux';
 import { createPost } from '../../redux/postSlice';
+// temp
+import { imageAPI } from '../../api';
 
 const PostForm = ({ user }) => {
   const dispatch = useDispatch();
@@ -43,10 +45,16 @@ const PostForm = ({ user }) => {
     onSubmit: (values, actions) => {
       const transformedPostData = transformPostData(values);
       console.log(transformedPostData);
-      dispatch(createPost(transformedPostData));
-      resetForm();
-      setSubmitting(false);
-      history.push('/feed');
+      try {
+        imageAPI.upload({ base64Image: values.featureImage });
+      } catch (error) {
+        console.log(error.response.data.error);
+      }
+
+      // dispatch(createPost(transformedPostData));
+      // resetForm();
+      // setSubmitting(false);
+      // history.push('/feed');
     },
   });
 
@@ -263,6 +271,11 @@ const PostForm = ({ user }) => {
             </Form.Text>
           </Form.Group>
         </Form.Row>
+
+        {/* TODO: create a thumbnail component for this. */}
+        {values.featureImage && (
+          <img src={values.featureImage} style={{ height: '100px' }} />
+        )}
 
         <Form.Row>
           <Form.Group as={Col}>

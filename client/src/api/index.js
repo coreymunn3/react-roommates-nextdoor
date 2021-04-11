@@ -39,3 +39,8 @@ export const locationAPI = {
       withCredentials: true,
     }),
 };
+
+export const imageAPI = {
+  upload: (base64Image) =>
+    axios.post(`${baseUrl}/api/images`, base64Image, { withCredentials: true }),
+};
