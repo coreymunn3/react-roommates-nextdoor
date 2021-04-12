@@ -7,7 +7,7 @@ import { FaUser, FaLock, FaEnvelope, FaEdit } from 'react-icons/fa';
 import FullHeightContainer from '../../layout/fullHeightContainer/FullHeightContainer';
 import ProfileGridItem from '../../profileGridItem/ProfileGridItem';
 import UpdateProfileModal from '../../updateProfileModal/UpdateProfileModal';
-
+import { Image } from 'cloudinary-react';
 // redux
 import { useSelector } from 'react-redux';
 // styles
@@ -45,10 +45,15 @@ const MyProfile = () => {
   ];
   return (
     <FullHeightContainer>
-      <div className={styles.profileTable}>
-        <p className='text-center'>Username cannot be updated.</p>
+      <Image
+        cloudName={process.env.REACT_APP_CLOUDINARY_CLOUD_NAME}
+        publicId='defaults/default_v8eyea'
+        className={styles.avatar}
+      />
+
+      <div className={`${styles.profileTable} shadow`}>
         {profileTableData.map((data, idx) => (
-          <Row key={idx} className={`${styles.profileTableRow} bottomDivider`}>
+          <Row key={idx} className={styles.profileTableRow}>
             <Col xs={10}>
               <ProfileGridItem profileDataItem={data} isLoading={isLoading} />
             </Col>
@@ -63,13 +68,13 @@ const MyProfile = () => {
             </Col>
           </Row>
         ))}
+        <div className={styles.profileControl}>
+          <Button as={Link} to='/myposts' variant='secondary' block>
+            View My Posts
+          </Button>
+        </div>
       </div>
 
-      <div className={styles.profileControl}>
-        <Button as={Link} to='/myposts' variant='secondary' block>
-          View My Posts
-        </Button>
-      </div>
       <UpdateProfileModal
         open={open}
         handleClose={handleClose}
