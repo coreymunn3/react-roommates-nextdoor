@@ -6,7 +6,10 @@ const transformPostData = (formValues, cloudinaryImage) => {
   formValues.totalMoveInCost = parseInt(formValues.totalMoveInCost);
   formValues.otherFeesMonthly = parseInt(formValues.otherFeesMonthly);
   formValues.moveInDate = parseDate(formValues.moveInDate);
-  formValues.featureImage = cloudinaryImage.url;
+  formValues.featureImage = {
+    public_id: cloudinaryImage.public_id,
+    url: cloudinaryImage.url,
+  };
   return {
     ...formValues,
   };

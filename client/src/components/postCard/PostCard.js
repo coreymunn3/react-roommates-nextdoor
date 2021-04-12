@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import Card from 'react-bootstrap/Card';
 import Button from 'react-bootstrap/Button';
 import Badge from 'react-bootstrap/Badge';
+import { Image } from 'cloudinary-react';
 import moment from 'moment';
 import styles from './postCard.module.scss';
 
@@ -21,7 +22,12 @@ const PostCard = ({
   return (
     <div className={styles.cardSpacing}>
       <Card>
-        <Card.Img src={featureImage} alt='featureImage' />
+        <Image
+          className='card-img'
+          publicId={featureImage.public_id}
+          cloudName={process.env.REACT_APP_CLOUDINARY_CLOUD_NAME}
+        />
+        {/* <Card.Img src={imageUrl} alt='featureImage' /> */}
         {/* <Card.ImgOverlay>
           <Card.Title>{title}</Card.Title>
           <Card.Text>{body}</Card.Text>

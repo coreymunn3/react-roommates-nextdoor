@@ -1,12 +1,11 @@
 import React from 'react';
 import styles from './postDetails.module.scss';
-import Image from 'react-bootstrap/Image';
 import Spinner from 'react-bootstrap/Spinner';
 import Button from 'react-bootstrap/Button';
 import DetailSection from '../layout/detailSection/DetailSection';
 import SplitColumnSection from '../layout/splitColumnSection/SplitColumnSection';
-import ElevatedSection from '../layout/elevatedSection/ElevatedSection';
 import Map from '../map/Map';
+import { Image } from 'cloudinary-react';
 import moment from 'moment';
 import transformAmenities from '../../utils/transformAmenities';
 // icons
@@ -121,7 +120,10 @@ const PostDetails = () => {
           <small className='mr-3 text-muted'>{`${likeCount} likes`}</small>
         </div>
         <div className={styles.imageContainer}>
-          <Image className={styles.featureImage} src={featureImage}></Image>
+          <Image
+            className={styles.featureImage}
+            publicId={featureImage?.public_id}
+          ></Image>
         </div>
 
         <DetailSection title='Room Description'>

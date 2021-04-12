@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
 import PostDetails from '../../postDetails/PostDetails';
+import { CloudinaryContext } from 'cloudinary-react';
 // redux
 import { useDispatch } from 'react-redux';
 import { getPostById } from '../../../redux/postSlice';
@@ -13,7 +14,11 @@ const Listing = ({ match }) => {
   }, []);
   return (
     <div>
-      <PostDetails />
+      <CloudinaryContext
+        cloudName={process.env.REACT_APP_CLOUDINARY_CLOUD_NAME}
+      >
+        <PostDetails />
+      </CloudinaryContext>
     </div>
   );
 };
