@@ -49,10 +49,15 @@ const MyProfile = () => {
       <div className={styles.avatarContainer}>
         <Image
           cloudName={process.env.REACT_APP_CLOUDINARY_CLOUD_NAME}
-          publicId='defaults/default_v8eyea'
+          publicId={user?.user?.avatar?.public_id}
           className={styles.avatar}
         />
-        <Button variant='dark' size='sm' className={styles.avatarControl}>
+        <Button
+          variant='dark'
+          size='sm'
+          className={styles.avatarControl}
+          onClick={() => handleOpen('Avatar')}
+        >
           <FaImage />
           {' +'}
         </Button>

@@ -1,6 +1,7 @@
 import React from 'react';
 import UpdatePasswordForm from './UpdatePasswordForm';
 import UpdateEmailForm from './UpdateEmailForm';
+import UpdateAvatarForm from './UpdateAvatarForm';
 import CustomModal from '../customModal/CustomModal';
 
 const UpdateProfileModal = ({ open, handleClose, title }) => {
@@ -12,6 +13,7 @@ const UpdateProfileModal = ({ open, handleClose, title }) => {
     >
       {title === 'Password' && <UpdatePasswordForm handleClose={handleClose} />}
       {title === 'Email' && <UpdateEmailForm handleClose={handleClose} />}
+      {title === 'Avatar' && <UpdateAvatarForm handleClose={handleClose} />}
     </CustomModal>
   );
 };
