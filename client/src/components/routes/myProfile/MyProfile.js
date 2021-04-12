@@ -8,6 +8,7 @@ import FullHeightContainer from '../../layout/fullHeightContainer/FullHeightCont
 import ProfileGridItem from '../../profileGridItem/ProfileGridItem';
 import UpdateProfileModal from '../../updateProfileModal/UpdateProfileModal';
 import { Image } from 'cloudinary-react';
+import { FaImage } from 'react-icons/fa';
 // redux
 import { useSelector } from 'react-redux';
 // styles
@@ -45,12 +46,17 @@ const MyProfile = () => {
   ];
   return (
     <FullHeightContainer>
-      <Image
-        cloudName={process.env.REACT_APP_CLOUDINARY_CLOUD_NAME}
-        publicId='defaults/default_v8eyea'
-        className={styles.avatar}
-      />
-
+      <div className={styles.avatarContainer}>
+        <Image
+          cloudName={process.env.REACT_APP_CLOUDINARY_CLOUD_NAME}
+          publicId='defaults/default_v8eyea'
+          className={styles.avatar}
+        />
+        <Button variant='dark' size='sm' className={styles.avatarControl}>
+          <FaImage />
+          {' +'}
+        </Button>
+      </div>
       <div className={`${styles.profileTable} shadow`}>
         {profileTableData.map((data, idx) => (
           <Row key={idx} className={styles.profileTableRow}>
