@@ -40,7 +40,7 @@ export const getPostById = createAsyncThunk(
 export const postSlice = createSlice({
   name: 'post',
   initialState: {
-    userPosts: [],
+    newPost: null,
     currentPost: {},
     locationPosts: [],
     isLoading: false,
@@ -56,8 +56,7 @@ export const postSlice = createSlice({
     },
     [createPost.fulfilled]: (state, action) => {
       state.isLoading = false;
-      state.userPosts.push(action.payload);
-      state.locationPosts.push(action.payload);
+      state.newPost = action.payload;
     },
     [createPost.rejected]: (state, action) => {
       state.isLoading = false;
@@ -72,6 +71,7 @@ export const postSlice = createSlice({
     [getPostsByLocation.fulfilled]: (state, action) => {
       state.isLoading = false;
       state.locationPosts = action.payload;
+      state.newPost = null;
     },
     [getPostsByLocation.rejected]: (state, action) => {
       state.isLoading = false;

@@ -8,8 +8,7 @@ router.post('/', async (req, res) => {
     const uploadedImage = await cloudinary.uploader.upload(base64Image, {
       upload_preset: 'roommates-project',
     });
-    console.log(uploadedImage);
-    res.json({ msg: 'YES' });
+    res.status(200).json(uploadedImage);
   } catch (error) {
     console.log(error);
     res.status(500).json({ error: 'Cloudinary Image Upload Failed' });

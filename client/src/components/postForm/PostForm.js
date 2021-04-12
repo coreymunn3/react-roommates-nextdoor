@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 // formik stuff
 import { useFormik } from 'formik';
@@ -9,6 +9,7 @@ import transformPostData from './TransformPostData';
 import Col from 'react-bootstrap/esm/Col';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/esm/Button';
+import Spinner from 'react-bootstrap/esm/Spinner';
 import ElevatedSection from '../layout/elevatedSection/ElevatedSection';
 import InputField from '../inputField/InputField';
 import InputFieldSelect from '../inputFieldSelect/InputFieldSelect';
@@ -21,14 +22,16 @@ import {
 } from './formOptions';
 import styles from './postForm.module.scss';
 // redux
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { createPost } from '../../redux/postSlice';
-// temp
 import { imageAPI } from '../../api';
 
 const PostForm = ({ user }) => {
   const dispatch = useDispatch();
   const history = useHistory();
+  const { isLoading, isError, newPost, errorMessage } = useSelector(
+    (state) => state.post
+  );
   const {
     handleSubmit,
     handleChange,
@@ -36,27 +39,36 @@ const PostForm = ({ user }) => {
     resetForm,
     setSubmitting,
     setFieldValue,
+    isSubmitting,
     values,
     touched,
     errors,
   } = useFormik({
     initialValues: initialValues,
     validationSchema: postValidationSchema,
-    onSubmit: (values, actions) => {
-      const transformedPostData = transformPostData(values);
-      console.log(transformedPostData);
-      try {
-        imageAPI.upload({ base64Image: values.featureImage });
-      } catch (error) {
-        console.log(error.response.data.error);
-      }
-
-      // dispatch(createPost(transformedPostData));
-      // resetForm();
-      // setSubmitting(false);
-      // history.push('/feed');
+    onSubmit: async (values, actions) => {
+      // upload image to cloudinary & get back public URL
+      const { data: cloudinaryImage } = await imageAPI.upload({
+        base64Image: values.featureImage,
+      });
+      // pull out new image url and transform data
+      const postData = transformPostData(values, cloudinaryImage);
+      // submit the post
+      dispatch(createPost(postData));
+      setSubmitting(false);
     },
   });
+
+  // effect to control the results of the submission and subsequent post state change
+  useEffect(() => {
+    if (isError) {
+      alert(errorMessage);
+    }
+    if (!isError && newPost) {
+      resetForm();
+      history.push('/feed');
+    }
+  }, [isLoading, newPost]);
 
   return (
     <ElevatedSection>
@@ -289,8 +301,15 @@ const PostForm = ({ user }) => {
 
         <Form.Row>
           <Form.Group as={Col}>
-            <Button type='submit' block>
-              Submit
+            <Button type='submit' disabled={isSubmitting} block>
+              {isSubmitting && (
+                <Spinner as='span' size='sm' animation='border' />
+              )}
+              {isSubmitting ? (
+                <span>{'Creating Your Post...'}</span>
+              ) : (
+                <span>{'Submit'}</span>
+              )}
             </Button>
           </Form.Group>
         </Form.Row>

@@ -1,4 +1,4 @@
-const submitPostData = (formValues) => {
+const transformPostData = (formValues, cloudinaryImage) => {
   // change data types for Post model
   formValues.numberOfCohabitants = parseInt(formValues.numberOfCohabitants);
   formValues.rentMonthly = parseInt(formValues.rentMonthly);
@@ -6,6 +6,7 @@ const submitPostData = (formValues) => {
   formValues.totalMoveInCost = parseInt(formValues.totalMoveInCost);
   formValues.otherFeesMonthly = parseInt(formValues.otherFeesMonthly);
   formValues.moveInDate = parseDate(formValues.moveInDate);
+  formValues.featureImage = cloudinaryImage.url;
   return {
     ...formValues,
   };
@@ -16,4 +17,4 @@ const parseDate = (dateString) => {
   return new Date(yyyy, mm - 1, dd);
 };
 
-export default submitPostData;
+export default transformPostData;

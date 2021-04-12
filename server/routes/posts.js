@@ -40,7 +40,6 @@ router.post('/', async (req, res) => {
     const { data: geocoded } = await axios.get(
       `https://maps.googleapis.com/maps/api/geocode/json?address=${streetAddress}+${zipCode}&key=${geocodeAPIkey}`
     );
-    console.log(geocoded.results[0].geometry.location);
     // create the post and save to DB
     try {
       const newPost = new Post({
@@ -61,7 +60,7 @@ router.post('/', async (req, res) => {
     console.log(error.response);
     res
       .status(500)
-      .json({ error: 'Error Attempting to Geocode', message: error.response });
+      .json({ error: 'Error Attempting to Geocode', message: error });
   }
 });
 
