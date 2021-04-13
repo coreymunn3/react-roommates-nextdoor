@@ -11,6 +11,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import { updateProfile } from '../../redux/userSlice';
 import { imageAPI } from '../../api';
 
+import styles from './updateProfileModal.module.scss';
+
 const UpdateAvatarForm = ({ handleClose }) => {
   const dispatch = useDispatch();
   const { user, isLoading } = useSelector((state) => state.user);
@@ -73,10 +75,16 @@ const UpdateAvatarForm = ({ handleClose }) => {
 
       {/* Here is Where the Thumbnail Preview will go... */}
 
-      <Button type='submit' className='mx-1' disabled={isSubmitting}>
-        {isSubmitting && <Spinner as='span' size='sm' animation='border' />}
+      <Button
+        type='submit'
+        className={styles.submitButton}
+        disabled={isSubmitting}
+      >
+        {isSubmitting && (
+          <Spinner className='mx-2' as='span' size='sm' animation='border' />
+        )}
         {isSubmitting ? (
-          <span>{'Creating Your Post...'}</span>
+          <span>{'Updating Your Profile...'}</span>
         ) : (
           <span>{'Submit'}</span>
         )}

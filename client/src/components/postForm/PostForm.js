@@ -298,9 +298,19 @@ const PostForm = ({ user }) => {
 
         <Form.Row>
           <Form.Group as={Col}>
-            <Button type='submit' disabled={isSubmitting} block>
+            <Button
+              type='submit'
+              className={styles.submitButton}
+              disabled={isSubmitting}
+              block
+            >
               {isSubmitting && (
-                <Spinner as='span' size='sm' animation='border' />
+                <Spinner
+                  as='span'
+                  size='sm'
+                  animation='border'
+                  className='mx-2'
+                />
               )}
               {isSubmitting ? (
                 <span>{'Creating Your Post...'}</span>
