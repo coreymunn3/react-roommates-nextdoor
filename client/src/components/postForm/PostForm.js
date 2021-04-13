@@ -13,7 +13,7 @@ import Spinner from 'react-bootstrap/esm/Spinner';
 import ElevatedSection from '../layout/elevatedSection/ElevatedSection';
 import InputField from '../inputField/InputField';
 import InputFieldSelect from '../inputFieldSelect/InputFieldSelect';
-import FileBase64 from 'react-file-base64';
+import InputFile from '../inputFile/InputFile';
 // mappable arrays for form options
 import {
   housingOptions,
@@ -49,6 +49,7 @@ const PostForm = ({ user }) => {
     onSubmit: async (values, actions) => {
       // upload image to cloudinary & get back public URL
       const { data: cloudinaryImage } = await imageAPI.upload({
+        type: 'post',
         base64Image: values.featureImage,
       });
       // pull out new image url and transform data
@@ -265,22 +266,18 @@ const PostForm = ({ user }) => {
 
         <Form.Row>
           <Form.Group as={Col}>
-            <Form.Label>Choose A Feature Image</Form.Label>
-            <FileBase64
+            <InputFile
+              label='Choose a Feature Image'
               name='featureImage'
               value={values.featureImage}
               onBlur={handleBlur}
-              isInvalid={touched.featureImage && errors.featureImage}
               error={errors.featureImage}
+              touched={touched.featureImage}
               multiple={false}
               onDone={({ base64 }) => {
-                // setFeatureImage(base64);
                 setFieldValue('featureImage', base64);
               }}
             />
-            <Form.Text style={{ color: 'red' }}>
-              {touched.featureImage && errors.featureImage}
-            </Form.Text>
           </Form.Group>
         </Form.Row>
 

@@ -4,20 +4,23 @@ import * as yup from 'yup';
 import Form from 'react-bootstrap/Form';
 import Col from 'react-bootstrap/Col';
 import Button from 'react-bootstrap/Button';
-import InputField from '../inputField/InputField';
+import Spinner from 'react-bootstrap/Spinner';
+import InputFile from '../inputFile/InputFile';
 // redux
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { updateProfile } from '../../redux/userSlice';
+import { imageAPI } from '../../api';
 
 const UpdateAvatarForm = ({ handleClose }) => {
   const dispatch = useDispatch();
+  const { user, isLoading } = useSelector((state) => state.user);
   const validationSchema = yup.object({
     avatar: yup.string().required('Required'),
   });
   const {
     handleSubmit,
-    handleChange,
     handleBlur,
+    setFieldValue,
     setSubmitting,
     resetForm,
     values,
@@ -29,11 +32,24 @@ const UpdateAvatarForm = ({ handleClose }) => {
       avatar: '',
     },
     validationSchema: validationSchema,
-    onSubmit: (values, actions) => {
+    onSubmit: async (values, actions) => {
       console.log(values);
-      // dispatch(updateProfile(values));
-      // setSubmitting(false);
-      // handleClose();
+      // upload image to cloudinary & get back public URL
+      const { data: cloudinaryImage } = await imageAPI.upload({
+        type: 'avatar',
+        base64Image: values.avatar,
+      });
+      console.log(cloudinaryImage);
+      // construct avatar object
+      const newAvatar = {
+        avatar: {
+          public_id: cloudinaryImage.public_id,
+          url: cloudinaryImage.url,
+        },
+      };
+      dispatch(updateProfile(newAvatar));
+      setSubmitting(false);
+      handleClose();
     },
   });
 
@@ -41,20 +57,29 @@ const UpdateAvatarForm = ({ handleClose }) => {
     <Form onSubmit={handleSubmit}>
       <Form.Row>
         <Form.Group as={Col}>
-          <InputField
-            label='Choose Avatar'
-            type='text'
+          <InputFile
             name='avatar'
             value={values.avatar}
-            onChange={handleChange}
-            onBlur={handleBlur}
-            isInvalid={touched.avatar && errors.avatar}
             error={errors.avatar}
+            touched={touched.avatar}
+            onBlur={handleBlur}
+            multiple={false}
+            onDone={({ base64 }) => {
+              setFieldValue('avatar', base64);
+            }}
           />
         </Form.Group>
       </Form.Row>
+
+      {/* Here is Where the Thumbnail Preview will go... */}
+
       <Button type='submit' className='mx-1' disabled={isSubmitting}>
-        {isSubmitting ? 'Saving...' : 'Save Avatar'}
+        {isSubmitting && <Spinner as='span' size='sm' animation='border' />}
+        {isSubmitting ? (
+          <span>{'Creating Your Post...'}</span>
+        ) : (
+          <span>{'Submit'}</span>
+        )}
       </Button>
     </Form>
   );
