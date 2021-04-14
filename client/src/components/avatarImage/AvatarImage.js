@@ -8,6 +8,8 @@ const AvatarImage = ({ avatar, width, height, children }) => {
       <Image
         cloudName={process.env.REACT_APP_CLOUDINARY_CLOUD_NAME}
         publicId={avatar?.public_id}
+        width={width}
+        height={height}
         className={styles.avatar}
         style={{ width: width, height: height }}
       />

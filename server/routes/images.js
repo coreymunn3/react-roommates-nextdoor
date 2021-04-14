@@ -10,6 +10,7 @@ router.post('/', async (req, res) => {
         type === 'post'
           ? 'roommates-project-posts'
           : 'roommates-project-avatars',
+      overwrite: false,
     });
     res.status(200).json(uploadedImage);
   } catch (error) {

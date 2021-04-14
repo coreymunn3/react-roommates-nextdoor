@@ -22,7 +22,6 @@ const PostCard = ({
     _user,
   },
 }) => {
-  console.log(_user.avatar.public_id);
   return (
     <div className={styles.cardSpacing}>
       <Card>
