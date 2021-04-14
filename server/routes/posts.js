@@ -23,7 +23,9 @@ router.get('/', async (req, res) => {
 router.get('/location/:locationId', async (req, res) => {
   try {
     const locationId = req.params.locationId;
-    const posts = await Post.find({ _location: locationId });
+    const posts = await Post.find({ _location: locationId })
+      .populate('_user')
+      .exec();
     res.status(200).json(posts);
   } catch (error) {
     res.status(500).json({ error: 'No Location with that ID' });

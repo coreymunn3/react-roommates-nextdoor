@@ -3,8 +3,10 @@ import { Link } from 'react-router-dom';
 import Card from 'react-bootstrap/Card';
 import Button from 'react-bootstrap/Button';
 import Badge from 'react-bootstrap/Badge';
+import AvatarImage from '../avatarImage/AvatarImage';
 import { Image } from 'cloudinary-react';
 import moment from 'moment';
+import Skeleton from 'react-loading-skeleton';
 import styles from './postCard.module.scss';
 
 const PostCard = ({
@@ -17,22 +19,25 @@ const PostCard = ({
     totalMoveInCost,
     datePosted,
     numberOfCohabitants,
+    _user,
   },
 }) => {
+  console.log(_user.avatar.public_id);
   return (
     <div className={styles.cardSpacing}>
       <Card>
-        <Image
-          className='card-img'
-          publicId={featureImage.public_id}
-          cloudName={process.env.REACT_APP_CLOUDINARY_CLOUD_NAME}
-          width='400'
-          crop='scale'
-        />
+        {(
+          <Image
+            className='card-img'
+            publicId={featureImage.public_id}
+            cloudName={process.env.REACT_APP_CLOUDINARY_CLOUD_NAME}
+            width='400'
+            crop='scale'
+          />
+        ) || <Skeleton />}
         <Card.ImgOverlay>
-          <Card.Title>{title}</Card.Title>
-          <Card.Text>{body}</Card.Text>
-          <Card.Text>Last updated 3 mins ago</Card.Text>
+          <AvatarImage avatar={_user?.avatar} width='60px' height='60px' />
+          {/* heart button top right */}
         </Card.ImgOverlay>
         <Card.Body>
           <div>

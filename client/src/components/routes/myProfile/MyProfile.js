@@ -45,10 +45,11 @@ const MyProfile = () => {
       editable: true,
     },
   ];
+  console.log(user?.user?.avatar);
   return (
     <FullHeightContainer>
       <div className={styles.avatarOffset}>
-        <AvatarImage width='100px' height='100px' user={user}>
+        <AvatarImage width='100px' height='100px' avatar={user?.user?.avatar}>
           <Button
             variant='dark'
             size='sm'
