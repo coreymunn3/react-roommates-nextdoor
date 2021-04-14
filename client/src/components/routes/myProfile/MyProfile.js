@@ -7,6 +7,7 @@ import { FaUser, FaLock, FaEnvelope, FaEdit } from 'react-icons/fa';
 import FullHeightContainer from '../../layout/fullHeightContainer/FullHeightContainer';
 import ProfileGridItem from '../../profileGridItem/ProfileGridItem';
 import UpdateProfileModal from '../../updateProfileModal/UpdateProfileModal';
+import AvatarImage from '../../avatarImage/AvatarImage';
 import { Image } from 'cloudinary-react';
 import { FaImage } from 'react-icons/fa';
 // redux
@@ -46,21 +47,18 @@ const MyProfile = () => {
   ];
   return (
     <FullHeightContainer>
-      <div className={styles.avatarContainer}>
-        <Image
-          cloudName={process.env.REACT_APP_CLOUDINARY_CLOUD_NAME}
-          publicId={user?.user?.avatar?.public_id}
-          className={styles.avatar}
-        />
-        <Button
-          variant='dark'
-          size='sm'
-          className={styles.avatarControl}
-          onClick={() => handleOpen('Avatar')}
-        >
-          <FaImage />
-          {' +'}
-        </Button>
+      <div className={styles.avatarOffset}>
+        <AvatarImage width='100px' height='100px' user={user}>
+          <Button
+            variant='dark'
+            size='sm'
+            className={styles.avatarControl}
+            onClick={() => handleOpen('Avatar')}
+          >
+            <FaImage />
+            {' +'}
+          </Button>
+        </AvatarImage>
       </div>
       <div className={`${styles.profileTable} shadow`}>
         {profileTableData.map((data, idx) => (

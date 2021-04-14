@@ -26,13 +26,14 @@ const PostCard = ({
           className='card-img'
           publicId={featureImage.public_id}
           cloudName={process.env.REACT_APP_CLOUDINARY_CLOUD_NAME}
+          width='400'
+          crop='scale'
         />
-        {/* <Card.Img src={imageUrl} alt='featureImage' /> */}
-        {/* <Card.ImgOverlay>
+        <Card.ImgOverlay>
           <Card.Title>{title}</Card.Title>
           <Card.Text>{body}</Card.Text>
           <Card.Text>Last updated 3 mins ago</Card.Text>
-        </Card.ImgOverlay> */}
+        </Card.ImgOverlay>
         <Card.Body>
           <div>
             <Badge
