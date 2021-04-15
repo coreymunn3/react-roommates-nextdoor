@@ -28,7 +28,7 @@ const PostCard = ({
 
   return (
     <div className={styles.cardSpacing}>
-      <Card>
+      <Card className='shadow'>
         <Image
           className='card-img'
           publicId={featureImage.public_id}
@@ -73,7 +73,12 @@ const PostCard = ({
           </div>
           <Card.Text>{body}</Card.Text>
           <div>
-            <Button as={Link} to={`feed/${_id}`} variant='primary'>
+            <Button
+              as={Link}
+              to={`feed/${_id}`}
+              variant='primary'
+              className='mb-2'
+            >
               See Full Post
             </Button>
           </div>
