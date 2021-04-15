@@ -31,6 +31,10 @@ export const postAPI = {
     axios.get(`${baseUrl}/api/posts/${postId}`, {
       withCredentials: true,
     }),
+  getPostByUser: () =>
+    axios.get(`${baseUrl}/api/posts`, {
+      withCredentials: true,
+    }),
 };
 
 export const locationAPI = {
