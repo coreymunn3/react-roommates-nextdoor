@@ -8,6 +8,7 @@ import FullHeightContainer from '../../layout/fullHeightContainer/FullHeightCont
 import ProfileGridItem from '../../profileGridItem/ProfileGridItem';
 import UpdateProfileModal from '../../updateProfileModal/UpdateProfileModal';
 import AvatarImage from '../../avatarImage/AvatarImage';
+import ElevatedSection from '../../layout/elevatedSection/ElevatedSection';
 import { FaImage } from 'react-icons/fa';
 // redux
 import { useSelector } from 'react-redux';
@@ -59,29 +60,31 @@ const MyProfile = () => {
           </Button>
         </AvatarImage>
       </div>
-      <div className={`${styles.profileTable} shadow`}>
-        {profileTableData.map((data, idx) => (
-          <Row key={idx} className={styles.profileTableRow}>
-            <Col xs={10}>
-              <ProfileGridItem profileDataItem={data} isLoading={isLoading} />
-            </Col>
-            <Col xs={2}>
-              {data.editable && (
-                <FaEdit
-                  className='clickable mb-2'
-                  size={iconSize}
-                  onClick={() => handleOpen(data.property)}
-                />
-              )}
-            </Col>
-          </Row>
-        ))}
-        <div className={styles.profileControl}>
-          <Button as={Link} to='/myposts' variant='secondary' block>
-            View My Posts
-          </Button>
+      <ElevatedSection>
+        <div className={styles.profileTable}>
+          {profileTableData.map((data, idx) => (
+            <Row key={idx} className={styles.profileTableRow}>
+              <Col xs={10}>
+                <ProfileGridItem profileDataItem={data} isLoading={isLoading} />
+              </Col>
+              <Col xs={2}>
+                {data.editable && (
+                  <FaEdit
+                    className='clickable mb-2'
+                    size={iconSize}
+                    onClick={() => handleOpen(data.property)}
+                  />
+                )}
+              </Col>
+            </Row>
+          ))}
+          <div className={styles.profileControl}>
+            <Button as={Link} to='/myposts' variant='secondary' block>
+              View My Posts
+            </Button>
+          </div>
         </div>
-      </div>
+      </ElevatedSection>
 
       <UpdateProfileModal
         open={open}

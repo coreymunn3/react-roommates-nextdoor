@@ -29,7 +29,9 @@ const PostsContainer = () => {
       {!postsLoading && locationPosts?.length === 0 ? (
         <NoPostsYet />
       ) : (
-        locationPosts.map((post) => <PostCard key={post._id} post={post} />)
+        locationPosts.map((post) => (
+          <PostCard key={post._id} post={post} edit={false} />
+        ))
       )}
     </div>
   );

@@ -83,6 +83,9 @@ img {
 .card-img,
 .card-img-overlay {
   border-radius: $theme-border-radius;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
   @include media-breakpoint-only(xs) {
     height: $card-img-xs-height;
   }

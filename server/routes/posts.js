@@ -9,7 +9,7 @@ const geocodeAPIkey = process.env.GEOCODE_API_KEY;
 // @private
 router.get('/', async (req, res) => {
   try {
-    const posts = await Post.find({ _user: req.user });
+    const posts = await Post.find({ _user: req.user }).populate('_user').exec();
     res.status(200).json(posts);
   } catch (error) {
     console.log(error);
