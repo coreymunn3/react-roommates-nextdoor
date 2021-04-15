@@ -18,6 +18,7 @@ const PostCard = ({
     rentMonthly,
     totalMoveInCost,
     datePosted,
+    moveInDate,
     numberOfCohabitants,
     _user,
   },
@@ -69,7 +70,10 @@ const PostCard = ({
           </div>
           <div className={styles.cardTitle}>
             <h4 className='my-0'>{title}</h4>
-            <small className='text-muted'>{moment(datePosted).fromNow()}</small>
+            <small className='text-muted'>
+              {`Posted ${moment(datePosted).fromNow()}`} &bull;
+              {` Move In ${moment(moveInDate).fromNow()}`}
+            </small>
           </div>
           <Card.Text>{body}</Card.Text>
           <div>
