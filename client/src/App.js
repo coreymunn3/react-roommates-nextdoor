@@ -7,6 +7,7 @@ import NewPost from './components/routes/newPost/NewPost';
 import PageLayout from './components/layout/PageLayout';
 import Listing from './components/routes/listing/Listing';
 import MyProfile from './components/routes/myProfile/MyProfile';
+import MyPosts from './components/routes/myPosts/MyPosts';
 // global sass - contains theming
 import './App.global.scss';
 // redux
@@ -30,6 +31,7 @@ const App = () => {
           <Route path='/feed/:id' component={Listing} />
           <Route exact path='/new-post' component={NewPost} />
           <Route exact path='/myprofile' component={MyProfile} />
+          <Route exact path='/myposts' component={MyPosts} />
         </PageLayout>
       </Switch>
     </Router>

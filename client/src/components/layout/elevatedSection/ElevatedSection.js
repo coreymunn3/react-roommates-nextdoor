@@ -2,7 +2,7 @@ import React from 'react';
 import styles from './elevatedSection.module.scss';
 
 const ElevatedSection = ({ children }) => {
-  return <div className={`${styles.container} shadow-sm `}>{children}</div>;
+  return <div className={`${styles.container} shadow `}>{children}</div>;
 };
 
 export default ElevatedSection;

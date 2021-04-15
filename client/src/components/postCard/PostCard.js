@@ -25,15 +25,13 @@ const PostCard = ({
   return (
     <div className={styles.cardSpacing}>
       <Card>
-        {(
-          <Image
-            className='card-img'
-            publicId={featureImage.public_id}
-            cloudName={process.env.REACT_APP_CLOUDINARY_CLOUD_NAME}
-            width='400'
-            crop='scale'
-          />
-        ) || <Skeleton />}
+        <Image
+          className='card-img'
+          publicId={featureImage.public_id}
+          cloudName={process.env.REACT_APP_CLOUDINARY_CLOUD_NAME}
+          width='400'
+          crop='scale'
+        />
         <Card.ImgOverlay>
           <AvatarImage avatar={_user?.avatar} width='60px' height='60px' />
           {/* heart button top right */}

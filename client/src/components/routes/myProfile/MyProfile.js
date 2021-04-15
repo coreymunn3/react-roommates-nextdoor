@@ -8,7 +8,6 @@ import FullHeightContainer from '../../layout/fullHeightContainer/FullHeightCont
 import ProfileGridItem from '../../profileGridItem/ProfileGridItem';
 import UpdateProfileModal from '../../updateProfileModal/UpdateProfileModal';
 import AvatarImage from '../../avatarImage/AvatarImage';
-import { Image } from 'cloudinary-react';
 import { FaImage } from 'react-icons/fa';
 // redux
 import { useSelector } from 'react-redux';
@@ -45,7 +44,6 @@ const MyProfile = () => {
       editable: true,
     },
   ];
-  console.log(user?.user?.avatar);
   return (
     <FullHeightContainer>
       <div className={styles.avatarOffset}>
