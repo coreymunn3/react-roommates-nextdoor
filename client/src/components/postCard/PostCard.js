@@ -1,13 +1,15 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import Card from 'react-bootstrap/Card';
 import Button from 'react-bootstrap/Button';
 import Badge from 'react-bootstrap/Badge';
 import AvatarImage from '../avatarImage/AvatarImage';
+import EditPostModal from '../editPostModal/EditPostModal';
 import { Image } from 'cloudinary-react';
 import moment from 'moment';
 import { FaEdit, FaTrash } from 'react-icons/fa';
 import styles from './postCard.module.scss';
+import { useSelector } from 'react-redux';
 
 const PostCard = ({
   post: {
@@ -24,8 +26,20 @@ const PostCard = ({
   },
   edit,
 }) => {
+  const { userPosts } = useSelector((state) => state.post);
   const [editModalOpen, setEditModalOpen] = useState(false);
+  const [editValues, setEditValues] = useState(null);
   const [deleteModalOpen, setDeleteModalOpen] = useState(false);
+
+  const handleEditOpen = () => {
+    const targetPost = userPosts.filter((post) => _id === post._id);
+    setEditValues(targetPost[0]);
+    setEditModalOpen(true);
+  };
+
+  const handleDeleteOpen = () => {
+    setDeleteModalOpen(true);
+  };
 
   return (
     <div className={styles.cardSpacing}>
@@ -38,19 +52,22 @@ const PostCard = ({
           crop='scale'
         />
         <Card.ImgOverlay
-          style={{ background: edit ? 'rgba(255,255,255,0.5)' : null }}
+          style={{ background: edit ? 'rgba(0,0,0,0.3)' : null }}
         >
           <AvatarImage avatar={_user?.avatar} width='60px' height='60px' />
-          {edit && (
-            <div className='d-flex justify-content-between'>
-              <Button variant='outline-warning'>
-                <FaEdit className='mb-1' /> <span>Edit</span>
-              </Button>
-              <Button variant='outline-danger'>
-                <FaTrash className='mb-1' /> <span>Delete</span>
-              </Button>
-            </div>
-          )}
+          {
+            /* only render buttons on overlay when edit state is true */
+            edit && (
+              <div className='d-flex justify-content-between'>
+                <Button variant='outline-warning' onClick={handleEditOpen}>
+                  <FaEdit className='mb-1' /> <span>Edit</span>
+                </Button>
+                <Button variant='outline-danger' onClick={handleDeleteOpen}>
+                  <FaTrash className='mb-1' /> <span>Delete</span>
+                </Button>
+              </div>
+            )
+          }
           {/* heart button top right */}
         </Card.ImgOverlay>
         <Card.Body>
@@ -88,6 +105,14 @@ const PostCard = ({
           </div>
         </Card.Body>
       </Card>
+
+      {/* modals */}
+      <EditPostModal
+        title={'Edit Listing'}
+        open={editModalOpen}
+        initialValues={editValues}
+        handleClose={() => setEditModalOpen(false)}
+      />
     </div>
   );
 };

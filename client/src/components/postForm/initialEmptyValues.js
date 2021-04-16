@@ -21,7 +21,10 @@ const initialValues = {
   hasKitchenAccess: false,
   hasPoolAccess: false,
   hasDrugTolerantCohabitants: false,
-  featureImage: '',
+  featureImage: {
+    public_id: '',
+    url: '',
+  },
 };
 
 export default initialValues;

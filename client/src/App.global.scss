@@ -105,6 +105,9 @@ img {
     height: $card-img-md-height;
   }
 }
+.card-img-overlay {
+  padding: 0.5rem;
+}
 .card-text {
   overflow: scroll;
   margin-bottom: 0.5rem;

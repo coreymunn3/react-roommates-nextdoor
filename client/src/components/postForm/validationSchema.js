@@ -50,7 +50,10 @@ const postValidationSchema = yup.object({
   hasKitchenAccess: yup.boolean(),
   hasPoolAccess: yup.boolean(),
   hasDrugTolerantCohabitants: yup.boolean(),
-  featureImage: yup.string().required('Must Upload a Feature Image'),
+  featureImage: yup.object({
+    public_id: yup.string(),
+    url: yup.string().required(),
+  }),
 });
 
 export default postValidationSchema;

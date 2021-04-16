@@ -3,7 +3,7 @@ import { useHistory } from 'react-router-dom';
 // formik stuff
 import { useFormik } from 'formik';
 import postValidationSchema from './validationSchema';
-import initialValues from './initialValues';
+import initialEmptyValues from './initialEmptyValues';
 import transformPostData from './TransformPostData';
 // components
 import Col from 'react-bootstrap/esm/Col';
@@ -26,7 +26,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { createPost } from '../../redux/postSlice';
 import { imageAPI } from '../../api';
 
-const PostForm = ({ user }) => {
+const PostForm = ({ edit, initialValues }) => {
   const dispatch = useDispatch();
   const history = useHistory();
   const { isLoading, isError, newPost, errorMessage } = useSelector(
@@ -44,13 +44,13 @@ const PostForm = ({ user }) => {
     touched,
     errors,
   } = useFormik({
-    initialValues: initialValues,
+    initialValues: edit ? initialValues : initialEmptyValues,
     validationSchema: postValidationSchema,
     onSubmit: async (values, actions) => {
       // upload image to cloudinary & get back public URL
       const { data: cloudinaryImage } = await imageAPI.upload({
         type: 'post',
-        base64Image: values.featureImage,
+        base64Image: values.featureImage.url,
       });
       // pull out new image url and transform data
       const postData = transformPostData(values, cloudinaryImage);
@@ -70,6 +70,11 @@ const PostForm = ({ user }) => {
       history.push('/feed');
     }
   }, [isLoading, newPost]);
+
+  useEffect(() => {
+    console.log('current values:', values);
+    console.log(values.moveInDate);
+  }, [values]);
 
   return (
     <ElevatedSection>
@@ -123,9 +128,9 @@ const PostForm = ({ user }) => {
           <Form.Group as={Col} sm={6} md={3}>
             <InputField
               label='Monthly Rent'
-              type='text'
+              type='number'
               name='rentMonthly'
-              values={values.rentMonthly}
+              value={values.rentMonthly}
               onChange={handleChange}
               onBlur={handleBlur}
               isInvalid={touched.rentMonthly && errors.rentMonthly}
@@ -135,9 +140,9 @@ const PostForm = ({ user }) => {
           <Form.Group as={Col} sm={6} md={3}>
             <InputField
               label='Security Deposit'
-              type='text'
+              type='number'
               name='securityDeposit'
-              values={values.securityDeposit}
+              value={values.securityDeposit}
               onChange={handleChange}
               onBlur={handleBlur}
               isInvalid={touched.securityDeposit && errors.securityDeposit}
@@ -147,9 +152,9 @@ const PostForm = ({ user }) => {
           <Form.Group as={Col} sm={6} md={3}>
             <InputField
               label='Total Move In'
-              type='text'
+              type='number'
               name='totalMoveInCost'
-              values={values.totalMoveInCost}
+              value={values.totalMoveInCost}
               onChange={handleChange}
               onBlur={handleBlur}
               isInvalid={touched.totalMoveInCost && errors.totalMoveInCost}
@@ -158,10 +163,10 @@ const PostForm = ({ user }) => {
           </Form.Group>
           <Form.Group as={Col} sm={6} md={3}>
             <InputField
-              label='Other Monthly Fees'
-              type='text'
+              label='Other Monthly Costs'
+              type='number'
               name='otherFeesMonthly'
-              values={values.otherFeesMonthly}
+              value={values.otherFeesMonthly}
               onChange={handleChange}
               onBlur={handleBlur}
               isInvalid={touched.otherFeesMonthly && errors.otherFeesMonthly}
@@ -224,7 +229,11 @@ const PostForm = ({ user }) => {
               label='Move In Date'
               type='date'
               name='moveInDate'
-              value={values.moveInDate}
+              value={
+                edit
+                  ? new Date(values?.moveInDate).toISOString().split('T')[0]
+                  : values.moveInDate
+              }
               onChange={handleChange}
               onBlur={handleBlur}
               isInvalid={touched.moveInDate && errors.moveInDate}
@@ -234,7 +243,7 @@ const PostForm = ({ user }) => {
           <Form.Group as={Col} md={6} controlId='formGridNumberCohabitants'>
             <InputField
               label='Number of Cohabitants/Housemates'
-              type='text'
+              type='number'
               name='numberOfCohabitants'
               value={values.numberOfCohabitants}
               onChange={handleChange}
@@ -258,6 +267,7 @@ const PostForm = ({ user }) => {
                   name={amenity.name}
                   onChange={handleChange}
                   value={values[amenity.name]}
+                  checked={values[amenity.name]}
                 />
               ))}
             </div>
@@ -275,7 +285,7 @@ const PostForm = ({ user }) => {
               touched={touched.featureImage}
               multiple={false}
               onDone={({ base64 }) => {
-                setFieldValue('featureImage', base64);
+                setFieldValue('featureImage.url', base64);
               }}
             />
           </Form.Group>
@@ -283,7 +293,7 @@ const PostForm = ({ user }) => {
 
         {/* TODO: create a thumbnail component for this. */}
         {values.featureImage && (
-          <img src={values.featureImage} style={{ height: '100px' }} />
+          <img src={values.featureImage.url} style={{ height: '100px' }} />
         )}
 
         <Form.Row>

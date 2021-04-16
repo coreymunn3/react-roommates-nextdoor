@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import Spinner from 'react-bootstrap/Spinner';
 import PostCard from '../../postCard/PostCard';
+import FullHeightContainer from '../../layout/fullHeightContainer/FullHeightContainer';
 
 // redux
 import { useDispatch, useSelector } from 'react-redux';
@@ -17,7 +18,9 @@ const MyPosts = () => {
     <div>
       <h4>Manage Listings</h4>
       {isLoading ? (
-        <Spinner animation='border' />
+        <FullHeightContainer>
+          <Spinner animation='border' />
+        </FullHeightContainer>
       ) : (
         userPosts.map((post) => (
           <PostCard key={post._id} post={post} edit={true} />

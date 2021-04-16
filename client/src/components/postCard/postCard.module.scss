@@ -13,9 +13,17 @@
   margin-bottom: 0.25rem;
   @include media-breakpoint-up(xs) {
     height: $card-img-xs-height;
+    border-top-left-radius: $theme-border-radius;
+    border-top-right-radius: $theme-border-radius;
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
   }
   @include media-breakpoint-up(sm) {
     height: $card-img-sm-height;
+    border-top-left-radius: $theme-border-radius;
+    border-top-right-radius: 0;
+    border-bottom-left-radius: $theme-border-radius;
+    border-bottom-right-radius: 0;
   }
   @include media-breakpoint-up(md) {
     height: $card-img-md-height;
