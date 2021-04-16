@@ -82,17 +82,24 @@ img {
 }
 .card-img,
 .card-img-overlay {
-  border-radius: $theme-border-radius;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   @include media-breakpoint-only(xs) {
     height: $card-img-xs-height;
+    border-top-left-radius: $theme-border-radius;
+    border-top-right-radius: $theme-border-radius;
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
   }
   @include media-breakpoint-up(sm) {
     max-width: 50%;
     height: $card-img-sm-height;
     object-fit: cover;
+    border-top-left-radius: $theme-border-radius;
+    border-top-right-radius: 0;
+    border-bottom-left-radius: $theme-border-radius;
+    border-bottom-right-radius: 0;
   }
   @include media-breakpoint-up(md) {
     height: $card-img-md-height;
@@ -100,6 +107,7 @@ img {
 }
 .card-text {
   overflow: scroll;
+  margin-bottom: 0.5rem;
   @include media-breakpoint-up(xs) {
     max-height: $card-text-xs-max-height;
   }
