@@ -16,7 +16,7 @@ const MyPosts = () => {
 
   return (
     <div>
-      <h4>Manage Listings</h4>
+      <h4>Manage Active Listings</h4>
       {isLoading ? (
         <FullHeightContainer>
           <Spinner animation='border' />

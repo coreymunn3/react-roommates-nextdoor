@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
+import moment from 'moment';
 // formik stuff
 import { useFormik } from 'formik';
 import postValidationSchema from './validationSchema';
@@ -23,7 +24,7 @@ import {
 import styles from './postForm.module.scss';
 // redux
 import { useDispatch, useSelector } from 'react-redux';
-import { createPost } from '../../redux/postSlice';
+import { createPost, editPost } from '../../redux/postSlice';
 import { imageAPI } from '../../api';
 
 const PostForm = ({ edit, initialValues }) => {
@@ -50,12 +51,18 @@ const PostForm = ({ edit, initialValues }) => {
       // upload image to cloudinary & get back public URL
       const { data: cloudinaryImage } = await imageAPI.upload({
         type: 'post',
-        base64Image: values.featureImage.url,
+        base64Image: values.featureImageUrl,
       });
       // pull out new image url and transform data
       const postData = transformPostData(values, cloudinaryImage);
+      console.log(postData);
+      console.log(postData._id);
       // submit the post
-      dispatch(createPost(postData));
+      if (edit) {
+        dispatch(editPost(postData));
+      } else {
+        dispatch(createPost(postData));
+      }
       setSubmitting(false);
     },
   });
@@ -73,8 +80,8 @@ const PostForm = ({ edit, initialValues }) => {
 
   useEffect(() => {
     console.log('current values:', values);
-    console.log(values.moveInDate);
-  }, [values]);
+    console.log('current errors:', errors);
+  }, [values, errors]);
 
   return (
     <ElevatedSection>
@@ -229,11 +236,7 @@ const PostForm = ({ edit, initialValues }) => {
               label='Move In Date'
               type='date'
               name='moveInDate'
-              value={
-                edit
-                  ? new Date(values?.moveInDate).toISOString().split('T')[0]
-                  : values.moveInDate
-              }
+              value={values.moveInDate}
               onChange={handleChange}
               onBlur={handleBlur}
               isInvalid={touched.moveInDate && errors.moveInDate}
@@ -278,22 +281,22 @@ const PostForm = ({ edit, initialValues }) => {
           <Form.Group as={Col}>
             <InputFile
               label='Choose a Feature Image'
-              name='featureImage'
-              value={values.featureImage}
+              name='featureImageUrl'
+              value={values.featureImageUrl}
               onBlur={handleBlur}
-              error={errors.featureImage}
-              touched={touched.featureImage}
+              error={errors.featureImageUrl}
+              touched={touched.featureImageUrl}
               multiple={false}
               onDone={({ base64 }) => {
-                setFieldValue('featureImage.url', base64);
+                setFieldValue('featureImageUrl', base64);
               }}
             />
           </Form.Group>
         </Form.Row>
 
         {/* TODO: create a thumbnail component for this. */}
-        {values.featureImage && (
-          <img src={values.featureImage.url} style={{ height: '100px' }} />
+        {values.featureImageUrl && (
+          <img src={values.featureImageUrl} style={{ height: '100px' }} />
         )}
 
         <Form.Row>

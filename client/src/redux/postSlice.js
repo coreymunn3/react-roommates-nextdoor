@@ -13,6 +13,18 @@ export const createPost = createAsyncThunk(
   }
 );
 
+export const editPost = createAsyncThunk(
+  'post/editPost',
+  async (postFormData, thunkAPI) => {
+    try {
+      const { data } = await postAPI.editPost(postFormData._id, postFormData);
+      return data;
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error.response.data);
+    }
+  }
+);
+
 export const getPostsByLocation = createAsyncThunk(
   'post/getPostsByLocation',
   async (locationId, thunkAPI) => {
@@ -72,6 +84,20 @@ export const postSlice = createSlice({
       state.newPost = action.payload;
     },
     [createPost.rejected]: (state, action) => {
+      state.isLoading = false;
+      state.isError = true;
+      state.errorMessage = action.payload;
+    },
+    [editPost.pending]: (state, aciton) => {
+      state.isLoading = true;
+      state.isError = false;
+      state.errorMessage = null;
+    },
+    [editPost.fulfilled]: (state, action) => {
+      state.isLoading = false;
+      state.newPost = action.payload;
+    },
+    [editPost.rejected]: (state, action) => {
       state.isLoading = false;
       state.isError = true;
       state.errorMessage = action.payload;

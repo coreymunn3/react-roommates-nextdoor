@@ -35,6 +35,10 @@ export const postAPI = {
     axios.get(`${baseUrl}/api/posts`, {
       withCredentials: true,
     }),
+  editPost: (postId, postFormData) =>
+    axios.patch(`${baseUrl}/api/posts/${postId}`, postFormData, {
+      withCredentials: true,
+    }),
 };
 
 export const locationAPI = {

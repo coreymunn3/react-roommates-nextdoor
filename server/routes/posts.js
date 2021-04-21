@@ -36,7 +36,15 @@ router.get('/location/:locationId', async (req, res) => {
 // allows user to submit a post
 // @private
 router.post('/', async (req, res) => {
-  const { zipCode, streetAddress, ...postData } = req.body;
+  const {
+    zipCode,
+    streetAddress,
+    featureImage,
+    featureImageUrl,
+    ...postData
+  } = req.body;
+  console.log(postData);
+  console.log(featureImage);
   // Get Lat Lon from google reverse geocoding API
   try {
     const { data: geocoded } = await axios.get(
@@ -48,6 +56,7 @@ router.post('/', async (req, res) => {
         ...postData,
         streetAddress,
         zipCode,
+        featureImage,
         geographicCoordinates: geocoded.results[0].geometry.location,
         _user: req.user._id,
         _location: req.user._location,
@@ -89,7 +98,10 @@ router.get('/:postId', async (req, res) => {
 router.patch('/:postId', async (req, res) => {
   const postId = req.params.postId;
   // required in req.body: _user field
+  console.log(postId);
   const postContent = req.body;
+  console.log(req.body);
+  console.log(req.user);
   // make sure user calling route owns the post
   if (postContent._user !== req.user._id.toString()) {
     return res.status(401).json({ error: 'Unauthorized' });
