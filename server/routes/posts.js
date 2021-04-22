@@ -36,13 +36,7 @@ router.get('/location/:locationId', async (req, res) => {
 // allows user to submit a post
 // @private
 router.post('/', async (req, res) => {
-  const {
-    zipCode,
-    streetAddress,
-    featureImage,
-    featureImageUrl,
-    ...postData
-  } = req.body;
+  const { zipCode, streetAddress, featureImage, ...postData } = req.body;
   console.log(postData);
   console.log(featureImage);
   // Get Lat Lon from google reverse geocoding API
@@ -98,13 +92,10 @@ router.get('/:postId', async (req, res) => {
 router.patch('/:postId', async (req, res) => {
   const postId = req.params.postId;
   // required in req.body: _user field
-  console.log(postId);
   const postContent = req.body;
-  console.log(req.body);
-  console.log(req.user);
   // make sure user calling route owns the post
-  if (postContent._user !== req.user._id.toString()) {
-    return res.status(401).json({ error: 'Unauthorized' });
+  if (postContent._user._id !== req.user._id.toString()) {
+    return res.status(401).json({ error: 'Unauthorized for Post Editing' });
   }
   // update the post with relevant body data
   try {
@@ -112,11 +103,13 @@ router.patch('/:postId', async (req, res) => {
       postId,
       { $set: postContent },
       { new: true }
-    );
+    )
+      .populate('_user')
+      .exec();
     res.status(200).json(updatedPost);
   } catch (error) {
     console.log(error);
-    res.status(500).json({ error: 'Could Not Update Post' });
+    res.status(500).json({ error: 'Unable to Update Post' });
   }
 });
 

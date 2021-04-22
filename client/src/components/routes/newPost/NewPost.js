@@ -1,6 +1,7 @@
 import React from 'react';
 import Container from 'react-bootstrap/Container';
 import PostForm from '../../postForm/PostForm';
+import ElevatedSection from '../../layout/elevatedSection/ElevatedSection';
 // redux
 import { useSelector } from 'react-redux';
 
@@ -9,7 +10,9 @@ const NewPost = () => {
   return (
     <div>
       <h3>{`Create A New Listing In ${user?.user?._location?.city}, ${user?.user?._location?.state}`}</h3>
-      <PostForm edit={false} />
+      <ElevatedSection>
+        <PostForm edit={false} />
+      </ElevatedSection>
     </div>
   );
 };

@@ -20,7 +20,7 @@ export const editPost = createAsyncThunk(
       const { data } = await postAPI.editPost(postFormData._id, postFormData);
       return data;
     } catch (error) {
-      return thunkAPI.rejectWithValue(error.response.data);
+      return thunkAPI.rejectWithValue(error.response.data.error);
     }
   }
 );
@@ -95,7 +95,9 @@ export const postSlice = createSlice({
     },
     [editPost.fulfilled]: (state, action) => {
       state.isLoading = false;
-      state.newPost = action.payload;
+      state.userPosts = state.userPosts.map((post) =>
+        post._id === action.payload._id ? action.payload : post
+      );
     },
     [editPost.rejected]: (state, action) => {
       state.isLoading = false;
