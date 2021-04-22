@@ -1,11 +1,11 @@
 import React, { useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 // import moment from 'moment';
-// formik stuff
+// formik stuff, submission helpers
 import { useFormik } from 'formik';
 import postValidationSchema from './validationSchema';
 import initialEmptyValues from './initialEmptyValues';
-import transformPostData from './TransformPostData';
+import { transformNewPostData, constructEditObject } from './TransformPostData';
 // components
 import Col from 'react-bootstrap/esm/Col';
 import Form from 'react-bootstrap/Form';
@@ -47,10 +47,11 @@ const PostForm = ({ edit, initialValues }) => {
     validationSchema: postValidationSchema,
     onSubmit: async (values, actions) => {
       if (edit) {
-        // determine if we need to upload a new image cloudinary
-        // transform postData if so...
+        // determine what values if any have changed
+        const editPostData = constructEditObject(initialValues, values);
+        console.log(editPostData);
         // submit the data
-        dispatch(editPost(values));
+        // dispatch(editPost(editPostData));
         // clear values
         // close modal
       }
@@ -62,9 +63,9 @@ const PostForm = ({ edit, initialValues }) => {
           base64Image: values.featureImage.url,
         });
         // pull out new image url and transform data
-        const postData = transformPostData(values, cloudinaryImage);
+        const newPostData = transformNewPostData(values, cloudinaryImage);
         // submit the data
-        dispatch(createPost(postData));
+        dispatch(createPost(newPostData));
         actions.setSubmitting(false);
       }
     },
@@ -318,16 +319,9 @@ const PostForm = ({ edit, initialValues }) => {
             disabled={isSubmitting}
             block
           >
-            {isSubmitting && (
-              <Spinner
-                as='span'
-                size='sm'
-                animation='border'
-                className='mx-2'
-              />
-            )}
+            {isSubmitting && <Spinner as='span' size='sm' animation='border' />}
             {isSubmitting ? (
-              <span>{'Creating Your Post...'}</span>
+              <span>{'Submitting Your Post...'}</span>
             ) : (
               <span>{'Submit'}</span>
             )}
