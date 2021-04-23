@@ -108,6 +108,7 @@ const PostForm = ({ edit, initialValues }) => {
             error={errors.streetAddress}
             length={values.streetAddress.length}
           />
+          {edit && <Form.Text muted>post location cannot be changed</Form.Text>}
         </Form.Group>
         <Form.Group as={Col} md={6} controlId='formGridZipCode'>
           <InputField
@@ -122,6 +123,7 @@ const PostForm = ({ edit, initialValues }) => {
             error={errors.zipCode}
             length={values.zipCode.length}
           />
+          {edit && <Form.Text muted>post location cannot be changed</Form.Text>}
         </Form.Group>
       </Form.Row>
 
