@@ -113,6 +113,7 @@ const PostCard = ({
         open={editModalOpen}
         initialValues={editValues}
         handleClose={() => setEditModalOpen(false)}
+        wide
       />
       <DeletePostModal
         title={'Delete Listing'}
