@@ -51,11 +51,11 @@ const PostForm = ({ edit, initialValues }) => {
         const editPostData = constructEditObject(initialValues, values);
         console.log(editPostData);
         // submit the data
-        // dispatch(editPost(editPostData));
+        dispatch(editPost(editPostData));
         // clear values
         // close modal
       }
-      // else, creating a new post
+      // else, create a new post
       else {
         // upload image to cloudinary & get back public URL
         const { data: cloudinaryImage } = await imageAPI.upload({
