@@ -46,19 +46,18 @@ const PostForm = ({ edit, initialValues }) => {
     validationSchema: postValidationSchema,
     onSubmit: async (values, actions) => {
       if (edit) {
-        // determine what values if any have changed
-        const editPostData = constructEditObject(initialValues, values);
-        console.log(editPostData);
+        // determine what values if any have changed, using DeepDiff comparison
+        const editPostData = await constructEditObject(initialValues, values);
         // submit the data
         dispatch(editPost(editPostData));
         // clear values
-        // close modal
+        actions.resetForm();
+        actions.setSubmitting(false);
       }
       // else, create a new post
       else {
         // transform data and upload image to cloudinary
         const newPostData = await transformNewPostData(values);
-        console.log(newPostData);
         // submit the data
         dispatch(createPost(newPostData));
         actions.setSubmitting(false);
@@ -76,11 +75,6 @@ const PostForm = ({ edit, initialValues }) => {
       history.push('/feed');
     }
   }, [isLoading, newPost]);
-
-  useEffect(() => {
-    console.log('current values:', values);
-    console.log('current errors:', errors);
-  }, [values, errors]);
 
   return (
     <Form noValidate onSubmit={handleSubmit}>
