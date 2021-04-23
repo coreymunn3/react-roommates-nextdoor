@@ -24,7 +24,6 @@ import styles from './postForm.module.scss';
 // redux
 import { useDispatch, useSelector } from 'react-redux';
 import { createPost, editPost } from '../../redux/postSlice';
-import { imageAPI } from '../../api';
 
 const PostForm = ({ edit, initialValues }) => {
   const dispatch = useDispatch();
@@ -57,13 +56,9 @@ const PostForm = ({ edit, initialValues }) => {
       }
       // else, create a new post
       else {
-        // upload image to cloudinary & get back public URL
-        const { data: cloudinaryImage } = await imageAPI.upload({
-          type: 'post',
-          base64Image: values.featureImage.url,
-        });
-        // pull out new image url and transform data
-        const newPostData = transformNewPostData(values, cloudinaryImage);
+        // transform data and upload image to cloudinary
+        const newPostData = await transformNewPostData(values);
+        console.log(newPostData);
         // submit the data
         dispatch(createPost(newPostData));
         actions.setSubmitting(false);

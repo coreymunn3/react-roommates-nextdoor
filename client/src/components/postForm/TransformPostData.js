@@ -1,24 +1,28 @@
 import DeepDiff from 'deep-diff';
+import { imageAPI } from '../../api';
 
 // New Post Data requirements
 // 1. Everything from formik form
 // 2. 5 fields must be parsed to number data type
 //    (numberCohab, securityDep, rentMonthly, totalMovein, otherFees)
 // 3. featureImage must be an object with public_id and url from cloudinary
-export const transformNewPostData = (formValues, cloudinaryImage) => {
+export const transformNewPostData = async (formValues) => {
+  const transformedValues = { ...formValues };
+  // upload the image
+  const cloudinaryImageData = await uploadImageToCloudinary(formValues);
   // change data types for Post model
-  formValues.numberOfCohabitants = parseInt(formValues.numberOfCohabitants);
-  formValues.rentMonthly = parseInt(formValues.rentMonthly);
-  formValues.securityDeposit = parseInt(formValues.securityDeposit);
-  formValues.totalMoveInCost = parseInt(formValues.totalMoveInCost);
-  formValues.otherFeesMonthly = parseInt(formValues.otherFeesMonthly);
-  formValues.featureImage = {
-    public_id: cloudinaryImage.public_id,
-    url: cloudinaryImage.url,
+  transformedValues.numberOfCohabitants = parseInt(
+    formValues.numberOfCohabitants
+  );
+  transformedValues.rentMonthly = parseInt(formValues.rentMonthly);
+  transformedValues.securityDeposit = parseInt(formValues.securityDeposit);
+  transformedValues.totalMoveInCost = parseInt(formValues.totalMoveInCost);
+  transformedValues.otherFeesMonthly = parseInt(formValues.otherFeesMonthly);
+  transformedValues.featureImage = {
+    public_id: cloudinaryImageData.public_id,
+    url: cloudinaryImageData.url,
   };
-  return {
-    ...formValues,
-  };
+  return transformedValues;
 };
 
 // Edit Post Data Requirements:
@@ -56,4 +60,12 @@ export const constructEditObject = (initialValues, formikValues) => {
     edits['_user'] = formikValues._user;
   });
   return edits;
+};
+
+const uploadImageToCloudinary = async (values) => {
+  const { data: cloudinaryImage } = await imageAPI.upload({
+    type: 'post',
+    base64Image: values.featureImage.url,
+  });
+  return cloudinaryImage;
 };
