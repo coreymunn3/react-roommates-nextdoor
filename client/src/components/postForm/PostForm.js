@@ -100,6 +100,7 @@ const PostForm = ({ edit, initialValues }) => {
             label='Street Address'
             type='text'
             name='streetAddress'
+            disabled={edit}
             value={values.streetAddress}
             onChange={handleChange}
             onBlur={handleBlur}
@@ -113,6 +114,7 @@ const PostForm = ({ edit, initialValues }) => {
             label='Zip Code'
             type='text'
             name='zipCode'
+            disabled={edit}
             value={values.zipCode}
             onChange={handleChange}
             onBlur={handleBlur}
