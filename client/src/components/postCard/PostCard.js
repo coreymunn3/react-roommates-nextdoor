@@ -5,6 +5,7 @@ import Button from 'react-bootstrap/Button';
 import Badge from 'react-bootstrap/Badge';
 import AvatarImage from '../avatarImage/AvatarImage';
 import EditPostModal from '../editPostModal/EditPostModal';
+import DeletePostModal from '../deletePostModal/DeletePostModal';
 import { Image } from 'cloudinary-react';
 import moment from 'moment';
 import { FaEdit, FaTrash } from 'react-icons/fa';
@@ -112,6 +113,11 @@ const PostCard = ({
         open={editModalOpen}
         initialValues={editValues}
         handleClose={() => setEditModalOpen(false)}
+      />
+      <DeletePostModal
+        title={'Delete Listing'}
+        open={deleteModalOpen}
+        handleClose={() => setDeleteModalOpen(false)}
       />
     </div>
   );
