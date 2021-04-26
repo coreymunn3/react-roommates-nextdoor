@@ -35,8 +35,7 @@ export const transformNewPostData = async (formValues) => {
 export const constructEditObject = async (initialValues, formikValues) => {
   const differences = DeepDiff(initialValues, formikValues);
   let editObj = {};
-  // no differences, exit
-  // handle in submit method
+  // no differences, exit, handle in submit method
   if (typeof differences === 'undefined') {
     return null;
   }

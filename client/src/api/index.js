@@ -39,6 +39,10 @@ export const postAPI = {
     axios.patch(`${baseUrl}/api/posts/${postId}`, postFormData, {
       withCredentials: true,
     }),
+  deletePost: (postId) =>
+    axios.delete(`${baseUrl}/api/posts/${postId}`, {
+      withCredentials: true,
+    }),
 };
 
 export const locationAPI = {

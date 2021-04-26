@@ -25,6 +25,18 @@ export const editPost = createAsyncThunk(
   }
 );
 
+export const deletePost = createAsyncThunk(
+  'post/deletePost',
+  async (postId, thunkAPI) => {
+    try {
+      const { data } = await postAPI.deletePost(postId);
+      return data;
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error.response.data.error);
+    }
+  }
+);
+
 export const getPostsByLocation = createAsyncThunk(
   'post/getPostsByLocation',
   async (locationId, thunkAPI) => {
@@ -101,6 +113,21 @@ export const postSlice = createSlice({
     },
     [editPost.rejected]: (state, action) => {
       state.isLoading = false;
+      state.isError = true;
+      state.errorMessage = action.payload;
+    },
+    [deletePost.pending]: (state, action) => {
+      state.isLoading = true;
+      state.isError = false;
+      state.errorMessage = null;
+    },
+    [deletePost.fulfilled]: (state, action) => {
+      state.isLoading = false;
+      state.userPosts = state.userPosts.filter(
+        (post) => post._id !== action.payload._id
+      );
+    },
+    [deletePost.rejected]: (state, action) => {
       state.isError = true;
       state.errorMessage = action.payload;
     },

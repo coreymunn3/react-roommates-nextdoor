@@ -117,6 +117,7 @@ const PostCard = ({
       />
       <DeletePostModal
         title={'Delete Listing'}
+        postId={_id}
         open={deleteModalOpen}
         handleClose={() => setDeleteModalOpen(false)}
       />
