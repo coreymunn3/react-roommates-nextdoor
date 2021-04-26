@@ -89,7 +89,6 @@ export const unlikePost = createAsyncThunk(
   async (postId, thunkAPI) => {
     try {
       const { data } = await postAPI.unlikePost(postId);
-      console.log(data);
       return data;
     } catch (error) {
       thunkAPI.rejectWithValue(error.response.data.error);

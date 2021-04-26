@@ -175,8 +175,6 @@ router.patch('/:postId/like', async (req, res) => {
 // @private
 router.patch('/:postId/unlike', async (req, res) => {
   const postId = req.params.postId;
-  console.log(postId);
-  console.log(req.user);
   // update post like count & likedBy array
   try {
     const updatedPost = await Post.findOneAndUpdate(
