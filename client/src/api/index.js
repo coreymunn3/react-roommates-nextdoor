@@ -43,6 +43,22 @@ export const postAPI = {
     axios.delete(`${baseUrl}/api/posts/${postId}`, {
       withCredentials: true,
     }),
+  likePost: (postId) =>
+    axios.patch(
+      `${baseUrl}/api/posts/${postId}/like`,
+      {},
+      {
+        withCredentials: true,
+      }
+    ),
+  unlikePost: (postId) =>
+    axios.patch(
+      `${baseUrl}/api/posts/${postId}/unlike`,
+      {},
+      {
+        withCredentials: true,
+      }
+    ),
 };
 
 export const locationAPI = {

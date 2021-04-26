@@ -1,9 +1,10 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import Card from 'react-bootstrap/Card';
 import Button from 'react-bootstrap/Button';
 import Badge from 'react-bootstrap/Badge';
 import AvatarImage from '../avatarImage/AvatarImage';
+import LikeButton from '../likeButton/LikeButton';
 import EditPostModal from '../editPostModal/EditPostModal';
 import DeletePostModal from '../deletePostModal/DeletePostModal';
 import { Image } from 'cloudinary-react';
@@ -24,6 +25,8 @@ const PostCard = ({
     moveInDate,
     numberOfCohabitants,
     _user,
+    likeCount,
+    likedBy,
   },
   edit,
 }) => {
@@ -55,7 +58,11 @@ const PostCard = ({
         <Card.ImgOverlay
           style={{ background: edit ? 'rgba(0,0,0,0.3)' : null }}
         >
-          <AvatarImage avatar={_user?.avatar} width='60px' height='60px' />
+          <div className='d-flex justify-content-between'>
+            <AvatarImage avatar={_user?.avatar} width='40px' height='40px' />
+            <LikeButton likeCount={likeCount} likedBy={likedBy} postId={_id} />
+          </div>
+
           {
             /* only render buttons on overlay when edit state is true */
             edit && (
@@ -69,7 +76,6 @@ const PostCard = ({
               </div>
             )
           }
-          {/* heart button top right */}
         </Card.ImgOverlay>
         <Card.Body>
           <div>

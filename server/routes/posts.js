@@ -86,7 +86,7 @@ router.get('/:postId', async (req, res) => {
   }
 });
 
-// PATCH api/posts/:postId
+// EDIT (patch) api/posts/:postId
 // Updates post at postId with body data
 // @private
 router.patch('/:postId', async (req, res) => {
@@ -113,7 +113,7 @@ router.patch('/:postId', async (req, res) => {
   }
 });
 
-// DELETE api/posts/:postId
+// DELETE (patch) api/posts/:postId
 // Deletes a post with id postId
 // @private
 router.delete('/:postId', async (req, res) => {
@@ -148,7 +148,9 @@ router.patch('/:postId/like', async (req, res) => {
         $push: { likedBy: req.user._id },
       },
       { new: true }
-    );
+    )
+      .populate('_user')
+      .exec();
     if (updatedPost) {
       res.status(200).json(updatedPost);
     } else {
@@ -173,6 +175,8 @@ router.patch('/:postId/like', async (req, res) => {
 // @private
 router.patch('/:postId/unlike', async (req, res) => {
   const postId = req.params.postId;
+  console.log(postId);
+  console.log(req.user);
   // update post like count & likedBy array
   try {
     const updatedPost = await Post.findOneAndUpdate(
@@ -185,7 +189,9 @@ router.patch('/:postId/unlike', async (req, res) => {
         $pull: { likedBy: req.user._id },
       },
       { new: true }
-    );
+    )
+      .populate('_user')
+      .exec();
     if (updatedPost) {
       res.status(200).json(updatedPost);
     } else {
