@@ -58,10 +58,26 @@ const PostCard = ({
         <Card.ImgOverlay
           style={{ background: edit ? 'rgba(0,0,0,0.3)' : null }}
         >
-          <div className='d-flex justify-content-between'>
-            <AvatarImage avatar={_user?.avatar} width='40px' height='40px' />
-            <LikeButton likeCount={likeCount} likedBy={likedBy} postId={_id} />
-          </div>
+          {
+            // don't show avatar and like/unlike button if user in in edit state
+            !edit ? (
+              <div className='d-flex justify-content-between'>
+                <AvatarImage
+                  avatar={_user?.avatar}
+                  width='40px'
+                  height='40px'
+                />
+                <LikeButton
+                  likeCount={likeCount}
+                  likedBy={likedBy}
+                  postId={_id}
+                />
+              </div>
+            ) : (
+              // empty div needed for card positioning
+              <div></div>
+            )
+          }
 
           {
             /* only render buttons on overlay when edit state is true */
