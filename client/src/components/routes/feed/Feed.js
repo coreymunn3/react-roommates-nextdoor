@@ -3,6 +3,7 @@ import FeedControls from '../../feedControls/FeedControls';
 import PostsContainer from '../../postsContainer/PostsContainer';
 import FeedControlToggle from '../../feedControlToggle/FeedControlToggle';
 import Accordion from 'react-bootstrap/Accordion';
+import FeedHeaderSkeleton from './FeedHeaderSkeleton';
 // redux
 import { useSelector, useDispatch } from 'react-redux';
 import { getPostsByLocation } from '../../../redux/postSlice';
@@ -24,7 +25,13 @@ const Feed = () => {
       <div className={styles.titleContainer}>
         <Accordion className={styles.accordionContainer}>
           <div className={styles.accordionTitle}>
-            <h3>{`Recent Posts In ${user?.user?._location?.city}, ${user?.user?._location?.state}`}</h3>
+            <h3>
+              {userLoading ? (
+                <FeedHeaderSkeleton />
+              ) : (
+                `Recent Posts In ${user?.user?._location?.city}, ${user?.user?._location?.state}`
+              )}
+            </h3>
             <FeedControlToggle eventKey='0' />
           </div>
           <Accordion.Collapse eventKey='0'>
