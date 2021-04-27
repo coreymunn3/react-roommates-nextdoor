@@ -11,9 +11,10 @@
 @import '../../variables';
 .pillContainer {
   padding: 0.5rem 0;
-  border-bottom: 1px solid $theme-border-color;
+  // border-bottom: 1px solid $theme-border-color;
 }
 .pill {
   margin: 0.25rem;
   box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075) !important;
+  background-color: #f6f6f6;
 }

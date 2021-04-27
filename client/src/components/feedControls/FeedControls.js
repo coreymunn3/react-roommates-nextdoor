@@ -1,35 +1,32 @@
-import React, { Fragment } from 'react';
+import React, { Fragment, useState } from 'react';
 // bootstrap
 import Button from 'react-bootstrap/esm/Button';
 import { FaSortAmountDown, FaFilter } from 'react-icons/fa';
-import { MdClose, MdAdd } from 'react-icons/md';
+import FeedControlModal from '../feedControlModal/FeedControlModal';
 // styles
 import styles from './feedcontrols.module.scss';
 
 const FeedControls = () => {
+  const [controlOpen, setControlOpen] = useState(false);
+
+  const handleOpen = () => {
+    setControlOpen(true);
+  };
+
   return (
     <Fragment>
       <div className={styles.pillContainer}>
-        <Button className={styles.pill} variant='light'>
-          <FaSortAmountDown />
-          <span> Newest</span>
-        </Button>
-        <Button className={styles.pill}>
-          <FaSortAmountDown />
-          <span> Likes</span>
-        </Button>
-      </div>
-      <div className={styles.pillContainer}>
-        <Button className={styles.pill} variant='light'>
+        <Button className={styles.pill} variant='light' onClick={handleOpen}>
           <FaFilter />
-          <span> Add Filters</span>
-          <MdAdd />
-        </Button>
-        <Button className={styles.pill}>
-          <span>Price</span>
-          <MdClose />
+          <span>{' Sort & Filter'}</span>
         </Button>
       </div>
+
+      <FeedControlModal
+        open={controlOpen}
+        title={'Sort & Filter Posts'}
+        handleClose={() => setControlOpen(false)}
+      />
     </Fragment>
   );
 };
