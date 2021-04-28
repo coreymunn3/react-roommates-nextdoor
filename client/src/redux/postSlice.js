@@ -108,7 +108,14 @@ export const postSlice = createSlice({
     isError: false,
     errorMessage: null,
   },
-  reducers: {},
+  reducers: {
+    setFilter(state, action) {
+      state.activeFilters = action.payload;
+    },
+    clearFilter(state, action) {
+      state.activeFilters = [];
+    },
+  },
   extraReducers: {
     [createPost.pending]: (state, action) => {
       state.isLoading = true;
@@ -232,3 +239,5 @@ export const postSlice = createSlice({
     },
   },
 });
+
+export const { setFilter, clearFilter } = postSlice.actions;
