@@ -101,6 +101,7 @@ export const postSlice = createSlice({
   initialState: {
     newPost: null,
     currentPost: {},
+    activeFilters: [],
     locationPosts: [],
     userPosts: [],
     isLoading: false,

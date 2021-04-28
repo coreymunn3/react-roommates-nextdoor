@@ -8,23 +8,41 @@ import styles from './feedcontrols.module.scss';
 
 const FeedControls = () => {
   const [controlOpen, setControlOpen] = useState(false);
+  const [modalTitle, setModalTitle] = useState('');
 
-  const handleOpen = () => {
+  const handleOpen = (title) => {
+    setModalTitle(title);
     setControlOpen(true);
   };
 
   return (
     <Fragment>
       <div className={styles.pillContainer}>
-        <Button className={styles.pill} variant='light' onClick={handleOpen}>
-          <FaFilter />
-          <span>{' Sort & Filter'}</span>
+        <Button
+          className={styles.pill}
+          variant='light'
+          onClick={() => handleOpen('Sort')}
+        >
+          <FaSortAmountDown />
+          <span>{' Sort Posts'}</span>
         </Button>
+        {/* Select activeFiltes array from state and Map active filters & sorts methods in same pill container as pills that are primary colors. */}
+      </div>
+      <div className={styles.pillContainer}>
+        <Button
+          className={styles.pill}
+          variant='light'
+          onClick={() => handleOpen('Filter')}
+        >
+          <FaFilter />
+          <span>{' Filter Posts'}</span>
+        </Button>
+        {/* Select activeFiltes array from state and Map active filters & sorts methods in same pill container as pills that are primary colors. */}
       </div>
 
       <FeedControlModal
         open={controlOpen}
-        title={'Sort & Filter Posts'}
+        title={modalTitle}
         handleClose={() => setControlOpen(false)}
       />
     </Fragment>
