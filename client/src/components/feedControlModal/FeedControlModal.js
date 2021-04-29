@@ -6,8 +6,10 @@ import FilterPostsForm from './FilterPostsForm';
 const FeedControlModal = ({ title, ...props }) => {
   return (
     <CustomModal title={`${title} Posts`} {...props}>
-      {title === 'Sort' && <SortPostsForm />}
-      {title === 'Filter' && <FilterPostsForm />}
+      {title === 'Sort' && <SortPostsForm handleClose={props.handleClose} />}
+      {title === 'Filter' && (
+        <FilterPostsForm handleClose={props.handleClose} />
+      )}
     </CustomModal>
   );
 };

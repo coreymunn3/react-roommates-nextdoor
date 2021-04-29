@@ -11,14 +11,10 @@ import {
 import { useDispatch, useSelector } from 'react-redux';
 import { setFilter } from '../../redux/postSlice';
 
-const FilterPostsForm = () => {
+const FilterPostsForm = ({ handleClose }) => {
   const dispatch = useDispatch();
   const { activeFilters } = useSelector((state) => state.post);
   console.log(activeFilters);
-  // const initialFilterValues = {
-  //   rentMonthly: 0,
-  //   housingType: [],
-  // };
   const [selectedFilters, setSelectedFilters] = useState(activeFilters);
 
   // change handlers
@@ -55,7 +51,6 @@ const FilterPostsForm = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     selectedFilters.rentMonthly = parseInt(selectedFilters.rentMonthly);
-
     dispatch(setFilter(selectedFilters));
   };
   useEffect(() => {
@@ -99,7 +94,9 @@ const FilterPostsForm = () => {
           ))}
         </Form.Group>
       </Form.Row>
-      <Button type='submit'>Submit</Button>
+      <Button type='submit' onClick={handleClose}>
+        Submit
+      </Button>
       <Button variant='light' className='mx-2' onClick={resetFields}>
         Reset Filters
       </Button>
