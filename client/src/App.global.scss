@@ -128,6 +128,9 @@ img {
     background: $light;
   }
 }
+.modal-content {
+  border-radius: $theme-border-radius;
+}
 .bottomDivider {
   border-bottom: 1px solid $theme-border-color;
 }
