@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import PostCard from '../postCard/PostCard';
 import PostCardSkeleton from '../postCard/PostCardSkeleton';
-import filterPosts from '../../utils/filterPosts';
+import { filterPosts } from '../../utils/filterUtils';
 import styles from './postsContainer.module.scss';
 
 const NoPostsYet = () => {
