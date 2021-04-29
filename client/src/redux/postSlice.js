@@ -101,7 +101,10 @@ export const postSlice = createSlice({
   initialState: {
     newPost: null,
     currentPost: {},
-    activeFilters: [],
+    activeFilters: {
+      rentMonthly: 0,
+      housingType: [],
+    },
     locationPosts: [],
     userPosts: [],
     isLoading: false,
@@ -113,7 +116,7 @@ export const postSlice = createSlice({
       state.activeFilters = action.payload;
     },
     clearFilter(state, action) {
-      state.activeFilters = [];
+      state.activeFilters = {};
     },
   },
   extraReducers: {

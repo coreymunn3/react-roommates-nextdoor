@@ -8,17 +8,18 @@ import {
   amenitiesOptions,
 } from '../postForm/formOptions';
 // redux
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { setFilter } from '../../redux/postSlice';
 
 const FilterPostsForm = () => {
   const dispatch = useDispatch();
-  // form state
-  const initialFilterValues = {
-    maxRent: 0,
-    housingType: [],
-  };
-  const [selectedFilters, setSelectedFilters] = useState(initialFilterValues);
+  const { activeFilters } = useSelector((state) => state.post);
+  console.log(activeFilters);
+  // const initialFilterValues = {
+  //   rentMonthly: 0,
+  //   housingType: [],
+  // };
+  const [selectedFilters, setSelectedFilters] = useState(activeFilters);
 
   // change handlers
   const handleFieldChange = (e) => {
@@ -45,22 +46,17 @@ const FilterPostsForm = () => {
     }
   };
   const resetFields = () => {
-    setSelectedFilters(initialFilterValues);
+    setSelectedFilters({
+      rentMonthly: 0,
+      housingType: [],
+    });
   };
   // submit
   const handleSubmit = (e) => {
     e.preventDefault();
-    const filters = [];
-    // use array.reduce instead here? good idea.
-    if (selectedFilters.maxRent > 0) {
-      filters.push({ rentMonthly: selectedFilters.maxRent });
-    }
-    if (selectedFilters.housingType.length > 0) {
-      filters.push({ housingType: selectedFilters.housingType });
-    }
-    console.log(filters);
+    selectedFilters.rentMonthly = parseInt(selectedFilters.rentMonthly);
 
-    dispatch(setFilter(filters));
+    dispatch(setFilter(selectedFilters));
   };
   useEffect(() => {
     console.log(selectedFilters);
@@ -71,8 +67,8 @@ const FilterPostsForm = () => {
       <Form.Row>
         <Form.Group as={Col} xs='9' className='d-flex align-items-center'>
           <Form.Control
-            value={selectedFilters.maxRent}
-            name='maxRent'
+            value={selectedFilters.rentMonthly}
+            name='rentMonthly'
             type='range'
             onChange={handleFieldChange}
             min={0}
@@ -81,8 +77,8 @@ const FilterPostsForm = () => {
         </Form.Group>
         <Form.Group as={Col} xs='3'>
           <Form.Control
-            value={selectedFilters.maxRent}
-            name='maxRent'
+            value={selectedFilters.rentMonthly}
+            name='rentMonthly'
             onChange={handleFieldChange}
           />
         </Form.Group>
