@@ -115,6 +115,11 @@ export const postSlice = createSlice({
     setFilter(state, action) {
       state.activeFilters = action.payload;
     },
+    clearFilter(state, action) {
+      console.log(action.payload);
+      const { stateKey, stateDefault } = action.payload;
+      state.activeFilters[stateKey] = stateDefault;
+    },
     clearAllFilters(state, action) {
       state.activeFilters = {};
     },
@@ -243,4 +248,4 @@ export const postSlice = createSlice({
   },
 });
 
-export const { setFilter, clearAllFilters } = postSlice.actions;
+export const { setFilter, clearFilter, clearAllFilters } = postSlice.actions;

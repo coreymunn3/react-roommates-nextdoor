@@ -5,13 +5,14 @@ import { FaSortAmountDown, FaFilter } from 'react-icons/fa';
 import { MdClose } from 'react-icons/md';
 import FeedControlModal from '../feedControlModal/FeedControlModal';
 // styles
-import styles from './feedcontrols.module.scss';
+import styles from './sortFilterControls.module.scss';
 // redux
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
+import { clearFilter } from '../../redux/postSlice';
+import { mapReduxFilterStateToUI } from './filterStateMapping';
 
-import { createFilterPills } from '../../utils/filterUtils';
-
-const FeedControls = () => {
+const SortFilterControls = () => {
+  const dispatch = useDispatch();
   const { activeFilters } = useSelector((state) => state.post);
   // modal state
   const [controlOpen, setControlOpen] = useState(false);
@@ -20,6 +21,10 @@ const FeedControls = () => {
   const handleOpen = (title) => {
     setModalTitle(title);
     setControlOpen(true);
+  };
+
+  const handleClearFilter = (stateKey, stateDefault) => {
+    dispatch(clearFilter({ stateKey, stateDefault }));
   };
 
   return (
@@ -46,11 +51,20 @@ const FeedControls = () => {
         </Button>
         {
           /* Select activeFiltes array from state and Map active filters & sorts methods in same pill container as pills that are primary colors. */
-          createFilterPills(activeFilters).map((filter) => (
-            <Button key={filter} className={styles.pill}>
-              <span>{filter}</span> <MdClose />
-            </Button>
-          ))
+          mapReduxFilterStateToUI(activeFilters).map((filter, idx) => {
+            console.log(filter);
+            return (
+              <Button
+                key={idx}
+                className={styles.pill}
+                onClick={() =>
+                  handleClearFilter(filter.stateKey, filter.stateDefault)
+                }
+              >
+                <span>{filter.display}</span> <MdClose />
+              </Button>
+            );
+          })
         }
       </div>
 
@@ -63,4 +77,4 @@ const FeedControls = () => {
   );
 };
 
-export default FeedControls;
+export default SortFilterControls;

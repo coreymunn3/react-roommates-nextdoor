@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import FeedControls from '../../feedControls/FeedControls';
+import FeedControls from '../../sortFilterControls/SortFilterControls';
 import PostsContainer from '../../postsContainer/PostsContainer';
 import FeedControlToggle from '../../feedControlToggle/FeedControlToggle';
 import Accordion from 'react-bootstrap/Accordion';
