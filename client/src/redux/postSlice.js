@@ -96,15 +96,27 @@ export const unlikePost = createAsyncThunk(
   }
 );
 
+const initialActiveFilters = {
+  rentMonthly: 0,
+  housingType: [],
+  hasPrivateBath: false,
+  hasFurnishedRoom: false,
+  hasParkingIncluded: false,
+  hasWasherDryerInUnit: false,
+  hasPetsAllowed: false,
+  hasWifi: false,
+  hasCableTelevision: false,
+  hasKitchenAccess: false,
+  hasPoolAccess: false,
+  hasDrugTolerantCohabitants: false,
+};
+
 export const postSlice = createSlice({
   name: 'post',
   initialState: {
     newPost: null,
     currentPost: {},
-    activeFilters: {
-      rentMonthly: 0,
-      housingType: [],
-    },
+    activeFilters: initialActiveFilters,
     locationPosts: [],
     userPosts: [],
     isLoading: false,
@@ -121,7 +133,7 @@ export const postSlice = createSlice({
       state.activeFilters[stateKey] = stateDefault;
     },
     clearAllFilters(state, action) {
-      state.activeFilters = {};
+      state.activeFilters = initialActiveFilters;
     },
   },
   extraReducers: {

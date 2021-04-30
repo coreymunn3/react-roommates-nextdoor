@@ -52,7 +52,6 @@ const SortFilterControls = () => {
         {
           /* Select activeFiltes array from state and Map active filters & sorts methods in same pill container as pills that are primary colors. */
           mapReduxFilterStateToUI(activeFilters).map((filter, idx) => {
-            console.log(filter);
             return (
               <Button
                 key={idx}
