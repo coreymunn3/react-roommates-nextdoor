@@ -1,4 +1,4 @@
-export const filterPosts = (postsArray, filters) => {
+export const filterAndSortPosts = (postsArray, filters, sort) => {
   if (filters.rentMonthly > 0) {
     postsArray = postsArray.filter(
       (post) => post.rentMonthly < filters.rentMonthly
@@ -42,6 +42,24 @@ export const filterPosts = (postsArray, filters) => {
     postsArray = postsArray.filter(
       (post) => post.hasDrugTolerantCohabitants === true
     );
+  }
+  switch (sort) {
+    // had to spread the arrays for reasons below:
+    // https://stackoverflow.com/questions/53420055/error-while-sorting-array-of-objects-cannot-assign-to-read-only-property-2-of/53420326
+    case 'Newest':
+      // ...on sorting by dates
+      // https://stackoverflow.com/questions/10123953/how-to-sort-an-object-array-by-date-property
+      postsArray = [...postsArray].sort((a, b) => {
+        return new Date(b.datePosted) - new Date(a.datePosted);
+      });
+      break;
+    case 'Most Likes':
+      postsArray = [...postsArray].sort((a, b) => {
+        return b.likeCount - a.likeCount;
+      });
+      break;
+    default:
+      break;
   }
   return postsArray;
 };

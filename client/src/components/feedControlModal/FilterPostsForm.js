@@ -69,9 +69,7 @@ const FilterPostsForm = ({ handleClose }) => {
     selectedFilters.rentMonthly = parseInt(selectedFilters.rentMonthly);
     dispatch(setFilter(selectedFilters));
   };
-  useEffect(() => {
-    console.log(selectedFilters);
-  }, [selectedFilters]);
+
   return (
     <Form onSubmit={handleSubmit}>
       <h6>Desired Max Rent Price</h6>

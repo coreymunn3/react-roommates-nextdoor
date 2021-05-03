@@ -1,37 +1,27 @@
-import React, { useEffect } from 'react';
-import { useFormik } from 'formik';
-import * as yup from 'yup';
+import React, { useState, useEffect } from 'react';
 import Form from 'react-bootstrap/Form';
 import Col from 'react-bootstrap/Col';
 import Button from 'react-bootstrap/Button';
-import InputField from '../inputField/InputField';
+// redux
+import { useDispatch, useSelector } from 'react-redux';
+import { setSort } from '../../redux/postSlice';
 
-const SortPostsForm = () => {
+const SortPostsForm = ({ handleClose }) => {
+  const dispatch = useDispatch();
+  const { activeSort } = useSelector((state) => state.post);
   const sortOptions = ['Newest', 'Most Likes', 'No Sort'];
-  const validationSchema = yup.object({});
-  const {
-    handleSubmit,
-    handleChange,
-    handleBlur,
-    setSubmitting,
-    resetForm,
-    values,
-    touched,
-    errors,
-    isSubmitting,
-  } = useFormik({
-    initialValues: {
-      sortOptionPicked: 'No Sort',
-    },
-    validationSchema: validationSchema,
-    onSubmit: (values, actions) => {
-      console.log(values);
-    },
-  });
+  const [sortSelection, setSortSelection] = useState(activeSort);
 
-  useEffect(() => {
-    console.log(values);
-  }, [values]);
+  const handleChange = (e) => {
+    setSortSelection(e.target.value);
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    dispatch(setSort(sortSelection));
+    handleClose();
+  };
+
   return (
     <Form onSubmit={handleSubmit}>
       <Form.Row>
@@ -44,7 +34,7 @@ const SortPostsForm = () => {
               name='sortOptionPicked'
               label={option}
               value={option}
-              checked={values.sortOptionPicked === option}
+              checked={sortSelection === option}
               onChange={handleChange}
             />
           ))}
@@ -52,9 +42,7 @@ const SortPostsForm = () => {
       </Form.Row>
 
       <Form.Row>
-        <Form.Group>
-          <h5>Select Filters</h5>
-        </Form.Group>
+        <Button type='submit'>Sort</Button>
       </Form.Row>
     </Form>
   );

@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import PostCard from '../postCard/PostCard';
 import PostCardSkeleton from '../postCard/PostCardSkeleton';
-import { filterPosts } from '../../utils/filterUtils';
+import { filterAndSortPosts } from '../../utils/filterUtils';
 import styles from './postsContainer.module.scss';
 
 const NoPostsYet = () => {
@@ -14,16 +14,21 @@ const NoPostsYet = () => {
 };
 
 const PostsContainer = () => {
-  const [postsInFeed, setPostsInFeed] = useState([]);
-  const { locationPosts, activeFilters, isLoading: postsLoading } = useSelector(
-    (state) => state.post
-  );
+  const {
+    locationPosts,
+    activeFilters,
+    activeSort,
+    isLoading: postsLoading,
+  } = useSelector((state) => state.post);
+  const [postsInFeed, setPostsInFeed] = useState(locationPosts);
 
   // user posts from location & activeFilters to determine
   // which posts appear in the feed
   useEffect(() => {
-    setPostsInFeed(filterPosts(locationPosts, activeFilters));
-  }, [locationPosts, activeFilters]);
+    setPostsInFeed(
+      filterAndSortPosts(locationPosts, activeFilters, activeSort)
+    );
+  }, [locationPosts, activeFilters, activeSort]);
 
   return (
     <div className='my-2'>

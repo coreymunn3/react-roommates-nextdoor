@@ -8,12 +8,13 @@ import FeedControlModal from '../feedControlModal/FeedControlModal';
 import styles from './sortFilterControls.module.scss';
 // redux
 import { useSelector, useDispatch } from 'react-redux';
-import { clearFilter } from '../../redux/postSlice';
+import { clearFilter, clearSort } from '../../redux/postSlice';
 import { mapReduxFilterStateToUI } from './filterStateMapping';
+import { mapReduxSortStateToUI } from './sortStateMapping';
 
 const SortFilterControls = () => {
   const dispatch = useDispatch();
-  const { activeFilters } = useSelector((state) => state.post);
+  const { activeFilters, activeSort } = useSelector((state) => state.post);
   // modal state
   const [controlOpen, setControlOpen] = useState(false);
   const [modalTitle, setModalTitle] = useState('');
@@ -27,6 +28,10 @@ const SortFilterControls = () => {
     dispatch(clearFilter({ stateKey, stateDefault }));
   };
 
+  const handleClearSort = () => {
+    dispatch(clearSort());
+  };
+
   return (
     <Fragment>
       <div className={styles.pillContainer}>
@@ -38,7 +43,11 @@ const SortFilterControls = () => {
           <FaSortAmountDown />
           <span>{' Sort Posts'}</span>
         </Button>
-        {/* Select activeFiltes array from state and Map active filters & sorts methods in same pill container as pills that are primary colors. */}
+        {mapReduxSortStateToUI(activeSort).map((sort, idx) => (
+          <Button key={idx} className={styles.pill} onClick={handleClearSort}>
+            <span>{sort.display}</span> <MdClose />
+          </Button>
+        ))}
       </div>
       <div className={styles.pillContainer}>
         <Button
@@ -49,22 +58,19 @@ const SortFilterControls = () => {
           <FaFilter />
           <span>{' Filter Posts'}</span>
         </Button>
-        {
-          /* Select activeFiltes array from state and Map active filters & sorts methods in same pill container as pills that are primary colors. */
-          mapReduxFilterStateToUI(activeFilters).map((filter, idx) => {
-            return (
-              <Button
-                key={idx}
-                className={styles.pill}
-                onClick={() =>
-                  handleClearFilter(filter.stateKey, filter.stateDefault)
-                }
-              >
-                <span>{filter.display}</span> <MdClose />
-              </Button>
-            );
-          })
-        }
+        {mapReduxFilterStateToUI(activeFilters).map((filter, idx) => {
+          return (
+            <Button
+              key={idx}
+              className={styles.pill}
+              onClick={() =>
+                handleClearFilter(filter.stateKey, filter.stateDefault)
+              }
+            >
+              <span>{filter.display}</span> <MdClose />
+            </Button>
+          );
+        })}
       </div>
 
       <FeedControlModal

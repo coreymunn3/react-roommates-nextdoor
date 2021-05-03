@@ -117,6 +117,7 @@ export const postSlice = createSlice({
     newPost: null,
     currentPost: {},
     activeFilters: initialActiveFilters,
+    activeSort: 'No Sort',
     locationPosts: [],
     userPosts: [],
     isLoading: false,
@@ -128,12 +129,17 @@ export const postSlice = createSlice({
       state.activeFilters = action.payload;
     },
     clearFilter(state, action) {
-      console.log(action.payload);
       const { stateKey, stateDefault } = action.payload;
       state.activeFilters[stateKey] = stateDefault;
     },
     clearAllFilters(state, action) {
       state.activeFilters = initialActiveFilters;
+    },
+    setSort(state, action) {
+      state.activeSort = action.payload;
+    },
+    clearSort(state, action) {
+      state.activeSort = 'No Sort';
     },
   },
   extraReducers: {
@@ -260,4 +266,10 @@ export const postSlice = createSlice({
   },
 });
 
-export const { setFilter, clearFilter, clearAllFilters } = postSlice.actions;
+export const {
+  setFilter,
+  clearFilter,
+  clearAllFilters,
+  setSort,
+  clearSort,
+} = postSlice.actions;
