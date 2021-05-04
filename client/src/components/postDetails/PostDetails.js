@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styles from './postDetails.module.scss';
 import Spinner from 'react-bootstrap/Spinner';
 import Button from 'react-bootstrap/Button';
@@ -8,6 +8,7 @@ import Map from '../map/Map';
 import { Image } from 'cloudinary-react';
 import moment from 'moment';
 import transformAmenities from '../../utils/transformAmenities';
+import CaptchaModal from '../captchaModal/CaptchaModal';
 // icons
 import {
   FaHome,
@@ -21,6 +22,7 @@ import {
 import { useSelector } from 'react-redux';
 
 const PostDetails = () => {
+  const [captchaOpen, setCapthcaOpen] = useState(false);
   const {
     currentPost: {
       title,
@@ -150,11 +152,18 @@ const PostDetails = () => {
 
         <DetailSection title='Next Steps'>
           <p>
-            Interested and Looking to take the next steps? Contact the Poster
-            using one of the methods below to get started
+            Interested and Looking to take the next steps? Contact the poster
+            below to get started
           </p>
-          <Button>Message Author</Button>
+          <Button onClick={() => setCapthcaOpen(true)}>Message Author</Button>
         </DetailSection>
+
+        <CaptchaModal
+          open={captchaOpen}
+          title='Contact Post Owner'
+          handleClose={() => setCapthcaOpen(false)}
+          userInfo={postingUser}
+        />
       </div>
     );
   }
