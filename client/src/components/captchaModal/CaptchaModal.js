@@ -1,15 +1,24 @@
 import React, { useEffect, useState } from 'react';
 import CustomModal from '../customModal/CustomModal';
 import Recaptcha from 'react-recaptcha';
-import { Form } from 'react-bootstrap';
+import { FaRegCopy, FaCheck } from 'react-icons/fa';
+import styles from './captchaModal.module.scss';
 
 const CaptchaModal = ({ userInfo, ...props }) => {
   const [isVerified, setIsVerified] = useState(false);
+  const [copy, setCopy] = useState('');
   const onloadCallback = () => {
     console.log('recaptcha has been loaded');
   };
   const verifyCallback = (response) => {
     if (response) setIsVerified(true);
+  };
+  const expiredCallback = () => {
+    setIsVerified(false);
+  };
+  const handleCopy = () => {
+    setCopy(userInfo.email);
+    navigator.clipboard.writeText(userInfo.email);
   };
   return (
     <CustomModal {...props}>
@@ -19,8 +28,19 @@ const CaptchaModal = ({ userInfo, ...props }) => {
         render='explicit'
         onloadCallback={onloadCallback}
         verifyCallback={verifyCallback}
+        expiredCallback={expiredCallback}
       />
-      {isVerified && <p>{userInfo.email}</p>}
+      {isVerified && (
+        <div className='my-2'>
+          <p>Copy & Paste the owner's email address by clicking it.</p>
+          <div
+            className={`${styles.copyable} ${copy && styles.copied}`}
+            onClick={handleCopy}
+          >
+            {userInfo.email} <FaRegCopy /> {copy && <FaCheck />}
+          </div>
+        </div>
+      )}
     </CustomModal>
   );
 };

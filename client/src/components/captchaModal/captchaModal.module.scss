@@ -1,0 +1,11 @@
+@import '../../variables';
+.copyable {
+  cursor: pointer;
+  padding: 0.25rem;
+}
+.copyable:hover {
+  text-decoration: underline;
+}
+.copied {
+  background-color: $light;
+}
