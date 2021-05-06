@@ -232,7 +232,8 @@ const PostForm = ({ edit, initialValues }) => {
             label='Move In Date'
             type='date'
             name='moveInDate'
-            value={values.moveInDate}
+            value={edit ? values.moveInDate.split('T')[0] : values.moveInDate}
+            min={new Date().toISOString().split('T')[0]}
             onChange={handleChange}
             onBlur={handleBlur}
             isInvalid={touched.moveInDate && errors.moveInDate}
@@ -281,7 +282,7 @@ const PostForm = ({ edit, initialValues }) => {
             value={values.featureImage?.url}
             onBlur={handleBlur}
             error={errors.featureImage?.url}
-            touched={true}
+            touched={touched.featureImage?.url}
             multiple={false}
             onDone={({ base64 }) => {
               setFieldValue('featureImage.url', base64);
