@@ -3,11 +3,12 @@ const router = express.Router();
 const Post = require('../models/Post');
 const axios = require('axios');
 const geocodeAPIkey = process.env.GEOCODE_API_KEY;
+const requireAuth = require('../middleware/requireAuth');
 
 // GET api/posts
 // returns all posts from a user
 // @private
-router.get('/', async (req, res) => {
+router.get('/', requireAuth, async (req, res) => {
   try {
     const posts = await Post.find({ _user: req.user }).populate('_user').exec();
     res.status(200).json(posts);
@@ -20,7 +21,7 @@ router.get('/', async (req, res) => {
 // GET api/posts/location/:location
 // returns all posts from current city
 // @private
-router.get('/location/:locationId', async (req, res) => {
+router.get('/location/:locationId', requireAuth, async (req, res) => {
   try {
     const locationId = req.params.locationId;
     const posts = await Post.find({ _location: locationId })
@@ -35,7 +36,7 @@ router.get('/location/:locationId', async (req, res) => {
 // POST api/posts
 // allows user to submit a post
 // @private
-router.post('/', async (req, res) => {
+router.post('/', requireAuth, async (req, res) => {
   const { zipCode, streetAddress, featureImage, ...postData } = req.body;
   console.log(postData);
   console.log(featureImage);
@@ -72,7 +73,7 @@ router.post('/', async (req, res) => {
 // GET api/posts/:postId
 // returns single post matching postId passed in params
 // @private
-router.get('/:postId', async (req, res) => {
+router.get('/:postId', requireAuth, async (req, res) => {
   try {
     const postId = req.params.postId;
     const post = await Post.findOne({ _id: postId })
@@ -89,7 +90,7 @@ router.get('/:postId', async (req, res) => {
 // EDIT (patch) api/posts/:postId
 // Updates post at postId with body data
 // @private
-router.patch('/:postId', async (req, res) => {
+router.patch('/:postId', requireAuth, async (req, res) => {
   const postId = req.params.postId;
   // required in req.body: _user field
   const postContent = req.body;
@@ -116,9 +117,9 @@ router.patch('/:postId', async (req, res) => {
 // DELETE (patch) api/posts/:postId
 // Deletes a post with id postId
 // @private
-router.delete('/:postId', async (req, res) => {
+router.delete('/:postId', requireAuth, async (req, res) => {
   const postId = req.params.postId;
-  // delete document if id matches and user matches
+  // delete document if id matches and user matches posting user
   try {
     const deletedPost = await Post.findOneAndDelete({
       _id: postId,
@@ -134,7 +135,7 @@ router.delete('/:postId', async (req, res) => {
 // PATCH api/posts/:postId/like
 // incriments the likes of a post by 1 and adds user to likedBy array
 // @private
-router.patch('/:postId/like', async (req, res) => {
+router.patch('/:postId/like', requireAuth, async (req, res) => {
   const postId = req.params.postId;
   // update post like count & likedBy array
   try {
@@ -173,7 +174,7 @@ router.patch('/:postId/like', async (req, res) => {
 // PATCH api/posts/:postId/unlike
 // decrements the likes of a post by 1 and removes user from likedBy array
 // @private
-router.patch('/:postId/unlike', async (req, res) => {
+router.patch('/:postId/unlike', requireAuth, async (req, res) => {
   const postId = req.params.postId;
   // update post like count & likedBy array
   try {

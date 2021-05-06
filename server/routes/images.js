@@ -1,8 +1,12 @@
 const express = require('express');
 const router = express.Router();
 const cloudinary = require('../config/cloudinary');
+const requireAuth = require('../middleware/requireAuth');
 
-router.post('/', async (req, res) => {
+// POST api/images
+// Uploads base64 Image to Cloudinary, returns the image in response
+// @private
+router.post('/', requireAuth, async (req, res) => {
   const { base64Image, type } = req.body;
   try {
     const uploadedImage = await cloudinary.uploader.upload(base64Image, {

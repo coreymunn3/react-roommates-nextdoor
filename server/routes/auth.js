@@ -4,6 +4,7 @@ const passport = require('passport');
 // Hashing Password as described here with bcrypt:
 // https://github.com/dcodeIO/bcrypt.js#usage---async
 const bcrypt = require('bcryptjs');
+const requireAuth = require('../middleware/requireAuth');
 require('../services/passport')(passport);
 
 // MODELS
@@ -125,7 +126,7 @@ router.post('/signup', async (req, res) => {
 // PATCH auth/updateprofile
 // Updates user profile data based on request body
 // @private
-router.patch('/updateprofile', async (req, res) => {
+router.patch('/updateprofile', requireAuth, async (req, res) => {
   const newUserInfo = req.body;
   // make sure request is not empty
   if (!newUserInfo) {
