@@ -17,7 +17,10 @@ const Location = require('../models/Location');
 router.get('/currentuser', async (req, res) => {
   if (req.user) {
     // res.status(200).json({ loggedIn: true, user: req.user });
-    const currentUser = await User.findOne({ _id: req.user._id })
+    const currentUser = await User.findOne(
+      { _id: req.user._id },
+      { password: 0 }
+    )
       .populate('_location')
       .exec();
     res.status(200).json({ loggedIn: true, user: currentUser });

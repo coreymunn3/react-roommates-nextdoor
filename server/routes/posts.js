@@ -10,7 +10,9 @@ const requireAuth = require('../middleware/requireAuth');
 // @private
 router.get('/', requireAuth, async (req, res) => {
   try {
-    const posts = await Post.find({ _user: req.user }).populate('_user').exec();
+    const posts = await Post.find({ _user: req.user })
+      .populate('_user', { password: 0 })
+      .exec();
     res.status(200).json(posts);
   } catch (error) {
     console.log(error);
@@ -25,7 +27,7 @@ router.get('/location/:locationId', requireAuth, async (req, res) => {
   try {
     const locationId = req.params.locationId;
     const posts = await Post.find({ _location: locationId })
-      .populate('_user')
+      .populate('_user', { password: 0 })
       .exec();
     res.status(200).json(posts);
   } catch (error) {
@@ -78,7 +80,7 @@ router.get('/:postId', requireAuth, async (req, res) => {
     const postId = req.params.postId;
     const post = await Post.findOne({ _id: postId })
       .populate('_location')
-      .populate('_user')
+      .populate('_user', { password: 0 })
       .exec();
     res.status(200).json(post);
   } catch (error) {
@@ -105,7 +107,7 @@ router.patch('/:postId', requireAuth, async (req, res) => {
       { $set: postContent },
       { new: true }
     )
-      .populate('_user')
+      .populate('_user', { password: 0 })
       .exec();
     res.status(200).json(updatedPost);
   } catch (error) {
@@ -150,7 +152,7 @@ router.patch('/:postId/like', requireAuth, async (req, res) => {
       },
       { new: true }
     )
-      .populate('_user')
+      .populate('_user', { password: 0 })
       .exec();
     if (updatedPost) {
       res.status(200).json(updatedPost);
@@ -189,7 +191,7 @@ router.patch('/:postId/unlike', requireAuth, async (req, res) => {
       },
       { new: true }
     )
-      .populate('_user')
+      .populate('_user', { password: 0 })
       .exec();
     if (updatedPost) {
       res.status(200).json(updatedPost);
