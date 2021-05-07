@@ -7,11 +7,13 @@ const PrivateRoute = ({ component: Component, ...props }) => {
   const [isAuthenticated, setIsAuthenticated] = useState(true);
 
   useEffect(() => {
-    if (user?.loggedIn && !isLoading) {
+    if (user && !isLoading) {
+      console.log(user);
       console.log('not loading, is logged in');
       setIsAuthenticated(true);
     }
-    if (!user?.loggedIn && !isLoading) {
+    if (!user && !isLoading) {
+      console.log(user);
       console.log('not loading, not logged in');
       setIsAuthenticated(false);
     }

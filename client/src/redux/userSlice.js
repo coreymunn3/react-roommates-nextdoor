@@ -71,7 +71,7 @@ export const userSlice = createSlice({
   name: 'user',
   initialState: {
     user: null,
-    isLoading: false,
+    isLoading: true,
     isError: false,
     errorMessage: null,
   },
