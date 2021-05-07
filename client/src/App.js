@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+import PrivateRoute from './components/routes/privateRoute/PrivateRoute';
 import Login from './components/routes/login/Login';
 import Signup from './components/routes/signup/Signup';
 import Feed from './components/routes/feed/Feed';
@@ -27,11 +28,11 @@ const App = () => {
         <Route exact path='/signup' component={Signup} />
         <Route exact path='/login' component={Login} />
         <PageLayout>
-          <Route exact path='/feed' component={Feed} />
-          <Route path='/feed/:id' component={Listing} />
-          <Route exact path='/new-post' component={NewPost} />
-          <Route exact path='/myprofile' component={MyProfile} />
-          <Route exact path='/myposts' component={MyPosts} />
+          <PrivateRoute exact path='/feed' component={Feed} />
+          <PrivateRoute path='/feed/:id' component={Listing} />
+          <PrivateRoute exact path='/new-post' component={NewPost} />
+          <PrivateRoute exact path='/myprofile' component={MyProfile} />
+          <PrivateRoute exact path='/myposts' component={MyPosts} />
         </PageLayout>
       </Switch>
     </Router>
