@@ -1,14 +1,27 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Route, Redirect } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 
 const PrivateRoute = ({ component: Component, ...props }) => {
-  const { user } = useSelector((state) => state.user);
+  const { user, isLoading } = useSelector((state) => state.user);
+  const [isAuthenticated, setIsAuthenticated] = useState(true);
+
+  useEffect(() => {
+    if (user?.loggedIn && !isLoading) {
+      console.log('not loading, is logged in');
+      setIsAuthenticated(true);
+    }
+    if (!user?.loggedIn && !isLoading) {
+      console.log('not loading, not logged in');
+      setIsAuthenticated(false);
+    }
+  }, [user, isLoading]);
+
   return (
     <Route
       {...props}
       render={(props) =>
-        user?.loggedIn ? <Component {...props} /> : <Redirect to='login' />
+        isAuthenticated ? <Component {...props} /> : <Redirect to='/login' />
       }
     ></Route>
   );
