@@ -7,7 +7,7 @@ const InputFieldSelect = ({ label, name, error, options, ...rest }) => {
       <Form.Label>{label}</Form.Label>
       <Form.Control name={name} {...rest}>
         <option hidden value>
-          Choose Type
+          Choose
         </option>
         {options.map((opt, idx) => (
           <option key={idx}>{opt}</option>

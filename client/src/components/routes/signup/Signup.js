@@ -1,14 +1,16 @@
 import React, { useEffect, useState } from 'react';
 import { useHistory, Link } from 'react-router-dom';
+import { useFormik } from 'formik';
+import * as yup from 'yup';
 // Bootstrap compponents
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import Col from 'react-bootstrap/Col';
 import Alert from 'react-bootstrap/Alert';
+import InputField from '../../inputField/InputField';
+import InputFieldSelect from '../../inputFieldSelect/InputFieldSelect';
 // style - using same style as signup
 import styles from './signup.module.scss';
-// fields
-import signupFields from './signupFields';
 // redux
 import { useDispatch, useSelector } from 'react-redux';
 import { signupUser } from '../../../redux/userSlice';
@@ -34,41 +36,43 @@ const Signup = () => {
     }
   }, [isError, user, isLoading]);
 
-  // form state
-  const initialFormState = {
-    username: '',
-    email: '',
-    password: '',
-    confirmPassword: '',
-    city: '',
-    state: '',
-  };
-  const [newUser, setNewUser] = useState(initialFormState);
+  const formik = useFormik({
+    initialValues: {
+      username: '',
+      email: '',
+      password: '',
+      confirmPassword: '',
+      location: '',
+    },
+    validationSchema: yup.object({
+      username: yup.string().required('Required'),
+      email: yup
+        .string()
+        .email('Please Enter a Valid Email')
+        .required('Required'),
+      password: yup
+        .string()
+        .min(8, 'Must be at least 8 characters')
+        .max(20, 'Cannot be more than 20 characters')
+        .required('Required'),
+      confirmPassword: yup
+        .string()
+        .oneOf([yup.ref('password')], 'Passwords Must Match')
+        .required('Required'),
+      location: yup.string().required('Required'),
+    }),
+    onSubmit: async (values, actions) => {
+      console.log('submitting');
+      console.log(values);
+      dispatch(signupUser(values));
+      actions.setSubmitting(false);
+    },
+  });
 
-  // handles form change for all but location
-  const handleChange = (e) => {
-    setNewUser({
-      ...newUser,
-      [e.target.name]: e.target.value,
-    });
-  };
-  // handles form change for location
-  const handleSetLocation = (e) => {
-    const chosenLocation = locations.filter(
-      (location) => location._id === e.target.value
-    );
-    setNewUser({
-      ...newUser,
-      city: chosenLocation[0].city,
-      state: chosenLocation[0].state,
-    });
-  };
-
-  // submit form data
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    dispatch(signupUser(newUser));
-  };
+  useEffect(() => {
+    console.log(formik.values);
+    console.log(formik.errors);
+  }, [formik.values, formik.errors]);
 
   return (
     <div className={styles.pageContainer}>
@@ -84,47 +88,85 @@ const Signup = () => {
         )}
       </div>
 
-      <div className={styles.formContainer}>
+      <div className={`${styles.formContainer} shadow`}>
         <h3 className='text-center'>Sign Up</h3>
-        <Form onSubmit={handleSubmit} className={styles.form}>
-          {signupFields.map((field) => (
-            <Form.Row key={field.name}>
-              <Form.Group as={Col} controlId={field.controlId}>
-                <Form.Label>{field.label}</Form.Label>
-                <Form.Control
-                  name={field.name}
-                  type={field.type}
-                  required={field.required}
-                  placeholder={field.placeholder}
-                  value={newUser[field.name]}
-                  onChange={handleChange}
-                />
-              </Form.Group>
-            </Form.Row>
-          ))}
+
+        <Form onSubmit={formik.handleSubmit}>
+          <Form.Row>
+            <Form.Group as={Col}>
+              <InputField
+                label='Username'
+                type='text'
+                name='username'
+                value={formik.values.username}
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
+                isInvalid={formik.touched.username && formik.errors.username}
+                error={formik.errors.username}
+              />
+            </Form.Group>
+          </Form.Row>
+          <Form.Row>
+            <Form.Group as={Col}>
+              <InputField
+                label='Email'
+                type='text'
+                name='email'
+                value={formik.values.email}
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
+                isInvalid={formik.touched.email && formik.errors.email}
+                error={formik.errors.email}
+              />
+            </Form.Group>
+          </Form.Row>
+          <Form.Row>
+            <Form.Group as={Col}>
+              <InputField
+                label='Password'
+                type='password'
+                name='password'
+                value={formik.values.password}
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
+                isInvalid={formik.touched.password && formik.errors.password}
+                error={formik.errors.password}
+              />
+            </Form.Group>
+          </Form.Row>
+          <Form.Row>
+            <Form.Group as={Col}>
+              <InputField
+                label='Confirm Password'
+                type='password'
+                name='confirmPassword'
+                value={formik.values.confirmPassword}
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
+                isInvalid={
+                  formik.touched.confirmPassword &&
+                  formik.errors.confirmPassword
+                }
+                error={formik.errors.confirmPassword}
+              />
+            </Form.Group>
+          </Form.Row>
 
           <Form.Row>
-            <Form.Group as={Col} controlId='formLocation'>
-              <Form.Label>Select Your Location</Form.Label>
-              <Form.Control
-                required
-                name='location'
+            <Form.Group as={Col}>
+              <InputFieldSelect
+                label='Choose Location'
                 as='select'
-                defaultValue={0}
-                value={newUser.location}
-                onChange={handleSetLocation}
-              >
-                <option hidden value>
-                  Choose Browsing Location...
-                </option>
-                {locations &&
-                  locations.map((location) => (
-                    <option
-                      key={location._id}
-                      value={location._id}
-                    >{`${location.city}, ${location.state}`}</option>
-                  ))}
-              </Form.Control>
+                name='location'
+                value={formik.values.location}
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
+                isInvalid={formik.touched.location && formik.errors.location}
+                error={formik.errors.location}
+                options={locations.map(
+                  (location) => `${location.city},${location.state}`
+                )}
+              />
             </Form.Group>
           </Form.Row>
 

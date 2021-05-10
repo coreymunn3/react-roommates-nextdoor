@@ -1,15 +1,9 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import validateLogin from '../utils/validateLogin';
-import validateSignup from '../utils/validateSignup';
 import { userAPI } from '../api';
 // thunks
 export const signupUser = createAsyncThunk(
   'user/signupUser',
   async (newUserData, thunkAPI) => {
-    const validationErrors = validateSignup(newUserData);
-    if (validationErrors) {
-      return thunkAPI.rejectWithValue(validationErrors);
-    }
     try {
       const { data } = await userAPI.signup(newUserData);
       return data;
@@ -21,10 +15,6 @@ export const signupUser = createAsyncThunk(
 export const loginUser = createAsyncThunk(
   'user/loginUser',
   async (userData, thunkAPI) => {
-    const validationErrors = validateLogin(userData);
-    if (validationErrors) {
-      return thunkAPI.rejectWithValue(validationErrors);
-    }
     try {
       const { data } = await userAPI.login(userData);
       return data;

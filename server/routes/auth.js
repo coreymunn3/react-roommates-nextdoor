@@ -74,8 +74,8 @@ router.post('/login', (req, res, next) => {
 // Signs up user given signup form data
 // @public
 router.post('/signup', async (req, res) => {
-  const { username, password, email, city, state } = req.body;
-  if (!username || !password || !city || !state) {
+  const { username, password, email, location } = req.body;
+  if (!username || !password || !location) {
     res.status(400).json({
       error:
         'Missing Required Information - username, password, city, or state',
@@ -89,8 +89,8 @@ router.post('/signup', async (req, res) => {
     // get location
     try {
       const userLocation = await Location.findOne({
-        city: city,
-        state: state,
+        city: location.split(',')[0],
+        state: location.split(',')[1],
       });
       // location doesn't exist, exit
       if (!userLocation) {
