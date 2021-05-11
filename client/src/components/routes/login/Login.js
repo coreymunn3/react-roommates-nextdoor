@@ -1,10 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import { useHistory, Link } from 'react-router-dom';
+import { useFormik } from 'formik';
+import * as yup from 'yup';
 // Bootstrap compponents
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import Col from 'react-bootstrap/Col';
 import Alert from 'react-bootstrap/Alert';
+import InputField from '../../inputField/InputField';
 // style
 import styles from './login.module.scss';
 // fields to map
@@ -33,26 +36,26 @@ const Login = () => {
     }
   }, [isError, user, isLoading]);
 
-  // form state
-  const initialFormState = {
-    username: '',
-    password: '',
-  };
-  const [userData, setUserData] = useState(initialFormState);
-
-  // handles form change for all but location
-  const handleChange = (e) => {
-    setUserData({
-      ...userData,
-      [e.target.name]: e.target.value,
-    });
-  };
-
   // submit form data
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    dispatch(loginUser(userData));
-  };
+  // const handleSubmit = async (e) => {
+  //   e.preventDefault();
+  //   dispatch(loginUser(userData));
+  // };
+
+  const formik = useFormik({
+    initialValues: {
+      username: '',
+      password: '',
+    },
+    validationSchema: yup.object({
+      username: yup.string().required('Required'),
+      password: yup.string().required('Required'),
+    }),
+    onSubmit: async (values, actions) => {
+      dispatch(loginUser(values));
+      actions.setSubmitting(false);
+    },
+  });
 
   return (
     <div className={styles.pageContainer}>
@@ -70,7 +73,51 @@ const Login = () => {
 
       <div className={styles.formContainer}>
         <h3 className='text-center'>Log In</h3>
-        <Form onSubmit={handleSubmit} className={styles.form}>
+
+        <Form onSubmit={formik.handleSubmit}>
+          <Form.Row>
+            <Form.Group as={Col}>
+              <InputField
+                label='Username'
+                name='username'
+                type='text'
+                value={formik.values.username}
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
+                isInvalid={formik.touched.username && formik.errors.username}
+                error={formik.errors.username}
+              />
+            </Form.Group>
+          </Form.Row>
+          <Form.Row>
+            <Form.Group as={Col}>
+              <InputField
+                label='Password'
+                name='password'
+                type='password'
+                value={formik.values.password}
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
+                isInvalid={formik.touched.password && formik.errors.password}
+                error={formik.errors.password}
+              />
+            </Form.Group>
+          </Form.Row>
+
+          <Button
+            variant='primary'
+            type='submit'
+            block
+            disabled={isLoading || formik.isSubmitting}
+          >
+            {isLoading || formik.isSubmitting ? 'Processing...' : 'Log In'}
+          </Button>
+          <Form.Text className='text-center'>
+            {'Still dont have an account? '}
+            <Link to='/signup'>Sign Up</Link>
+          </Form.Text>
+        </Form>
+        {/* <Form onSubmit={handleSubmit} className={styles.form}>
           {loginFields.map((field) => (
             <Form.Row key={field.name}>
               <Form.Group as={Col} controlId={field.controlId}>
@@ -93,7 +140,7 @@ const Login = () => {
             {'Still dont have an account? '}
             <Link to='/signup'>Sign Up</Link>
           </Form.Text>
-        </Form>
+        </Form> */}
       </div>
     </div>
   );

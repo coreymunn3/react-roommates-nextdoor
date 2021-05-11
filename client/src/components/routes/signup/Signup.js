@@ -62,17 +62,10 @@ const Signup = () => {
       location: yup.string().required('Required'),
     }),
     onSubmit: async (values, actions) => {
-      console.log('submitting');
-      console.log(values);
       dispatch(signupUser(values));
       actions.setSubmitting(false);
     },
   });
-
-  useEffect(() => {
-    console.log(formik.values);
-    console.log(formik.errors);
-  }, [formik.values, formik.errors]);
 
   return (
     <div className={styles.pageContainer}>
@@ -170,8 +163,13 @@ const Signup = () => {
             </Form.Group>
           </Form.Row>
 
-          <Button variant='primary' type='submit' block disabled={isLoading}>
-            {isLoading ? 'Processing...' : 'Sign Up'}
+          <Button
+            variant='primary'
+            type='submit'
+            block
+            disabled={isLoading || formik.isSubmitting}
+          >
+            {isLoading || formik.isSubmitting ? 'Processing...' : 'Sign Up'}
           </Button>
           <Form.Text className='text-center'>
             {'Already have an account? '}
