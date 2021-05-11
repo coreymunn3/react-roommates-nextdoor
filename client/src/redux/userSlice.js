@@ -57,6 +57,11 @@ export const updateProfile = createAsyncThunk(
   }
 );
 
+export async function checkUsernameAvailability(query) {
+  const { data } = await userAPI.searchUsername(query);
+  return data;
+}
+
 export const userSlice = createSlice({
   name: 'user',
   initialState: {

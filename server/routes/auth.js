@@ -156,4 +156,26 @@ router.patch('/updateprofile', requireAuth, async (req, res) => {
   }
 });
 
+// GET auth/username
+// check to see if username exists or is taken
+// @public
+router.post('/username', async (req, res) => {
+  const query = req.body.query;
+  try {
+    const user = await User.findOne({ username: query });
+    if (user) {
+      // result object in return tells client if name is available
+      // if it exists, username is NOT available, return false
+      res.status(200).json({ searched: query, available: false });
+    } else {
+      // otherwise it IS available
+      res.status(200).json({ searched: query, available: true });
+    }
+  } catch (error) {
+    res
+      .status(500)
+      .json({ error: 'Server Error, could not check Username availability' });
+  }
+});
+
 module.exports = router;

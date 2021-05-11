@@ -13,7 +13,10 @@ import InputFieldSelect from '../../inputFieldSelect/InputFieldSelect';
 import styles from './signup.module.scss';
 // redux
 import { useDispatch, useSelector } from 'react-redux';
-import { signupUser } from '../../../redux/userSlice';
+import {
+  signupUser,
+  checkUsernameAvailability,
+} from '../../../redux/userSlice';
 
 const Signup = () => {
   const dispatch = useDispatch();
@@ -45,7 +48,16 @@ const Signup = () => {
       location: '',
     },
     validationSchema: yup.object({
-      username: yup.string().required('Required'),
+      username: yup
+        .string()
+        .max(25, 'Cannot be more than 25 characters')
+        .test({
+          name: 'isAvailable',
+          message: `username is not available`,
+          test: async (value, testContext) =>
+            (await checkUsernameAvailability(value)).available === true,
+        })
+        .required('Required'),
       email: yup
         .string()
         .email('Please Enter a Valid Email')
@@ -66,6 +78,11 @@ const Signup = () => {
       actions.setSubmitting(false);
     },
   });
+
+  // useEffect(() => {
+  //   console.log(formik.values);
+  //   console.log(formik.errors);
+  // }, [formik.values, formik.errors]);
 
   return (
     <div className={styles.pageContainer}>

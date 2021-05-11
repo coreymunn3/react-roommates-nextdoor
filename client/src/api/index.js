@@ -18,6 +18,12 @@ export const userAPI = {
     axios.patch(`${baseUrl}/auth/updateprofile`, newUserData, {
       withCredentials: true,
     }),
+  searchUsername: (query) =>
+    axios.post(
+      `${baseUrl}/auth/username`,
+      { query },
+      { withCredentials: true }
+    ),
 };
 
 export const postAPI = {
