@@ -14,15 +14,23 @@ import NotFound from './components/routes/notFound/NotFound';
 import './App.global.scss';
 // redux
 import { useDispatch } from 'react-redux';
-import { getUser } from './redux/userSlice';
+import { getUser, setUserFromLS } from './redux/userSlice';
 import { getAllLocations } from './redux/locationSlice';
 
 const App = () => {
   const dispatch = useDispatch();
   useEffect(() => {
-    dispatch(getUser());
+    // set user state
+    if (localStorage.getItem('userState')) {
+      const payload = JSON.parse(localStorage.getItem('userState'));
+      dispatch(setUserFromLS(payload));
+    } else {
+      dispatch(getUser());
+    }
+    // get locations
     dispatch(getAllLocations());
   }, []);
+
   return (
     <Router>
       <Switch>
