@@ -1,14 +1,11 @@
 import React from 'react';
 import FullHeightContainer from '../../layout/fullHeightContainer/FullHeightContainer';
-import PageLayout from '../../layout/PageLayout';
 
-const NotFound = () => {
+const NotFound = ({ message = 'Page Not Found' }) => {
   return (
-    <PageLayout>
-      <FullHeightContainer>
-        <h1>404 | Page Not Found</h1>
-      </FullHeightContainer>
-    </PageLayout>
+    <FullHeightContainer>
+      <h1>404 | {message}</h1>
+    </FullHeightContainer>
   );
 };
 
