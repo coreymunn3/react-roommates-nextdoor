@@ -1,5 +1,6 @@
 const express = require('express');
 const router = express.Router();
+const mongoose = require('mongoose');
 const Post = require('../models/Post');
 const axios = require('axios');
 const geocodeAPIkey = process.env.GEOCODE_API_KEY;
@@ -76,16 +77,19 @@ router.post('/', requireAuth, async (req, res) => {
 // returns single post matching postId passed in params
 // @private
 router.get('/:postId', requireAuth, async (req, res) => {
-  try {
-    const postId = req.params.postId;
-    const post = await Post.findOne({ _id: postId })
-      .populate('_location')
-      .populate('_user', { password: 0 })
-      .exec();
-    res.status(200).json(post);
-  } catch (error) {
-    console.log(error);
+  const postId = req.params.postId;
+  if (!mongoose.Types.ObjectId.isValid(postId)) {
     res.status(500).json({ error: 'No Post with that ID' });
+  } else {
+    try {
+      const post = await Post.findOne({ _id: postId })
+        .populate('_location')
+        .populate('_user', { password: 0 })
+        .exec();
+      res.status(200).json(post);
+    } catch (error) {
+      console.log(error);
+    }
   }
 });
 

@@ -23,79 +23,58 @@ import { useSelector } from 'react-redux';
 
 const PostDetails = () => {
   const [captchaOpen, setCapthcaOpen] = useState(false);
-  const {
-    currentPost: {
-      title,
-      body,
-      geographicCoordinates,
-      datePosted,
-      likeCount,
-      featureImage,
-      housingType,
-      roomPrivacy,
-      numberOfCohabitants,
-      moveInDate,
-      rentMonthly,
-      securityDeposit,
-      totalMoveInCost,
-      otherFeesMonthly,
-      _user: postingUser,
-      _location,
-      ...otherDetails
-    },
-    isLoading,
-  } = useSelector((state) => state.post);
+  const { currentPost, isLoading } = useSelector((state) => state.post);
 
   const iconSize = '1.5rem';
   const descriptionList = [
     {
-      title: housingType,
+      title: currentPost.housingType,
       icon: <FaHome size={iconSize} />,
     },
     {
-      title: roomPrivacy,
+      title: currentPost.roomPrivacy,
       icon:
-        roomPrivacy === 'Room Private' ? (
+        currentPost.roomPrivacy === 'Room Private' ? (
           <FaLock size={iconSize} />
         ) : (
           <FaUnlock size={iconSize} />
         ),
     },
     {
-      title: `${numberOfCohabitants} Other Person (${
-        numberOfCohabitants + 1
+      title: `${currentPost.numberOfCohabitants} Other Person (${
+        currentPost.numberOfCohabitants + 1
       } Total Residents)`,
       icon: <FaUsers size={iconSize} />,
     },
     {
-      title: `Move In ${new Date(moveInDate).toLocaleDateString()}, ${moment(
-        moveInDate
-      ).fromNow()}`,
+      title: `Move In ${new Date(
+        currentPost.moveInDate
+      ).toLocaleDateString()}, ${moment(currentPost.moveInDate).fromNow()}`,
       icon: <FaCalendarCheck size={iconSize} />,
     },
   ];
-  const amenityList = transformAmenities(otherDetails, iconSize);
+  const amenityList = transformAmenities(currentPost, iconSize);
   const costList = [
     {
-      title: `Total Move In Cost $${totalMoveInCost}`,
+      title: `Total Move In Cost $${currentPost.totalMoveInCost}`,
       icon: <FaDollarSign size={iconSize} />,
     },
     {
-      title: `Monthly Rent $${rentMonthly}`,
+      title: `Monthly Rent $${currentPost.rentMonthly}`,
       icon: <FaDollarSign size={iconSize} />,
     },
     {
-      title: `Security Deposit $${securityDeposit}`,
+      title: `Security Deposit $${currentPost.securityDeposit}`,
       icon: <FaDollarSign size={iconSize} />,
     },
     {
-      title: `Other Monthly Expenses (approx) $${otherFeesMonthly}`,
+      title: `Other Monthly Expenses (approx) $${currentPost.otherFeesMonthly}`,
       icon: <FaDollarSign size={iconSize} />,
     },
   ];
 
   const mapCircle = {
-    center: geographicCoordinates,
+    center: currentPost.geographicCoordinates,
     radius: 400,
     options: {
       strokeColor: '#ff0000',
@@ -114,22 +93,24 @@ const PostDetails = () => {
   } else {
     return (
       <div>
-        <h3>{title}</h3>
+        <h3>{currentPost.title}</h3>
         <div className={styles.headerDetails}>
           <small className='mr-3 text-muted'>
-            {`${moment(datePosted).fromNow()}, by ${postingUser?.username}`}
+            {`${moment(currentPost.datePosted).fromNow()}, by ${
+              currentPost.postingUser?.username
+            }`}
           </small>
-          <small className='mr-3 text-muted'>{`${likeCount} likes`}</small>
+          <small className='mr-3 text-muted'>{`${currentPost.likeCount} likes`}</small>
         </div>
         <div className={styles.imageContainer}>
           <Image
             className={styles.featureImage}
-            publicId={featureImage?.public_id}
+            publicId={currentPost.featureImage?.public_id}
           ></Image>
         </div>
 
         <DetailSection title='Room Description'>
-          <p>{body}</p>
+          <p>{currentPost.body}</p>
           <SplitColumnSection items={descriptionList} />
         </DetailSection>
 
@@ -162,7 +143,7 @@ const PostDetails = () => {
           open={captchaOpen}
           title='Contact Post Owner'
           handleClose={() => setCapthcaOpen(false)}
-          userInfo={postingUser}
+          userInfo={currentPost.postingUser}
         />
       </div>
     );

@@ -44,7 +44,7 @@ export const getPostsByLocation = createAsyncThunk(
       const { data } = await postAPI.getPostsByLocation(locationId);
       return data;
     } catch (error) {
-      thunkAPI.rejectWithValue(error.response.data.error);
+      return thunkAPI.rejectWithValue(error.response.data.error);
     }
   }
 );
@@ -56,7 +56,7 @@ export const getPostById = createAsyncThunk(
       const { data } = await postAPI.getPostById(postId);
       return data;
     } catch (error) {
-      thunkAPI.rejectWithValue(error.response.data.error);
+      return thunkAPI.rejectWithValue(error.response.data.error);
     }
   }
 );
@@ -68,7 +68,7 @@ export const getPostByUser = createAsyncThunk(
       const { data } = await postAPI.getPostByUser();
       return data;
     } catch (error) {
-      thunkAPI.rejectWithValue(error.response.data.error);
+      return thunkAPI.rejectWithValue(error.response.data.error);
     }
   }
 );
@@ -80,7 +80,7 @@ export const likePost = createAsyncThunk(
       const { data } = await postAPI.likePost(postId);
       return data;
     } catch (error) {
-      thunkAPI.rejectWithValue(error.response.data.error);
+      return thunkAPI.rejectWithValue(error.response.data.error);
     }
   }
 );
@@ -91,7 +91,7 @@ export const unlikePost = createAsyncThunk(
       const { data } = await postAPI.unlikePost(postId);
       return data;
     } catch (error) {
-      thunkAPI.rejectWithValue(error.response.data.error);
+      return thunkAPI.rejectWithValue(error.response.data.error);
     }
   }
 );

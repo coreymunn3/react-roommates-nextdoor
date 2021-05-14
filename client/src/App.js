@@ -42,8 +42,8 @@ const App = () => {
           <PrivateRoute exact path='/new-post' component={NewPost} />
           <PrivateRoute exact path='/myprofile' component={MyProfile} />
           <PrivateRoute exact path='/myposts' component={MyPosts} />
-          <Route component={NotFound} />
         </PageLayout>
+        <Route component={NotFound} />
       </Switch>
     </Router>
   );
