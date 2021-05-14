@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import PageLayout from '../../layout/PageLayout';
 import { Route, Redirect } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 
@@ -12,7 +13,9 @@ const PrivateRoute = ({ component: Component, ...props }) => {
         !user?.loggedIn && !isLoading ? (
           <Redirect to='/login' />
         ) : (
-          <Component {...props} />
+          <PageLayout>
+            <Component {...props} />
+          </PageLayout>
         )
       }
     ></Route>

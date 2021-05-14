@@ -5,7 +5,6 @@ import Login from './components/routes/login/Login';
 import Signup from './components/routes/signup/Signup';
 import Feed from './components/routes/feed/Feed';
 import NewPost from './components/routes/newPost/NewPost';
-import PageLayout from './components/layout/PageLayout';
 import Listing from './components/routes/listing/Listing';
 import MyProfile from './components/routes/myProfile/MyProfile';
 import MyPosts from './components/routes/myPosts/MyPosts';
@@ -36,13 +35,11 @@ const App = () => {
       <Switch>
         <Route exact path='/signup' component={Signup} />
         <Route exact path='/login' component={Login} />
-        <PageLayout>
-          <PrivateRoute exact path='/feed' component={Feed} />
-          <PrivateRoute path='/feed/:id' component={Listing} />
-          <PrivateRoute exact path='/new-post' component={NewPost} />
-          <PrivateRoute exact path='/myprofile' component={MyProfile} />
-          <PrivateRoute exact path='/myposts' component={MyPosts} />
-        </PageLayout>
+        <PrivateRoute exact path='/feed' component={Feed} />
+        <PrivateRoute path='/feed/:id' component={Listing} />
+        <PrivateRoute exact path='/new-post' component={NewPost} />
+        <PrivateRoute exact path='/myprofile' component={MyProfile} />
+        <PrivateRoute exact path='/myposts' component={MyPosts} />
         <Route component={NotFound} />
       </Switch>
     </Router>
