@@ -208,3 +208,25 @@ router.patch('/:postId/unlike', requireAuth, async (req, res) => {
   }
 });
 module.exports = router;
+
+// POST api/posts/search/:query
+// Searches the database for posts with title or body that matches the input data
+// @private
+
+router.get('/search/:query', requireAuth, async (req, res) => {
+  const query = req.params.query;
+  try {
+    const posts = await Post.find({
+      $or: [
+        { title: new RegExp(query, 'i') },
+        { body: new RegExp(query, 'i') },
+      ],
+    })
+      .populate('_user', { password: 0 })
+      .exec();
+    res.status(200).json(posts);
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ error: 'Cannot find posts' });
+  }
+});
