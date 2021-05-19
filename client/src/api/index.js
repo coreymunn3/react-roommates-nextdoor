@@ -65,6 +65,10 @@ export const postAPI = {
         withCredentials: true,
       }
     ),
+  searchPosts: (searchTerm) =>
+    axios.get(`${baseUrl}/api/posts/search/${searchTerm}`, {
+      withCredentials: true,
+    }),
 };
 
 export const locationAPI = {

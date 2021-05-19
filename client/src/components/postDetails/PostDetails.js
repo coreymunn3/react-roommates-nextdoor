@@ -143,7 +143,7 @@ const PostDetails = () => {
           open={captchaOpen}
           title='Contact Post Owner'
           handleClose={() => setCapthcaOpen(false)}
-          userInfo={currentPost.postingUser}
+          userInfo={currentPost._user}
         />
       </div>
     );

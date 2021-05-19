@@ -29,6 +29,7 @@ body {
 .form-control {
   border-radius: $theme-border-radius;
   border: none;
+  box-shadow: none;
 }
 .form-text,
 .invalid-feedback {

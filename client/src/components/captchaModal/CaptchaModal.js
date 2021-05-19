@@ -32,7 +32,7 @@ const CaptchaModal = ({ userInfo, ...props }) => {
       />
       {isVerified && (
         <div className='my-2'>
-          <p>Copy & Paste the owner's email address by clicking it.</p>
+          <p>{'Copy & Paste the owners email address by clicking it.'}</p>
           <div
             className={`${styles.copyable} ${copy && styles.copied}`}
             onClick={handleCopy}

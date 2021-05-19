@@ -4,6 +4,7 @@ import PostsContainer from '../../postsContainer/PostsContainer';
 import FeedControlToggle from '../../feedControlToggle/FeedControlToggle';
 import Accordion from 'react-bootstrap/Accordion';
 import FeedHeaderSkeleton from './FeedHeaderSkeleton';
+import SearchBar from '../../searchBar/SearchBar';
 // redux
 import { useSelector, useDispatch } from 'react-redux';
 import { getPostsByLocation } from '../../../redux/postSlice';
@@ -39,7 +40,7 @@ const Feed = () => {
           </Accordion.Collapse>
         </Accordion>
       </div>
-
+      <SearchBar />
       <PostsContainer />
     </div>
   );

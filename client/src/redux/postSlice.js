@@ -96,6 +96,18 @@ export const unlikePost = createAsyncThunk(
   }
 );
 
+export const searchPosts = createAsyncThunk(
+  'posts/searchPosts',
+  async (query, thunkAPI) => {
+    try {
+      const { data } = await postAPI.searchPosts(query);
+      return data;
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error.response.data.error);
+    }
+  }
+);
+
 const initialActiveFilters = {
   rentMonthly: 0,
   housingType: [],
@@ -263,13 +275,22 @@ export const postSlice = createSlice({
       state.isError = true;
       state.errorMessage = action.payload;
     },
+    [searchPosts.pending]: (state, action) => {
+      state.isLoading = true;
+      state.isError = false;
+      state.errorMessage = null;
+    },
+    [searchPosts.fulfilled]: (state, action) => {
+      state.isLoading = false;
+      state.locationPosts = action.payload;
+    },
+    [searchPosts.rejected]: (state, action) => {
+      state.isLoading = false;
+      state.isError = true;
+      state.errorMessage = action.payload;
+    },
   },
 });
 
-export const {
-  setFilter,
-  clearFilter,
-  clearAllFilters,
-  setSort,
-  clearSort,
-} = postSlice.actions;
+export const { setFilter, clearFilter, clearAllFilters, setSort, clearSort } =
+  postSlice.actions;

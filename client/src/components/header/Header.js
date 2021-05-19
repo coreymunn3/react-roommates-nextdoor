@@ -44,7 +44,7 @@ const Header = () => {
         </Navbar.Toggle>
         <Navbar.Collapse id='responsive-navbar-nav'>
           <Nav className='mr-auto flex-grow-1'>
-            <Form className={styles.headerForm}>
+            {/* <Form className={styles.headerForm}>
               <div className={styles.searchBarGroup}>
                 <div className={styles.searchBarButton}>
                   <Button>Search</Button>
@@ -55,7 +55,7 @@ const Header = () => {
                   placeholder='Search Listings'
                 />
               </div>
-            </Form>
+            </Form> */}
           </Nav>
           <Nav>
             <Nav.Link as={Link} to='/new-post'>
