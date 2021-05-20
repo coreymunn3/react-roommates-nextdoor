@@ -10,6 +10,15 @@ import { searchPosts } from '../../redux/postSlice';
 const SearchBar = () => {
   const dispatch = useDispatch();
   const [query, setQuery] = useState('');
+  const [focused, setFocused] = useState(false);
+
+  const onFocus = () => {
+    setFocused(true);
+  };
+
+  const onBlur = () => {
+    setFocused(false);
+  };
 
   const handleChange = (e) => {
     setQuery(e.target.value);
@@ -28,7 +37,9 @@ const SearchBar = () => {
           <Button type='submit'>Search Posts</Button>
         </div>
         <FormControl
-          className={styles.searchBar}
+          className={`${styles.searchBar} ${focused && 'shadow'}`}
+          onFocus={onFocus}
+          onBlur={onBlur}
           type='text'
           placeholder='Search Listings'
           value={query}
