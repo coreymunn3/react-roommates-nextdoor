@@ -101,7 +101,10 @@ export const searchPosts = createAsyncThunk(
   async (query, thunkAPI) => {
     try {
       const { data } = await postAPI.searchPosts(query);
-      return data;
+      return {
+        data,
+        query,
+      };
     } catch (error) {
       return thunkAPI.rejectWithValue(error.response.data.error);
     }
@@ -130,6 +133,7 @@ export const postSlice = createSlice({
     currentPost: {},
     activeFilters: initialActiveFilters,
     activeSort: 'No Sort',
+    activeSearch: null,
     locationPosts: [],
     userPosts: [],
     isLoading: false,
@@ -152,6 +156,9 @@ export const postSlice = createSlice({
     },
     clearSort(state, action) {
       state.activeSort = 'No Sort';
+    },
+    clearSearch(state, action) {
+      state.activeSearch = null;
     },
   },
   extraReducers: {
@@ -282,7 +289,8 @@ export const postSlice = createSlice({
     },
     [searchPosts.fulfilled]: (state, action) => {
       state.isLoading = false;
-      state.locationPosts = action.payload;
+      state.locationPosts = action.payload.data;
+      state.activeSearch = action.payload.query;
     },
     [searchPosts.rejected]: (state, action) => {
       state.isLoading = false;
@@ -292,5 +300,11 @@ export const postSlice = createSlice({
   },
 });
 
-export const { setFilter, clearFilter, clearAllFilters, setSort, clearSort } =
-  postSlice.actions;
+export const {
+  setFilter,
+  clearFilter,
+  clearAllFilters,
+  setSort,
+  clearSort,
+  clearSearch,
+} = postSlice.actions;
