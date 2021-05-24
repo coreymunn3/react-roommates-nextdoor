@@ -1,5 +1,6 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import { postAPI } from '../api';
+import { setToast } from './toastSlice';
 
 export const createPost = createAsyncThunk(
   'post/createPost',

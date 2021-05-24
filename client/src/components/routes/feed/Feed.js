@@ -8,6 +8,7 @@ import SearchBar from '../../searchBar/SearchBar';
 // redux
 import { useSelector, useDispatch } from 'react-redux';
 import { getPostsByLocation } from '../../../redux/postSlice';
+import { setToast } from '../../../redux/toastSlice';
 // styles
 import styles from './feed.module.scss';
 
@@ -17,7 +18,9 @@ const Feed = () => {
 
   useEffect(() => {
     if (!userLoading && user?.loggedIn) {
-      dispatch(getPostsByLocation(user.user._location._id));
+      dispatch(getPostsByLocation(user.user._location._id)).then(() =>
+        dispatch(setToast('Posts Loaded'))
+      );
     }
   }, [userLoading]);
 
