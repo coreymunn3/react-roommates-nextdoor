@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { useHistory, Link } from 'react-router-dom';
 import { useFormik } from 'formik';
 import * as yup from 'yup';
@@ -6,7 +6,6 @@ import * as yup from 'yup';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import Col from 'react-bootstrap/Col';
-import Alert from 'react-bootstrap/Alert';
 import InputField from '../../inputField/InputField';
 import InputFieldSelect from '../../inputFieldSelect/InputFieldSelect';
 // style - using same style as signup
@@ -17,6 +16,7 @@ import {
   signupUser,
   checkUsernameAvailability,
 } from '../../../redux/userSlice';
+import { addToast, clearToast } from '../../../redux/toastSlice';
 
 const Signup = () => {
   const dispatch = useDispatch();
@@ -27,14 +27,26 @@ const Signup = () => {
   const { locations } = useSelector((state) => state.location);
 
   // alert state & toggle
-  const [showAlert, setShowAlert] = useState(false);
   useEffect(() => {
     if (isError) {
-      setShowAlert(true);
+      dispatch(
+        addToast({
+          id: 21,
+          status: 0,
+          message: errorMessage,
+        })
+      );
     } else {
-      setShowAlert(false);
+      dispatch(clearToast(21));
     }
     if (user?.loggedIn) {
+      dispatch(
+        addToast({
+          id: 22,
+          status: 1,
+          message: 'Welcome to the Site!',
+        })
+      );
       history.push('/feed');
     }
   }, [isError, user, isLoading]);
@@ -79,25 +91,8 @@ const Signup = () => {
     },
   });
 
-  // useEffect(() => {
-  //   console.log(formik.values);
-  //   console.log(formik.errors);
-  // }, [formik.values, formik.errors]);
-
   return (
     <div className={styles.pageContainer}>
-      <div className={styles.alertContainer}>
-        {showAlert && (
-          <Alert
-            variant='danger'
-            onClose={() => setShowAlert(false)}
-            dismissible
-          >
-            <p>{`Unable to Sign Up: ${errorMessage}`}</p>
-          </Alert>
-        )}
-      </div>
-
       <div className={`${styles.formContainer} shadow`}>
         <h3 className='text-center'>Sign Up</h3>
 

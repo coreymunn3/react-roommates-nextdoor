@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { useHistory, Link } from 'react-router-dom';
 import { useFormik } from 'formik';
 import * as yup from 'yup';
@@ -6,15 +6,13 @@ import * as yup from 'yup';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import Col from 'react-bootstrap/Col';
-import Alert from 'react-bootstrap/Alert';
 import InputField from '../../inputField/InputField';
 // style
 import styles from './login.module.scss';
-// fields to map
-import loginFields from './loginFields';
 // redux
 import { useDispatch, useSelector } from 'react-redux';
 import { loginUser } from '../../../redux/userSlice';
+import { addToast, clearToast } from '../../../redux/toastSlice';
 
 const Login = () => {
   const dispatch = useDispatch();
@@ -24,23 +22,31 @@ const Login = () => {
   );
 
   // alert state & toggle
-  const [showAlert, setShowAlert] = useState(false);
   useEffect(() => {
     if (isError) {
-      setShowAlert(true);
+      // setShowAlert(true);
+      dispatch(
+        addToast({
+          id: 31,
+          status: 0,
+          message: errorMessage,
+        })
+      );
     } else {
-      setShowAlert(false);
+      // setShowAlert(false);
+      dispatch(clearToast(31));
     }
     if (!isLoading && user?.loggedIn) {
+      dispatch(
+        addToast({
+          id: 32,
+          status: 1,
+          message: 'You are Now Logged In',
+        })
+      );
       history.push('/feed');
     }
   }, [isError, user, isLoading]);
-
-  // submit form data
-  // const handleSubmit = async (e) => {
-  //   e.preventDefault();
-  //   dispatch(loginUser(userData));
-  // };
 
   const formik = useFormik({
     initialValues: {
@@ -59,18 +65,6 @@ const Login = () => {
 
   return (
     <div className={styles.pageContainer}>
-      <div className={styles.alertContainer}>
-        {showAlert && (
-          <Alert
-            variant='danger'
-            onClose={() => setShowAlert(false)}
-            dismissible
-          >
-            <p>{`Unable to Log In: ${errorMessage}`}</p>
-          </Alert>
-        )}
-      </div>
-
       <div className={styles.formContainer}>
         <h3 className='text-center'>Log In</h3>
 
@@ -117,30 +111,6 @@ const Login = () => {
             <Link to='/signup'>Sign Up</Link>
           </Form.Text>
         </Form>
-        {/* <Form onSubmit={handleSubmit} className={styles.form}>
-          {loginFields.map((field) => (
-            <Form.Row key={field.name}>
-              <Form.Group as={Col} controlId={field.controlId}>
-                <Form.Label>{field.label}</Form.Label>
-                <Form.Control
-                  name={field.name}
-                  type={field.type}
-                  required={field.required}
-                  placeholder={field.placeholder}
-                  value={userData[field.name]}
-                  onChange={handleChange}
-                />
-              </Form.Group>
-            </Form.Row>
-          ))}
-          <Button variant='primary' type='submit' block disabled={isLoading}>
-            {isLoading ? 'Processing...' : 'Log In'}
-          </Button>
-          <Form.Text className='text-center'>
-            {'Still dont have an account? '}
-            <Link to='/signup'>Sign Up</Link>
-          </Form.Text>
-        </Form> */}
       </div>
     </div>
   );

@@ -5,7 +5,7 @@
   height: 120vh;
   display: flex;
   flex-direction: column;
-  // justify-content: center;
+  justify-content: center;
   align-items: center;
   background: url('../../../img/neighborhood.jpg');
   background-position: fixed;
@@ -23,12 +23,12 @@
   color: white;
 }
 
-.alertContainer {
-  height: 80px;
-  position: relative;
-  width: 90%;
-  max-width: 500px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
+// .alertContainer {
+//   height: 80px;
+//   position: relative;
+//   width: 90%;
+//   max-width: 500px;
+//   display: flex;
+//   align-items: center;
+//   justify-content: center;
+// }

@@ -16,7 +16,7 @@ const Toast = ({ toast }) => {
   useEffect(() => {
     const toastTimer = setTimeout(() => {
       dispatch(clearToast(id));
-    }, 2000);
+    }, 5000);
 
     return () => {
       clearTimeout(toastTimer);
