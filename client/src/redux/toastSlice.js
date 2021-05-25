@@ -1,16 +1,23 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 
+// toast structure:
+// {
+//   id: ###
+//   status: 1 (success) || 0 (fail),
+//   message: 'Text to Display'
+// }
+
 export const toastSlice = createSlice({
-  name: 'toast',
-  initialState: null,
+  name: 'toasts',
+  initialState: [],
   reducers: {
-    setToast: (state, action) => {
-      return (state = action.payload);
+    addToast(state, action) {
+      return (state = [action.payload, ...state]);
     },
-    clearToast: (state, action) => {
-      return (state = null);
+    clearToast(state, action) {
+      return (state = state.filter((toast) => toast.id !== action.payload));
     },
   },
 });
 
-export const { setToast, clearToast } = toastSlice.actions;
+export const { addToast, clearToast } = toastSlice.actions;

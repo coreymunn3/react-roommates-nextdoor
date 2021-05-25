@@ -9,6 +9,6 @@ export default configureStore({
     user: userSlice.reducer,
     post: postSlice.reducer,
     location: locationSlice.reducer,
-    toast: toastSlice.reducer,
+    toasts: toastSlice.reducer,
   },
 });

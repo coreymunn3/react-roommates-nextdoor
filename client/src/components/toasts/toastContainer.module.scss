@@ -1,15 +1,6 @@
 .container {
   position: fixed;
   bottom: 0;
-  right: 5px;
-  width: 240px;
-}
-
-.toast {
-  display: flex;
-  border-radius: 20px;
-  color: white;
-  padding: 1rem;
-  background-color: lightblue;
-  margin-bottom: 0.25rem;
+  right: 15px;
+  max-width: 300px;
 }

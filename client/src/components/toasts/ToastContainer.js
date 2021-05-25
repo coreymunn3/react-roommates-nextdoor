@@ -1,27 +1,18 @@
-import React, { useState, useEffect } from 'react';
-
-import { useDispatch, useSelector } from 'react-redux';
-import { setToast, clearToast } from '../../redux/toastSlice';
+import React from 'react';
+import Toast from './Toast';
+import { useSelector } from 'react-redux';
 import styles from './toastContainer.module.scss';
+import { AnimatePresence } from 'framer-motion';
 
 const ToastContainer = () => {
-  const dispatch = useDispatch();
-  const toast = useSelector((state) => state.toast);
-  console.log(toast);
-
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      dispatch(clearToast());
-    }, 2000);
-
-    return () => {
-      clearTimeout(timer);
-    };
-  }, [toast]);
+  const toasts = useSelector((state) => state.toasts);
 
   return (
     <ul className={styles.container}>
-      {toast && <li className={styles.toast}>{toast}</li>}
+      <AnimatePresence>
+        {toasts &&
+          toasts.map((toast, idx) => <Toast toast={toast} key={idx} />)}
+      </AnimatePresence>
     </ul>
   );
 };

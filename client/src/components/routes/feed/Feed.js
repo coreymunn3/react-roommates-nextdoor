@@ -18,9 +18,7 @@ const Feed = () => {
 
   useEffect(() => {
     if (!userLoading && user?.loggedIn) {
-      dispatch(getPostsByLocation(user.user._location._id)).then(() =>
-        dispatch(setToast('Posts Loaded'))
-      );
+      dispatch(getPostsByLocation(user.user._location._id));
     }
   }, [userLoading]);
 

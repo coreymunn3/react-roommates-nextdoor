@@ -1,14 +1,28 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import { postAPI } from '../api';
-import { setToast } from './toastSlice';
+import { addToast } from './toastSlice';
 
 export const createPost = createAsyncThunk(
   'post/createPost',
   async (postFormData, thunkAPI) => {
     try {
       const { data } = await postAPI.createPost(postFormData);
+      thunkAPI.dispatch(
+        addToast({
+          id: data._id,
+          status: 1,
+          message: 'Post is Live!',
+        })
+      );
       return data;
     } catch (error) {
+      thunkAPI.dispatch(
+        addToast({
+          id: 22,
+          status: 0,
+          message: error.response.data.error || 'Unable to Create Post',
+        })
+      );
       return thunkAPI.rejectWithValue(error.response.data.error);
     }
   }
@@ -19,8 +33,22 @@ export const editPost = createAsyncThunk(
   async (postFormData, thunkAPI) => {
     try {
       const { data } = await postAPI.editPost(postFormData._id, postFormData);
+      thunkAPI.dispatch(
+        addToast({
+          id: data._id,
+          status: 1,
+          message: 'Post now Updated',
+        })
+      );
       return data;
     } catch (error) {
+      thunkAPI.dispatch(
+        addToast({
+          id: 33,
+          status: 0,
+          message: error.response.data.error || 'Unable to Edit Post',
+        })
+      );
       return thunkAPI.rejectWithValue(error.response.data.error);
     }
   }
@@ -31,8 +59,22 @@ export const deletePost = createAsyncThunk(
   async (postId, thunkAPI) => {
     try {
       const { data } = await postAPI.deletePost(postId);
+      thunkAPI.dispatch(
+        addToast({
+          id: data._id,
+          status: 1,
+          message: 'Deletion Complete',
+        })
+      );
       return data;
     } catch (error) {
+      thunkAPI.dispatch(
+        addToast({
+          id: 44,
+          status: 0,
+          message: error.response.data.error || 'Unable to Delete Post',
+        })
+      );
       return thunkAPI.rejectWithValue(error.response.data.error);
     }
   }
@@ -45,6 +87,13 @@ export const getPostsByLocation = createAsyncThunk(
       const { data } = await postAPI.getPostsByLocation(locationId);
       return data;
     } catch (error) {
+      thunkAPI.dispatch(
+        addToast({
+          id: 55,
+          status: 0,
+          message: error.response.data.error || 'Unable to Load Posts',
+        })
+      );
       return thunkAPI.rejectWithValue(error.response.data.error);
     }
   }
@@ -57,6 +106,13 @@ export const getPostById = createAsyncThunk(
       const { data } = await postAPI.getPostById(postId);
       return data;
     } catch (error) {
+      thunkAPI.dispatch(
+        addToast({
+          id: 66,
+          status: 0,
+          message: error.response.data.error || 'Unable to Load Post',
+        })
+      );
       return thunkAPI.rejectWithValue(error.response.data.error);
     }
   }
@@ -64,11 +120,18 @@ export const getPostById = createAsyncThunk(
 
 export const getPostByUser = createAsyncThunk(
   'posts/getPostByUser',
-  async (thunkAPI) => {
+  async (_, thunkAPI) => {
     try {
       const { data } = await postAPI.getPostByUser();
       return data;
     } catch (error) {
+      thunkAPI.dispatch(
+        addToast({
+          id: 77,
+          status: 0,
+          message: error.response.data.error || 'Unable to Load Posts',
+        })
+      );
       return thunkAPI.rejectWithValue(error.response.data.error);
     }
   }
@@ -107,6 +170,13 @@ export const searchPosts = createAsyncThunk(
         query,
       };
     } catch (error) {
+      thunkAPI.dispatch(
+        addToast({
+          id: 88,
+          status: 0,
+          message: error.response.data.error || 'Unable to Find Posts',
+        })
+      );
       return thunkAPI.rejectWithValue(error.response.data.error);
     }
   }
