@@ -106,7 +106,7 @@ const PostCard = ({
             <Badge
               variant='secondary'
               className='mr-1'
-            >{`${numberOfCohabitants} Other Person`}</Badge>
+            >{`${numberOfCohabitants} Other Person(s)`}</Badge>
           </div>
           <div className={styles.cardTitle}>
             <h4 className='my-0'>{title}</h4>

@@ -41,7 +41,7 @@ const PostDetails = () => {
         ),
     },
     {
-      title: `${currentPost.numberOfCohabitants} Other Person (${
+      title: `${currentPost.numberOfCohabitants} Other Person(s) (${
         currentPost.numberOfCohabitants + 1
       } Total Residents)`,
       icon: <FaUsers size={iconSize} />,
