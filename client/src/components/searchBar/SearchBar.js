@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import styles from './searchBar.module.scss';
 import Form from 'react-bootstrap/Form';
 import FormControl from 'react-bootstrap/FormControl';
@@ -19,6 +19,14 @@ const SearchBar = () => {
   const [query, setQuery] = useState('');
   const [focused, setFocused] = useState(false);
 
+  // synchronize with redux active search state
+  // (useful when user does search then navigates away from feed)
+  useEffect(() => {
+    if (activeSearch.query) {
+      setQuery(activeSearch.query);
+    }
+  }, []);
+
   const onFocus = () => {
     setFocused(true);
   };
@@ -31,9 +39,9 @@ const SearchBar = () => {
     setQuery(e.target.value);
   };
 
-  const searchOrClear = (e) => {
+  const handleSearchOrClear = (e) => {
     e.preventDefault();
-    if (activeSearch) {
+    if (activeSearch.query) {
       dispatch(getPostsByLocation(user.user._location._id)).then(() =>
         dispatch(clearSearch())
       );
@@ -48,13 +56,11 @@ const SearchBar = () => {
     <Form className={styles.headerForm}>
       <div className={styles.searchBarGroup}>
         <div className={styles.searchBarButton}>
-          <Button
-            type='submit'
-            disabled={query === ''}
-            onClick={(e) => searchOrClear(e)}
-          >
+          <Button disabled={query === ''} onClick={handleSearchOrClear}>
             <FaSearch />
-            <span>{`${activeSearch ? ' Clear Search' : ' Search Posts'}`}</span>
+            <span>{`${
+              activeSearch.query ? ' Clear Search' : ' Search Posts'
+            }`}</span>
           </Button>
         </div>
         <FormControl

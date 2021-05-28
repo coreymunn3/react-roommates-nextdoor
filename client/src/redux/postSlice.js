@@ -204,7 +204,10 @@ export const postSlice = createSlice({
     currentPost: {},
     activeFilters: initialActiveFilters,
     activeSort: 'No Sort',
-    activeSearch: null,
+    activeSearch: {
+      query: null,
+      results: [],
+    },
     locationPosts: [],
     userPosts: [],
     isLoading: false,
@@ -229,7 +232,8 @@ export const postSlice = createSlice({
       state.activeSort = 'No Sort';
     },
     clearSearch(state, action) {
-      state.activeSearch = null;
+      state.activeSearch.query = null;
+      state.activeSearch.results = [];
     },
   },
   extraReducers: {
@@ -360,8 +364,8 @@ export const postSlice = createSlice({
     },
     [searchPosts.fulfilled]: (state, action) => {
       state.isLoading = false;
-      state.locationPosts = action.payload.data;
-      state.activeSearch = action.payload.query;
+      state.activeSearch.results = action.payload.data;
+      state.activeSearch.query = action.payload.query;
     },
     [searchPosts.rejected]: (state, action) => {
       state.isLoading = false;
