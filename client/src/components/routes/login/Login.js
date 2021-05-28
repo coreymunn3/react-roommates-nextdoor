@@ -41,7 +41,7 @@ const Login = () => {
         addToast({
           id: 32,
           status: 1,
-          message: 'You are Now Logged In',
+          message: 'You are Logged In',
         })
       );
       history.push('/feed');
