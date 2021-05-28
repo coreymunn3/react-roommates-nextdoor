@@ -6,11 +6,7 @@ import Button from 'react-bootstrap/Button';
 import { FaSearch } from 'react-icons/fa';
 // redux
 import { useDispatch, useSelector } from 'react-redux';
-import {
-  searchPosts,
-  clearSearch,
-  getPostsByLocation,
-} from '../../redux/postSlice';
+import { searchPosts, clearSearch } from '../../redux/postSlice';
 
 const SearchBar = () => {
   const dispatch = useDispatch();
@@ -42,9 +38,7 @@ const SearchBar = () => {
   const handleSearchOrClear = (e) => {
     e.preventDefault();
     if (activeSearch.query) {
-      dispatch(getPostsByLocation(user.user._location._id)).then(() =>
-        dispatch(clearSearch())
-      );
+      dispatch(clearSearch());
       setQuery('');
     } else {
       console.log(query);
