@@ -5,10 +5,12 @@ import Button from 'react-bootstrap/Button';
 import DetailSection from '../layout/detailSection/DetailSection';
 import SplitColumnSection from '../layout/splitColumnSection/SplitColumnSection';
 import Map from '../map/Map';
-import { Image } from 'cloudinary-react';
+import FullHeightContainer from '../layout/fullHeightContainer/FullHeightContainer';
+import { Image, Placeholder } from 'cloudinary-react';
 import moment from 'moment';
 import transformAmenities from '../../utils/transformAmenities';
 import CaptchaModal from '../captchaModal/CaptchaModal';
+import useWindowDimensions from '../../hooks/WindowDimensions';
 // icons
 import {
   FaHome,
@@ -24,6 +26,7 @@ import { useSelector } from 'react-redux';
 const PostDetails = () => {
   const [captchaOpen, setCapthcaOpen] = useState(false);
   const { currentPost, isLoading } = useSelector((state) => state.post);
+  const { width } = useWindowDimensions();
 
   const iconSize = '1.5rem';
   const descriptionList = [
@@ -83,12 +86,9 @@ const PostDetails = () => {
 
   if (isLoading) {
     return (
-      <div
-        className='d-flex justify-content-center align-items-center'
-        style={{ height: '50vh', width: '100%' }}
-      >
+      <FullHeightContainer>
         <Spinner animation='border' variant='dark' />
-      </div>
+      </FullHeightContainer>
     );
   } else {
     return (
@@ -106,7 +106,11 @@ const PostDetails = () => {
           <Image
             className={styles.featureImage}
             publicId={currentPost.featureImage?.public_id}
-          ></Image>
+            width={Math.round(width / 100) * 100}
+            crop='scale'
+          >
+            <Placeholder type='blur' />
+          </Image>
         </div>
 
         <DetailSection title='Room Description'>

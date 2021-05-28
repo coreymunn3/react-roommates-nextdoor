@@ -7,7 +7,7 @@ import AvatarImage from '../avatarImage/AvatarImage';
 import LikeButton from '../likeButton/LikeButton';
 import EditPostModal from '../editPostModal/EditPostModal';
 import DeletePostModal from '../deletePostModal/DeletePostModal';
-import { Image } from 'cloudinary-react';
+import { Image, Placeholder } from 'cloudinary-react';
 import moment from 'moment';
 import { FaEdit, FaTrash } from 'react-icons/fa';
 import styles from './postCard.module.scss';
@@ -53,8 +53,9 @@ const PostCard = ({
           publicId={featureImage.public_id}
           cloudName={process.env.REACT_APP_CLOUDINARY_CLOUD_NAME}
           width='400'
+          loading='lazy'
           crop='scale'
-        />
+        ></Image>
         <Card.ImgOverlay
           style={{ background: edit ? 'rgba(0,0,0,0.3)' : null }}
         >
@@ -62,11 +63,7 @@ const PostCard = ({
             // don't show avatar and like/unlike button if user in in edit state
             !edit ? (
               <div className='d-flex justify-content-between'>
-                <AvatarImage
-                  avatar={_user?.avatar}
-                  width='40px'
-                  height='40px'
-                />
+                <AvatarImage avatar={_user?.avatar} />
                 <LikeButton
                   likeCount={likeCount}
                   likedBy={likedBy}

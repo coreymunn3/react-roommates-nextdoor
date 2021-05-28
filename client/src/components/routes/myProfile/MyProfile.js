@@ -48,7 +48,7 @@ const MyProfile = () => {
   return (
     <FullHeightContainer>
       <div className={styles.avatarOffset}>
-        <AvatarImage width='100px' height='100px' avatar={user?.user?.avatar}>
+        <AvatarImage width='100' height='100' avatar={user?.user?.avatar}>
           <Button
             variant='dark'
             size='sm'

@@ -28,12 +28,10 @@ const PostsContainer = () => {
   useEffect(() => {
     // step 1 - determine what should be in the feed
     if (activeSearch.query) {
-      console.log('active search path');
       setPostsInFeed(
         filterAndSortPosts(activeSearch.results, activeFilters, activeSort)
       );
     } else {
-      console.log('regular path');
       setPostsInFeed(
         filterAndSortPosts(locationPosts, activeFilters, activeSort)
       );
