@@ -43,57 +43,56 @@ const Header = () => {
           <FaBars />
         </Navbar.Toggle>
         <Navbar.Collapse id='responsive-navbar-nav'>
-          <Nav className='mr-auto flex-grow-1'>
-            {/* <Form className={styles.headerForm}>
-              <div className={styles.searchBarGroup}>
-                <div className={styles.searchBarButton}>
-                  <Button>Search</Button>
-                </div>
-                <FormControl
-                  className={styles.searchBar}
-                  type='text'
-                  placeholder='Search Listings'
-                />
-              </div>
-            </Form> */}
-          </Nav>
-          <Nav>
-            <Nav.Link as={Link} to='/new-post'>
-              <Button variant='danger'>New Post</Button>
-            </Nav.Link>
-            <DropdownButton
-              menuAlign='right'
-              title={`Hello, ${user?.user?.username}`}
-              id='dropdown-menu-align-right'
-              variant='outlined'
-            >
-              <Dropdown.Item
-                onSelect={() => console.log('selected')}
-                disabled
-              >{`Current Location: ${user?.user?._location?.city}`}</Dropdown.Item>
-              <Dropdown.Divider />
-              <Dropdown.Item onClick={handleOpen}>
-                Change Location
-              </Dropdown.Item>
-              <Dropdown.Item as={Link} to='/myprofile'>
-                My Profile
-              </Dropdown.Item>
-              <Dropdown.Item as={Link} to='/myposts'>
-                My Posts
-              </Dropdown.Item>
-              <Dropdown.Divider />
-              <Dropdown.Item as={Link} to='/login' onClick={handleLogout}>
-                Logout
-              </Dropdown.Item>
-            </DropdownButton>
+          <Nav className='mr-auto flex-grow-1'></Nav>
+          {user?.loggedIn && (
+            <Nav>
+              <Nav.Link as={Link} to='/new-post'>
+                <Button variant='danger'>New Post</Button>
+              </Nav.Link>
+              <DropdownButton
+                menuAlign='right'
+                title={`Hello, ${user?.user?.username}`}
+                id='dropdown-menu-align-right'
+                variant='outlined'
+              >
+                <Dropdown.Item
+                  onSelect={() => console.log('selected')}
+                  disabled
+                >{`Current Location: ${user?.user?._location?.city}`}</Dropdown.Item>
+                <Dropdown.Divider />
+                <Dropdown.Item onClick={handleOpen}>
+                  Change Location
+                </Dropdown.Item>
+                <Dropdown.Item as={Link} to='/myprofile'>
+                  My Profile
+                </Dropdown.Item>
+                <Dropdown.Item as={Link} to='/myposts'>
+                  My Posts
+                </Dropdown.Item>
+                <Dropdown.Divider />
+                <Dropdown.Item as={Link} to='/login' onClick={handleLogout}>
+                  Logout
+                </Dropdown.Item>
+              </DropdownButton>
 
-            <ChangeLocationModal
-              user={user}
-              locations={locations}
-              open={open}
-              handleClose={handleClose}
-            />
-          </Nav>
+              <ChangeLocationModal
+                user={user}
+                locations={locations}
+                open={open}
+                handleClose={handleClose}
+              />
+            </Nav>
+          )}
+          {!user?.loggedIn && (
+            <Nav>
+              <Nav.Link as={Link} to='/signup'>
+                <Button>Sign Up</Button>
+              </Nav.Link>
+              <Nav.Link as={Link} to='/login'>
+                <Button variant='outline-primary'>Log In</Button>
+              </Nav.Link>
+            </Nav>
+          )}
         </Navbar.Collapse>
       </Container>
     </Navbar>

@@ -9,6 +9,7 @@ import NewPost from './components/routes/newPost/NewPost';
 import Listing from './components/routes/listing/Listing';
 import MyProfile from './components/routes/myProfile/MyProfile';
 import MyPosts from './components/routes/myPosts/MyPosts';
+import LandingPage from './components/routes/landing/LandingPage';
 import NotFound from './components/routes/notFound/NotFound';
 // global sass - contains theming
 import './App.global.scss';
@@ -41,6 +42,7 @@ const App = () => {
         <PrivateRoute exact path='/new-post' component={NewPost} />
         <PrivateRoute exact path='/myprofile' component={MyProfile} />
         <PrivateRoute exact path='/myposts' component={MyPosts} />
+        <Route exact path='/' component={LandingPage} />
         <Route>
           <PageLayout>
             <NotFound />
