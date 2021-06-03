@@ -7,6 +7,7 @@ import Nav from 'react-bootstrap/Nav';
 import Button from 'react-bootstrap/Button';
 import { Link } from 'react-router-dom';
 import { getRandomPost } from '../../../../redux/postSlice';
+import SimplePostCard from '../../../postCard/SimplePostCard';
 // images
 import hero1 from '../../../../img/hero/hero1.jpg';
 import hero2 from '../../../../img/hero/hero2.jpg';
@@ -116,7 +117,7 @@ const Hero = () => {
               Sign Up
             </Button>
           </div>
-          {/* <div>{randomPost && <PostCard post={randomPost} />}</div> */}
+          <div>{randomPost && <SimplePostCard post={randomPost} />}</div>
         </motion.div>
         <div className={styles.footer}>
           <DropdownButton drop='up' variant='outline-primary' title='Roommates'>
