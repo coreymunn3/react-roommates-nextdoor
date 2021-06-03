@@ -1,11 +1,18 @@
 import React, { useState, useEffect } from 'react';
 import styles from './hero.module.scss';
 import { AnimatePresence, motion } from 'framer-motion';
+import Navbar from 'react-bootstrap/esm/Navbar';
+import Container from 'react-bootstrap/esm/Container';
+import Nav from 'react-bootstrap/Nav';
+import Button from 'react-bootstrap/Button';
+import { Link } from 'react-router-dom';
 // images
 import hero1 from '../../../../img/hero/hero1.jpg';
 import hero2 from '../../../../img/hero/hero2.jpg';
 import hero3 from '../../../../img/hero/hero3.jpg';
 import hero4 from '../../../../img/hero/hero4.jpg';
+import DropdownButton from 'react-bootstrap/esm/DropdownButton';
+import Dropdown from 'react-bootstrap/esm/Dropdown';
 
 const imgVariants = {
   hidden: {
@@ -16,6 +23,21 @@ const imgVariants = {
   },
   exit: {
     opacity: 0,
+  },
+};
+
+const landingContentVariants = {
+  hidden: {
+    opacity: 0,
+    y: 40,
+  },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: {
+      delay: 1,
+      duration: 1,
+    },
   },
 };
 
@@ -57,7 +79,53 @@ const Hero = () => {
         {heroImgs[currentIndex]}
       </AnimatePresence>
       <section className={styles.overlay}>
-        <h1>Your New Home Awaits</h1>
+        <Navbar>
+          <Container fluid>
+            <Navbar.Brand style={{ color: '#fff' }}>Roommates</Navbar.Brand>
+            <Nav className='me-auto'>
+              <Nav.Link as={Link} to='/login'>
+                <Button variant='outline-primary'>Log In</Button>
+              </Nav.Link>
+            </Nav>
+          </Container>
+        </Navbar>
+        <motion.div
+          className={styles.landingContent}
+          variants={landingContentVariants}
+          initial='hidden'
+          animate='visible'
+        >
+          <h1>Your New Home Awaits</h1>
+          <h4>New Rooms, Shares, and Group Living Options Daily</h4>
+          <Button size='lg' as={Link} to='/signup'>
+            Sign Up
+          </Button>
+        </motion.div>
+        <div className={styles.footer}>
+          <DropdownButton drop='up' variant='outline-primary' title='Roommates'>
+            <Dropdown.Item>About</Dropdown.Item>
+            <Dropdown.Item>News</Dropdown.Item>
+            <Dropdown.Item>Press Releases</Dropdown.Item>
+            <Dropdown.Item>Careers</Dropdown.Item>
+          </DropdownButton>
+          <DropdownButton
+            drop='up'
+            variant='outline-primary'
+            title='Communities'
+          >
+            <Dropdown.Item>Supported Communities</Dropdown.Item>
+            <Dropdown.Item>Rules & Guidelines</Dropdown.Item>
+            <Dropdown.Item>Want Roommates Near You?</Dropdown.Item>
+          </DropdownButton>
+          <DropdownButton
+            drop='up'
+            variant='outline-primary'
+            title='NonProfits'
+          >
+            <Dropdown.Item>Our Support</Dropdown.Item>
+            <Dropdown.Item>Our Initiatives</Dropdown.Item>
+          </DropdownButton>
+        </div>
       </section>
     </header>
   );

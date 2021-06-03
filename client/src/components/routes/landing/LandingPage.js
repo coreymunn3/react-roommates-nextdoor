@@ -5,7 +5,6 @@ const LandingPage = () => {
   return (
     <div>
       <Hero />
-      <p> More Content...</p>
       {/* Example Posts */}
       {/* Testimonials */}
     </div>
