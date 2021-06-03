@@ -182,6 +182,15 @@ export const searchPosts = createAsyncThunk(
   }
 );
 
+export const getRandomPost = async () => {
+  try {
+    const { data } = await postAPI.getRandomPost();
+    return data;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
 const initialActiveFilters = {
   rentMonthly: 0,
   housingType: [],

@@ -69,6 +69,10 @@ export const postAPI = {
     axios.get(`${baseUrl}/api/posts/search/${searchTerm}`, {
       withCredentials: true,
     }),
+  getRandomPost: () =>
+    axios.get(`${baseUrl}/api/posts/post/random`, {
+      withCredentials: true,
+    }),
 };
 
 export const locationAPI = {

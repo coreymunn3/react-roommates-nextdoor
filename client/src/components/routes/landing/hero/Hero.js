@@ -6,6 +6,7 @@ import Container from 'react-bootstrap/esm/Container';
 import Nav from 'react-bootstrap/Nav';
 import Button from 'react-bootstrap/Button';
 import { Link } from 'react-router-dom';
+import { getRandomPost } from '../../../../redux/postSlice';
 // images
 import hero1 from '../../../../img/hero/hero1.jpg';
 import hero2 from '../../../../img/hero/hero2.jpg';
@@ -58,10 +59,10 @@ const Hero = () => {
     />
   ));
 
+  // effect to cycle through background Images
   const [currentIndex, setCurrentIndex] = useState(0);
   useEffect(() => {
     const timer = setTimeout(() => {
-      console.log(currentIndex);
       if (currentIndex === images.length - 1) {
         setCurrentIndex(0);
       } else {
@@ -73,6 +74,19 @@ const Hero = () => {
       clearTimeout(timer);
     };
   }, [currentIndex]);
+
+  // effect to fetch a random post
+  const [randomPost, setRandomPost] = useState();
+  useEffect(() => {
+    const getData = async () => {
+      const randomPost = await getRandomPost();
+      setRandomPost(randomPost);
+    };
+    getData();
+  }, []);
+
+  console.log(randomPost);
+
   return (
     <header className={styles.hero}>
       <AnimatePresence exitBeforeEnter initial={false}>
@@ -95,11 +109,14 @@ const Hero = () => {
           initial='hidden'
           animate='visible'
         >
-          <h1>Your New Home Awaits</h1>
-          <h4>New Rooms, Shares, and Group Living Options Daily</h4>
-          <Button size='lg' as={Link} to='/signup'>
-            Sign Up
-          </Button>
+          <div>
+            <h1>Your New Home Awaits</h1>
+            <h4>New Rooms, Shares, and Group Living Options Daily</h4>
+            <Button size='lg' as={Link} to='/signup'>
+              Sign Up
+            </Button>
+          </div>
+          {/* <div>{randomPost && <PostCard post={randomPost} />}</div> */}
         </motion.div>
         <div className={styles.footer}>
           <DropdownButton drop='up' variant='outline-primary' title='Roommates'>

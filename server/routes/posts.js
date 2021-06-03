@@ -230,3 +230,29 @@ router.get('/search/:query', requireAuth, async (req, res) => {
     res.status(500).json({ error: 'Cannot find posts' });
   }
 });
+
+// Adapted from:
+// https://stackoverflow.com/questions/14644545/random-document-from-a-collection-in-mongoose/17457887
+// https://stackoverflow.com/questions/16680015/how-to-use-populate-and-aggregate-in-same-statement
+router.get('/post/random', async (req, res) => {
+  try {
+    const post = await Post.aggregate([
+      {
+        $sample: { size: 1 },
+      },
+      {
+        $lookup: {
+          from: 'users',
+          localField: '_user',
+          foreignField: '_id',
+          as: '_user',
+        },
+      },
+      { $project: { _user: { password: 0 } } },
+    ]);
+
+    res.status(200).json(post[0]);
+  } catch (error) {
+    res.status(500).json({ error: 'Unable to Get Random Post' });
+  }
+});
