@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import styles from './landingPage.module.scss';
 import { AnimatePresence, motion } from 'framer-motion';
+import CountUp from 'react-countup';
 import Navbar from 'react-bootstrap/esm/Navbar';
 import Container from 'react-bootstrap/esm/Container';
 import Nav from 'react-bootstrap/Nav';
@@ -26,17 +27,20 @@ const imgVariants = {
   },
 };
 
+const LANDING_TRANSITION_DELAY = 1;
+const LANDING_TRANSITION_DURATION = 1.5;
 const landingContentVariants = {
   hidden: {
     opacity: 0,
-    y: 40,
+    y: 20,
   },
   visible: {
     opacity: 1,
     y: 0,
     transition: {
-      delay: 1,
-      duration: 1,
+      delay: LANDING_TRANSITION_DELAY,
+      duration: LANDING_TRANSITION_DURATION,
+      type: 'ease',
     },
   },
 };
@@ -98,7 +102,17 @@ const LandingPage = () => {
         >
           <div>
             <h1>Your New Home Awaits</h1>
-            <h4>New Rooms, Shares, and Group Living Options Daily</h4>
+            <h4>
+              {'Over '}
+              <CountUp
+                end={10000}
+                delay={LANDING_TRANSITION_DELAY}
+                duration={3}
+                useEasing={true}
+                separator=','
+              />
+              {' Rooms Filled'}
+            </h4>
             <Button size='lg' as={Link} to='/signup'>
               Sign Up
             </Button>
