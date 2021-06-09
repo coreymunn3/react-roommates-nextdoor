@@ -47,9 +47,6 @@ const Header = () => {
           <Nav className='mr-auto flex-grow-1'></Nav>
           {user?.loggedIn && (
             <Nav>
-              <Nav.Link as={Link} to='/new-post'>
-                <Button variant='danger'>New Post</Button>
-              </Nav.Link>
               <DropdownButton
                 menuAlign='right'
                 title={`Hello, ${user?.user?.username}`}
@@ -75,6 +72,9 @@ const Header = () => {
                   Logout
                 </Dropdown.Item>
               </DropdownButton>
+              <Nav.Link as={Link} to='/new-post'>
+                <Button variant='primary'>New Post</Button>
+              </Nav.Link>
 
               <ChangeLocationModal
                 user={user}
