@@ -1,7 +1,8 @@
 // import global variables
 @import './variables';
 // font
-@import url('https://fonts.googleapis.com/css2?family=Nunito&display=swap');
+// @import url('https://fonts.googleapis.com/css2?family=Nunito&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Source+Sans+Pro&display=swap');
 // Import Bootstrap and its default variables
 @import '~bootstrap/scss/bootstrap.scss';
 
@@ -11,7 +12,8 @@ body {
   overflow-x: hidden;
 }
 body {
-  font-family: 'Nunito', sans-serif;
+  // font-family: 'Nunito', sans-serif;
+  font-family: 'Source Sans Pro', sans-serif;
 }
 @include media-breakpoint-up(sm) {
   .container {

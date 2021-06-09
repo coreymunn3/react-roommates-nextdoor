@@ -1,9 +1,21 @@
 // change the theme colors
-$primary: #09cfda;
+$primary: #388697;
+$secondary: #3c3c3c;
 $light: #f6f6f6;
+$dark: #343434;
+$success: #45d787;
+$danger: #fa471d;
+$warning: #ffbb00;
+$info: #1077e5;
 $theme-colors: (
   'primary': $primary,
+  'secondary': $secondary,
   'light': $light,
+  'dark': $dark,
+  'success': $success,
+  'danger': $danger,
+  'warning': $warning,
+  'info': $info,
 );
 
 // other variables

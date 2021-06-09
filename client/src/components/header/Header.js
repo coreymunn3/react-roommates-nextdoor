@@ -10,6 +10,7 @@ import FormControl from 'react-bootstrap/FormControl';
 import Button from 'react-bootstrap/Button';
 import { FaBars } from 'react-icons/fa';
 import ChangeLocationModal from '../changeLocationModal/ChangeLocationModal';
+import logo from '../../img/logo.png';
 // styles
 import styles from './header.module.scss';
 // redux
@@ -37,7 +38,7 @@ const Header = () => {
     >
       <Container fluid>
         <Navbar.Brand as={Link} to={'/feed'}>
-          Roommates
+          <img src={logo} className={styles.logo} />
         </Navbar.Brand>
         <Navbar.Toggle aria-controls='responsive-navbar-nav'>
           <FaBars />
