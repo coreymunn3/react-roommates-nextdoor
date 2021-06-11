@@ -10,7 +10,7 @@ import Button from 'react-bootstrap/Button';
 import DropdownButton from 'react-bootstrap/esm/DropdownButton';
 import Dropdown from 'react-bootstrap/esm/Dropdown';
 // images
-import logo from '../../../img/logo.png';
+import logo from '../../../img/RoommatesLogoWhite.svg';
 import hero1 from '../../../img/hero/hero1.jpg';
 import hero2 from '../../../img/hero/hero2.jpg';
 import hero3 from '../../../img/hero/hero3.jpg';
@@ -94,6 +94,12 @@ const LandingPage = () => {
               <Nav.Link as={Link} to='#'>
                 <Button variant='outline-light'>About</Button>
               </Nav.Link>
+              <Nav.Link as={Link} to='#'>
+                <Button variant='outline-light'>News</Button>
+              </Nav.Link>
+              <Nav.Link as={Link} to='#'>
+                <Button variant='outline-light'>Rules & Guidelines</Button>
+              </Nav.Link>
 
               <Nav.Link as={Link} to='/login'>
                 <Button variant='light'>Log In</Button>
@@ -126,19 +132,12 @@ const LandingPage = () => {
           </div>
         </motion.div>
         <div className={styles.footer}>
-          <DropdownButton drop='up' variant='outline-primary' title='Roommates'>
-            <Dropdown.Item>About</Dropdown.Item>
-            <Dropdown.Item>News</Dropdown.Item>
-            <Dropdown.Item>Press Releases</Dropdown.Item>
-            <Dropdown.Item>Careers</Dropdown.Item>
-          </DropdownButton>
           <DropdownButton
             drop='up'
             variant='outline-primary'
             title='Communities'
           >
             <Dropdown.Item>Supported Communities</Dropdown.Item>
-            <Dropdown.Item>Rules & Guidelines</Dropdown.Item>
             <Dropdown.Item>Want Roommates Near You?</Dropdown.Item>
           </DropdownButton>
           <DropdownButton

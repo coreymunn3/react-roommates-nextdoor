@@ -87,20 +87,20 @@ const PostDetails = () => {
   if (isLoading) {
     return (
       <FullHeightContainer>
-        <Spinner animation='border' variant='dark' />
+        <Spinner animation='border' variant='light' />
       </FullHeightContainer>
     );
   } else {
     return (
-      <div>
+      <div className='text-light'>
         <h3>{currentPost.title}</h3>
         <div className={styles.headerDetails}>
-          <small className='mr-3 text-muted'>
+          <small className='mr-3'>
             {`${moment(currentPost.datePosted).fromNow()}, by ${
-              currentPost.postingUser?.username
+              currentPost._user?.username
             }`}
           </small>
-          <small className='mr-3 text-muted'>{`${currentPost.likeCount} likes`}</small>
+          <small className='mr-3'>{`${currentPost.likeCount} likes`}</small>
         </div>
         <div className={styles.imageContainer}>
           <Image
@@ -126,22 +126,24 @@ const PostDetails = () => {
           <SplitColumnSection items={costList} />
         </DetailSection>
 
-        <DetailSection title='Location'>
-          <Map
-            zoom={14}
-            center={mapCircle.center}
-            radius={mapCircle.radius}
-            options={mapCircle.options}
-          />
-        </DetailSection>
+        <Map
+          zoom={14}
+          center={mapCircle.center}
+          radius={mapCircle.radius}
+          options={mapCircle.options}
+        />
 
         <DetailSection title='Next Steps'>
           <p>
             Interested and Looking to take the next steps? Contact the poster
             below to get started
           </p>
-          <Button onClick={() => setCapthcaOpen(true)}>Message Author</Button>
+          <Button variant='light' onClick={() => setCapthcaOpen(true)}>
+            Message Author
+          </Button>
         </DetailSection>
+
+        <div style={{ height: '20px' }}></div>
 
         <CaptchaModal
           open={captchaOpen}

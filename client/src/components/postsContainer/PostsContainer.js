@@ -8,7 +8,7 @@ import styles from './postsContainer.module.scss';
 const NoPostsYet = () => {
   return (
     <div className={styles.noPostsContainer}>
-      <h6 className='text-muted'>No Posts Here Yet!</h6>
+      <h6 className='text-light'>No Posts Here Yet!</h6>
     </div>
   );
 };

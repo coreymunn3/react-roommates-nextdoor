@@ -48,7 +48,7 @@ const PostCard = ({
 
   return (
     <div className={styles.cardSpacing}>
-      <Card className='shadow'>
+      <Card>
         <Image
           className='card-img'
           publicId={featureImage.public_id}
@@ -91,18 +91,21 @@ const PostCard = ({
             )
           }
         </Card.ImgOverlay>
-        <Card.Body className='position-relative'>
+        <Card.Body className={`position-relative `}>
           <div>
             <Badge
-              variant='secondary'
+              pill
+              variant='primary'
               className='mr-1'
             >{`Rent $${rentMonthly}`}</Badge>
             <Badge
-              variant='secondary'
+              pill
+              variant='primary'
               className='mr-1'
             >{`Move In $${totalMoveInCost}`}</Badge>
             <Badge
-              variant='secondary'
+              pill
+              variant='light'
               className='mr-1'
             >{`${numberOfCohabitants} Other Person(s)`}</Badge>
           </div>
@@ -114,16 +117,6 @@ const PostCard = ({
             </small>
           </div>
           <Card.Text>{body}</Card.Text>
-          {/* <div>
-            <Button
-              as={Link}
-              to={`feed/${_id}`}
-              variant='primary'
-              className='mb-2'
-            >
-              See Full Post
-            </Button>
-          </div> */}
           <div className={styles.cardLinkContainer}>
             <Link to={`feed/${_id}`} className={styles.cardLink}>
               <IoArrowUndo size='1.5rem' className={styles.arrow} />

@@ -10,7 +10,7 @@ import FormControl from 'react-bootstrap/FormControl';
 import Button from 'react-bootstrap/Button';
 import { FaBars } from 'react-icons/fa';
 import ChangeLocationModal from '../changeLocationModal/ChangeLocationModal';
-import logo from '../../img/logo.png';
+import logo from '../../img/RoommatesLogoWhite.svg';
 // styles
 import styles from './header.module.scss';
 // redux
@@ -32,16 +32,15 @@ const Header = () => {
     <Navbar
       collapseOnSelect
       expand='md'
-      bg='white'
       variant='light'
-      className='shadow-sm mb-3'
+      className={`${styles.headerBg} mb-3`}
     >
       <Container fluid>
         <Navbar.Brand as={Link} to={'/feed'}>
           <img src={logo} className={styles.logo} />
         </Navbar.Brand>
         <Navbar.Toggle aria-controls='responsive-navbar-nav'>
-          <FaBars />
+          <FaBars color={'white'} />
         </Navbar.Toggle>
         <Navbar.Collapse id='responsive-navbar-nav'>
           <Nav className='mr-auto flex-grow-1'></Nav>
@@ -51,7 +50,7 @@ const Header = () => {
                 menuAlign='right'
                 title={`Hello, ${user?.user?.username}`}
                 id='dropdown-menu-align-right'
-                variant='outlined'
+                variant='outlined-light'
               >
                 <Dropdown.Item
                   onSelect={() => console.log('selected')}

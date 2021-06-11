@@ -9,7 +9,7 @@ const NewPost = () => {
   const { user } = useSelector((state) => state.user);
   return (
     <div>
-      <h3>{`Create A New Listing In ${user?.user?._location?.city}, ${user?.user?._location?.state}`}</h3>
+      <h3 className='text-light'>{`Create A New Listing In ${user?.user?._location?.city}, ${user?.user?._location?.state}`}</h3>
       <ElevatedSection>
         <PostForm edit={false} />
       </ElevatedSection>

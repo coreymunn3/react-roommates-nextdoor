@@ -16,8 +16,8 @@ const Map = compose(
         <FaSpinner />
       </div>
     ),
-    containerElement: <div style={{ height: `400px` }} />,
-    mapElement: <div style={{ height: `100%` }} />,
+    containerElement: <div style={{ height: `400px`, marginBottom: '1rem' }} />,
+    mapElement: <div style={{ height: `100%`, borderRadius: '20px' }} />,
   }),
   withScriptjs,
   withGoogleMap

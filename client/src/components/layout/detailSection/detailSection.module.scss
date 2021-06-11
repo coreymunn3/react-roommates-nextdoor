@@ -1,4 +1,7 @@
 .detailSection {
-  padding: 1rem 0;
-  border-top: 1px lightgray solid;
+  padding: 1rem;
+  margin-bottom: 1rem;
+  // border-top: 1px lightgray solid;
+  border-radius: 20px;
+  background-color: rgba($color: white, $alpha: 0.25);
 }
