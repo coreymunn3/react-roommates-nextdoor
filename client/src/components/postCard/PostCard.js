@@ -10,6 +10,7 @@ import DeletePostModal from '../deletePostModal/DeletePostModal';
 import { Image, Placeholder } from 'cloudinary-react';
 import moment from 'moment';
 import { FaEdit, FaTrash } from 'react-icons/fa';
+import { IoArrowUndo } from 'react-icons/io5';
 import styles from './postCard.module.scss';
 import { useSelector } from 'react-redux';
 
@@ -90,14 +91,14 @@ const PostCard = ({
             )
           }
         </Card.ImgOverlay>
-        <Card.Body>
+        <Card.Body className='position-relative'>
           <div>
             <Badge
-              variant='primary'
+              variant='secondary'
               className='mr-1'
             >{`Rent $${rentMonthly}`}</Badge>
             <Badge
-              variant='primary'
+              variant='secondary'
               className='mr-1'
             >{`Move In $${totalMoveInCost}`}</Badge>
             <Badge
@@ -113,7 +114,7 @@ const PostCard = ({
             </small>
           </div>
           <Card.Text>{body}</Card.Text>
-          <div>
+          {/* <div>
             <Button
               as={Link}
               to={`feed/${_id}`}
@@ -122,6 +123,11 @@ const PostCard = ({
             >
               See Full Post
             </Button>
+          </div> */}
+          <div className={styles.cardLinkContainer}>
+            <Link to={`feed/${_id}`} className={styles.cardLink}>
+              <IoArrowUndo size='1.5rem' className={styles.arrow} />
+            </Link>
           </div>
         </Card.Body>
       </Card>

@@ -50,7 +50,11 @@ const SearchBar = () => {
     <Form className={styles.headerForm}>
       <div className={styles.searchBarGroup}>
         <div className={styles.searchBarButton}>
-          <Button disabled={query === ''} onClick={handleSearchOrClear}>
+          <Button
+            disabled={query === ''}
+            onClick={handleSearchOrClear}
+            variant='outline-primary'
+          >
             <FaSearch />
             <span>{`${
               activeSearch.query ? ' Clear Search' : ' Search Posts'
