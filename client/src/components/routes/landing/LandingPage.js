@@ -10,6 +10,7 @@ import Button from 'react-bootstrap/Button';
 import DropdownButton from 'react-bootstrap/esm/DropdownButton';
 import Dropdown from 'react-bootstrap/esm/Dropdown';
 // images
+import logo from '../../../img/logo.png';
 import hero1 from '../../../img/hero/hero1.jpg';
 import hero2 from '../../../img/hero/hero2.jpg';
 import hero3 from '../../../img/hero/hero3.jpg';
@@ -86,10 +87,16 @@ const LandingPage = () => {
       <section className={styles.overlay}>
         <Navbar>
           <Container fluid>
-            <Navbar.Brand style={{ color: '#fff' }}>Roommates</Navbar.Brand>
+            <Navbar.Brand style={{ color: '#fff' }}>
+              <img src={logo} className={styles.logo} />
+            </Navbar.Brand>
             <Nav className='me-auto'>
+              <Nav.Link as={Link} to='#'>
+                <Button variant='outline-light'>About</Button>
+              </Nav.Link>
+
               <Nav.Link as={Link} to='/login'>
-                <Button variant='outline-primary'>Log In</Button>
+                <Button variant='light'>Log In</Button>
               </Nav.Link>
             </Nav>
           </Container>
