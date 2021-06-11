@@ -78,16 +78,6 @@ const FilterPostsForm = ({ handleClose }) => {
           <Form.Control
             value={selectedFilters.rentMonthly}
             name='rentMonthly'
-            type='range'
-            onChange={handleFieldChange}
-            min={0}
-            max={10000}
-          />
-        </Form.Group>
-        <Form.Group as={Col} xs='3'>
-          <Form.Control
-            value={selectedFilters.rentMonthly}
-            name='rentMonthly'
             onChange={handleFieldChange}
           />
         </Form.Group>
