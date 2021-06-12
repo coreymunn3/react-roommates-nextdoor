@@ -1,6 +1,10 @@
 import React, { useEffect } from 'react';
 import styles from './toast.module.scss';
-import { FaTimes } from 'react-icons/fa';
+import {
+  IoCloseOutline,
+  IoCheckmarkCircleSharp,
+  IoWarningOutline,
+} from 'react-icons/io5';
 import { useDispatch } from 'react-redux';
 import { clearToast } from '../../redux/toastSlice';
 import { motion } from 'framer-motion';
@@ -51,13 +55,20 @@ const Toast = ({ toast }) => {
       initial='hidden'
       animate='visible'
       exit='exit'
-      className={`${styles.toast} ${
+      className={` shadow ${styles.toast} ${
         status ? styles.toastSuccess : styles.toastFail
       }`}
     >
+      <div>
+        {status ? (
+          <IoCheckmarkCircleSharp fontSize='1.5rem' className='text-success' />
+        ) : (
+          <IoWarningOutline fontSize='1.5rem' className='text-danger' />
+        )}
+      </div>
       <p className={styles.toastContent}>{message}</p>
       <button className={styles.dismiss} onClick={handleDismiss}>
-        <FaTimes fontSize='1.5rem' className='clickable' />
+        <IoCloseOutline fontSize='1.5rem' className='clickable' />
       </button>
     </motion.li>
   );

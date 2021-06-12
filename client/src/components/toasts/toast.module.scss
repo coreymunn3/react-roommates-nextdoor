@@ -1,11 +1,15 @@
+@import '../../_variables.scss';
+
 .toast {
+  position: relative;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  border-radius: 20px;
+  min-height: 60px;
   color: white;
+  border-radius: 20px;
   padding: 0.5rem 1rem;
-  margin-bottom: 0.25rem;
+  margin-bottom: 1rem;
 }
 
 .toastContent {
@@ -14,11 +18,13 @@
 }
 
 .toastSuccess {
-  background-color: green;
+  background-color: $success-light;
+  border: 1px solid $success-dark;
 }
 
 .toastFail {
-  background-color: red;
+  background-color: $danger-light;
+  border: 1px solid $danger-dark;
 }
 
 .dismiss {
