@@ -21,13 +21,8 @@ import { getAllLocations } from './redux/locationSlice';
 const App = () => {
   const dispatch = useDispatch();
   useEffect(() => {
-    // set user state
-    if (localStorage.getItem('userState')) {
-      const payload = JSON.parse(localStorage.getItem('userState'));
-      dispatch(setUserFromLS(payload));
-    } else {
-      dispatch(getUser());
-    }
+    // get the user
+    dispatch(getUser());
     // get locations
     dispatch(getAllLocations());
   }, []);

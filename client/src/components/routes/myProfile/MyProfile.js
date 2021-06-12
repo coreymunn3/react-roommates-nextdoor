@@ -50,7 +50,7 @@ const MyProfile = () => {
       <div className={styles.avatarOffset}>
         <AvatarImage width='100' height='100' avatar={user?.user?.avatar}>
           <Button
-            variant='dark'
+            variant='primary'
             size='sm'
             className={styles.avatarControl}
             onClick={() => handleOpen('Avatar')}

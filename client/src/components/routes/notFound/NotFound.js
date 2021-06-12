@@ -4,7 +4,7 @@ import FullHeightContainer from '../../layout/fullHeightContainer/FullHeightCont
 const NotFound = ({ message = 'Page Not Found' }) => {
   return (
     <FullHeightContainer>
-      <h1>404 | {message}</h1>
+      <h1 className='text-light'>404 | {message}</h1>
     </FullHeightContainer>
   );
 };

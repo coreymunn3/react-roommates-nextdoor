@@ -6,7 +6,6 @@ export const signupUser = createAsyncThunk(
   async (newUserData, thunkAPI) => {
     try {
       const { data } = await userAPI.signup(newUserData);
-      localStorage.setItem('userState', JSON.stringify(data));
       return data;
     } catch (error) {
       return thunkAPI.rejectWithValue(error.response.data.error);
@@ -18,7 +17,6 @@ export const loginUser = createAsyncThunk(
   async (userData, thunkAPI) => {
     try {
       const { data } = await userAPI.login(userData);
-      localStorage.setItem('userState', JSON.stringify(data));
       return data;
     } catch (error) {
       return thunkAPI.rejectWithValue(error.response.data.error);
@@ -40,7 +38,6 @@ export const logoutUser = createAsyncThunk(
   async (thunkAPI) => {
     try {
       const { data } = await userAPI.logout();
-      localStorage.removeItem('userState');
       return data;
     } catch (error) {
       return thunkAPI.rejectWithValue(error.response.data.error);
@@ -73,12 +70,7 @@ export const userSlice = createSlice({
     isError: false,
     errorMessage: null,
   },
-  reducers: {
-    setUserFromLS(state, action) {
-      state.user = action.payload;
-      state.isLoading = false;
-    },
-  },
+  reducers: {},
   extraReducers: {
     [signupUser.fulfilled]: (state, action) => {
       state.isLoading = false;
@@ -152,5 +144,3 @@ export const userSlice = createSlice({
     },
   },
 });
-
-export const { setUserFromLS } = userSlice.actions;
