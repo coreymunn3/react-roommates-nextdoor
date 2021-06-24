@@ -102,7 +102,7 @@ const PostDetails = () => {
           </small>
           <small className='mr-3'>{`${currentPost.likeCount} likes`}</small>
         </div>
-        <div className={styles.imageContainer}>
+        <div className={`${styles.imageContainer} shadow`}>
           <Image
             className={styles.featureImage}
             publicId={currentPost.featureImage?.public_id}

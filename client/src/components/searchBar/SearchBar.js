@@ -51,6 +51,7 @@ const SearchBar = () => {
       <div className={styles.searchBarGroup}>
         <div className={styles.searchBarButton}>
           <Button
+            style={{ height: '38px' }}
             disabled={query === ''}
             onClick={handleSearchOrClear}
             variant='outline-primary'
