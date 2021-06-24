@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const baseUrl = 'https://roommates-project-server.herokuapp.com/';
+const baseUrl = 'https://roommates-project-server.herokuapp.com';
 
 export const userAPI = {
   signup: (newUserData) =>
