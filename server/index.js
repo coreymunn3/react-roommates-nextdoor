@@ -16,7 +16,7 @@ app.use(express.json({ limit: '30mb', extended: true }));
 app.use(express.urlencoded({ limit: '30mb', extended: true }));
 app.use(
   cors({
-    origin: 'https://roommates.netlify.app',
+    origin: 'http://localhost:3000',
     credentials: true,
   })
 );
@@ -27,6 +27,8 @@ app.use(
     resave: true,
     cookie: {
       maxAge: 7 * 24 * 60 * 60 * 1000, // one week, expressed in ms
+      sameSite: 'none',
+      secure: true,
     },
     store: new MongoStore({ mongooseConnection: mongoose.connection }),
   })

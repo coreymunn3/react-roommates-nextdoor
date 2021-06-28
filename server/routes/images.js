@@ -6,7 +6,7 @@ const requireAuth = require('../middleware/requireAuth');
 // POST api/images
 // Uploads base64 Image to Cloudinary, returns the image in response
 // @private
-router.post('/', requireAuth, async (req, res) => {
+router.post('/', async (req, res) => {
   const { base64Image, type } = req.body;
   try {
     const uploadedImage = await cloudinary.uploader.upload(base64Image, {
