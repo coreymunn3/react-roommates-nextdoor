@@ -4,4 +4,4 @@ A fullstack application hosted on Heroku created with Create-React-App for the p
 
 [Live Site](https://roommates-fullstack.herokuapp.com/)
 
-![image](https://imgur.com/a/swtBrZI)
+![Imgur](https://imgur.com/eJXhosK)
