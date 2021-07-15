@@ -16,9 +16,7 @@ const Listing = ({ match }) => {
   }, []);
   return (
     <div>
-      <CloudinaryContext
-        cloudName={process.env.REACT_APP_CLOUDINARY_CLOUD_NAME}
-      >
+      <CloudinaryContext cloudName={'dcmstbvwq'}>
         {!isLoading && isError ? (
           <NotFound message={'Post Not Found'} />
         ) : (

@@ -52,7 +52,7 @@ const PostCard = ({
         <Image
           className='card-img'
           publicId={featureImage.public_id}
-          cloudName={process.env.REACT_APP_CLOUDINARY_CLOUD_NAME}
+          cloudName={'dcmstbvwq'}
           width='400'
           loading='lazy'
           crop='scale'

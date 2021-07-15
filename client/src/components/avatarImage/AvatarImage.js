@@ -6,7 +6,7 @@ const AvatarImage = ({ avatar, width = '50', height = '50', children }) => {
   return (
     <div className={styles.avatarContainer}>
       <Image
-        cloudName={process.env.REACT_APP_CLOUDINARY_CLOUD_NAME}
+        cloudName={'dcmstbvwq'}
         publicId={avatar?.public_id}
         className={styles.avatar}
         style={{ width: width, height: height }}
