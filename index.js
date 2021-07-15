@@ -6,6 +6,7 @@ const cors = require('cors');
 const passport = require('passport');
 const connectDb = require('./config/connectDb');
 require('dotenv').config();
+const path = require('path');
 
 // conenct mongoDb
 const connection = connectDb(process.env.MONGO_URI);
