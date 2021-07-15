@@ -1,0 +1,50 @@
+@import 'node_modules/bootstrap/scss/functions';
+@import 'node_modules/bootstrap/scss/variables';
+@import 'node_modules/bootstrap/scss/mixins/_breakpoints';
+@import './../../variables';
+
+.cardTitle {
+  margin-bottom: 1rem;
+}
+.cardSpacing {
+  padding: 1rem 0;
+}
+.skeletonImg {
+  margin-bottom: 0.25rem;
+  @include media-breakpoint-up(xs) {
+    height: $card-img-xs-height;
+    border-top-left-radius: $theme-border-radius;
+    border-top-right-radius: $theme-border-radius;
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+  }
+  @include media-breakpoint-up(sm) {
+    height: $card-img-sm-height;
+    border-top-left-radius: $theme-border-radius;
+    border-top-right-radius: 0;
+    border-bottom-left-radius: $theme-border-radius;
+    border-bottom-right-radius: 0;
+  }
+  @include media-breakpoint-up(md) {
+    height: $card-img-md-height;
+  }
+}
+
+.cardLinkContainer {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  width: 30px;
+  height: 30px;
+  border-bottom-right-radius: $theme-border-radius;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.cardLink {
+  cursor: pointer;
+  transform: scale(-1);
+  transform: rotate(180);
+  color: $primary;
+}

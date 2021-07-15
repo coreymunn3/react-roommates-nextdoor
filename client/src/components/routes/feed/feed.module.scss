@@ -1,0 +1,15 @@
+.titleContainer {
+  display: flex;
+  align-items: center;
+  color: white;
+}
+.accordionContainer {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+.accordionTitle {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}

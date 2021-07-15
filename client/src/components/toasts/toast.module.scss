@@ -1,0 +1,35 @@
+@import '../../_variables.scss';
+
+.toast {
+  position: relative;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  min-height: 60px;
+  color: white;
+  border-radius: 20px;
+  padding: 0.5rem 1rem;
+  margin-bottom: 1rem;
+}
+
+.toastContent {
+  margin-bottom: 0;
+  margin-right: 10px;
+}
+
+.toastSuccess {
+  background-color: $success-light;
+  border: 1px solid $success-dark;
+}
+
+.toastFail {
+  background-color: $danger-light;
+  border: 1px solid $danger-dark;
+}
+
+.dismiss {
+  border: none;
+  border-radius: none;
+  color: inherit;
+  background-color: inherit;
+}

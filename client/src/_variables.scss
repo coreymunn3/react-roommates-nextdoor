@@ -1,0 +1,35 @@
+// change the theme colors
+$primary: #388697;
+$secondary: #726ac8;
+$light: #f6f6f6;
+$dark: #343434;
+$success-dark: #45d787;
+$success-light: #abedc9;
+$danger-dark: #f78154;
+$danger-light: #fcd4c5;
+$warning: #ffbb00;
+$info: #1077e5;
+$theme-colors: (
+  'primary': $primary,
+  'secondary': $secondary,
+  'light': $light,
+  'dark': $dark,
+  'success': $success-dark,
+  'danger': $danger-dark,
+  'warning': $warning,
+  'info': $info,
+);
+
+// other variables
+$theme-border-radius: 20px;
+$theme-border-color: #ebe9e9;
+$max-width: 1200px;
+$card-title-max-height: 50px;
+$card-img-xs-height: 250px;
+$card-img-sm-height: 300px;
+$card-img-md-height: 325px;
+$card-text-xs-max-height: 150px;
+$card-text-sm-max-height: 100px;
+$card-text-lg-max-height: 150px;
+$modal-wide: 800px;
+$modal-standard: 500px;

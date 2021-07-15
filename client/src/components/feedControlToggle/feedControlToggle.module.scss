@@ -1,0 +1,9 @@
+@import '../../variables';
+.accordionToggle {
+  border: none;
+  background-color: inherit;
+  margin-bottom: 1rem;
+}
+.accordionToggle:hover {
+  color: $primary;
+}

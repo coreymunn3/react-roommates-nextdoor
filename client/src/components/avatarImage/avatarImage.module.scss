@@ -1,0 +1,10 @@
+@import '../../variables';
+
+.avatarContainer {
+  position: relative;
+}
+
+.avatar {
+  border-radius: 50%;
+  border: 2px solid $primary;
+}

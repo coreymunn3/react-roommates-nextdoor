@@ -1,0 +1,142 @@
+// import global variables
+@import './variables';
+// font
+// @import url('https://fonts.googleapis.com/css2?family=Nunito&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans&display=swap');
+// Import Bootstrap and its default variables
+@import '~bootstrap/scss/bootstrap.scss';
+
+// global overrides
+html,
+body {
+  overflow-x: hidden;
+}
+body {
+  // font-family: 'Nunito', sans-serif;
+  font-family: 'Open Sans', sans-serif;
+}
+@include media-breakpoint-up(sm) {
+  .container {
+    padding: 0;
+  }
+}
+.alert {
+  margin-bottom: 0;
+  p {
+    margin-bottom: 0;
+  }
+  border-radius: $theme-border-radius;
+}
+.btn,
+.form-control {
+  border-radius: $theme-border-radius;
+  border: none;
+  box-shadow: none;
+}
+.form-text,
+.invalid-feedback {
+  padding-left: 10px;
+}
+input[type='file'] {
+  width: 100%;
+}
+label {
+  padding: 0 0.75rem;
+}
+img {
+  border-radius: $theme-border-radius;
+}
+.navbar-nav {
+  // align-items: flex-start;
+  @include media-breakpoint-up(sm) {
+    align-items: center;
+  }
+}
+.navbar-toggler {
+  border: none;
+}
+.navbar-toggler:hover {
+  color: black;
+}
+// Modifications to Card CSS
+.card {
+  border: none;
+  border-radius: $theme-border-radius;
+}
+.card-title {
+  @include media-breakpoint-only(sm) {
+    max-height: $card-title-max-height;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+}
+.card-body {
+  padding: 0 1rem;
+}
+
+@include media-breakpoint-up(sm) {
+  .card {
+    flex-direction: row;
+  }
+  .card-body {
+    width: 50%;
+  }
+}
+.card-img,
+.card-img-overlay {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  @include media-breakpoint-only(xs) {
+    height: $card-img-xs-height;
+    border-top-left-radius: $theme-border-radius;
+    border-top-right-radius: $theme-border-radius;
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+  }
+  @include media-breakpoint-up(sm) {
+    max-width: 50%;
+    height: $card-img-sm-height;
+    object-fit: cover;
+    border-top-left-radius: $theme-border-radius;
+    border-top-right-radius: 0;
+    border-bottom-left-radius: $theme-border-radius;
+    border-bottom-right-radius: 0;
+  }
+  @include media-breakpoint-up(md) {
+    height: $card-img-md-height;
+  }
+}
+.card-img-overlay {
+  padding: 0.5rem;
+}
+.card-text {
+  overflow: scroll;
+  margin-bottom: 0.5rem;
+  @include media-breakpoint-up(xs) {
+    max-height: $card-text-xs-max-height;
+  }
+  @include media-breakpoint-up(sm) {
+    max-height: $card-text-sm-max-height;
+  }
+  @include media-breakpoint-up(lg) {
+    max-height: $card-text-lg-max-height;
+  }
+}
+.modal-body {
+  input,
+  textarea,
+  select {
+    background: $light;
+  }
+}
+.modal-content {
+  border-radius: $theme-border-radius;
+}
+.bottomDivider {
+  border-bottom: 1px solid $theme-border-color;
+}
+.clickable {
+  cursor: pointer;
+}
