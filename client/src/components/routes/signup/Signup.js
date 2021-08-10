@@ -8,6 +8,7 @@ import Form from 'react-bootstrap/Form';
 import Col from 'react-bootstrap/Col';
 import InputField from '../../inputField/InputField';
 import InputFieldSelect from '../../inputFieldSelect/InputFieldSelect';
+import ToastContainer from '../../toasts/ToastContainer';
 // style - using same style as signup
 import styles from './signup.module.scss';
 // redux
@@ -185,10 +186,13 @@ const Signup = () => {
           </Button>
           <Form.Text className='text-center'>
             {'Already have an account? '}
-            <Link to='/login'>Log In</Link>
+            <Link to='/login' style={{ color: 'white' }}>
+              Log In
+            </Link>
           </Form.Text>
         </Form>
       </div>
+      <ToastContainer />
     </div>
   );
 };

@@ -58,7 +58,7 @@ router.post('/login', (req, res, next) => {
     }
     // if username or password is incorrect, exit here
     if (!user) {
-      // info contains result from local strategy attempt at services/passport.js
+      // info contains result from local strategy attempt at services/passport.js;
       return res.status(404).json(info);
     }
     req.login(user, (err) => {

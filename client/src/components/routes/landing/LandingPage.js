@@ -5,10 +5,7 @@ import { AnimatePresence, motion } from 'framer-motion';
 import CountUp from 'react-countup';
 import Navbar from 'react-bootstrap/esm/Navbar';
 import Container from 'react-bootstrap/esm/Container';
-import Nav from 'react-bootstrap/Nav';
 import Button from 'react-bootstrap/Button';
-import DropdownButton from 'react-bootstrap/esm/DropdownButton';
-import Dropdown from 'react-bootstrap/esm/Dropdown';
 // images
 import logo from '../../../img/RoommatesLogoWhite.svg';
 import hero1 from '../../../img/hero/hero1.jpg';
@@ -90,21 +87,6 @@ const LandingPage = () => {
             <Navbar.Brand style={{ color: '#fff' }}>
               <img src={logo} className={styles.logo} />
             </Navbar.Brand>
-            <Nav className='me-auto'>
-              <Nav.Link as={Link} to='#'>
-                <Button variant='outline-light'>About</Button>
-              </Nav.Link>
-              <Nav.Link as={Link} to='#'>
-                <Button variant='outline-light'>News</Button>
-              </Nav.Link>
-              <Nav.Link as={Link} to='#'>
-                <Button variant='outline-light'>Rules & Guidelines</Button>
-              </Nav.Link>
-
-              <Nav.Link as={Link} to='/login'>
-                <Button variant='light'>Log In</Button>
-              </Nav.Link>
-            </Nav>
           </Container>
         </Navbar>
         <motion.div
@@ -126,29 +108,21 @@ const LandingPage = () => {
               />
               {' Rooms Filled'}
             </h4>
-            <Button size='lg' as={Link} to='/signup'>
-              Sign Up
-            </Button>
+            <div className='buttonBox'>
+              <Button
+                style={{ marginRight: '10px' }}
+                size='lg'
+                as={Link}
+                to='/signup'
+              >
+                Sign Up
+              </Button>
+              <Button size='lg' variant='light' as={Link} to='/login'>
+                Log In
+              </Button>
+            </div>
           </div>
         </motion.div>
-        <div className={styles.footer}>
-          <DropdownButton
-            drop='up'
-            variant='outline-primary'
-            title='Communities'
-          >
-            <Dropdown.Item>Supported Communities</Dropdown.Item>
-            <Dropdown.Item>Want Roommates Near You?</Dropdown.Item>
-          </DropdownButton>
-          <DropdownButton
-            drop='up'
-            variant='outline-primary'
-            title='NonProfits'
-          >
-            <Dropdown.Item>Our Support</Dropdown.Item>
-            <Dropdown.Item>Our Initiatives</Dropdown.Item>
-          </DropdownButton>
-        </div>
       </section>
     </header>
   );

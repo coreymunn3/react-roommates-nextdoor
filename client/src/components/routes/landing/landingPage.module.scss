@@ -12,6 +12,13 @@
   // opacity: 0.7; - this is being handled by framer
 }
 
+.buttonBox {
+  display: flex;
+  width: 100%;
+  justify-content: space-evenly;
+  align-items: center;
+}
+
 .overlay {
   position: absolute;
   top: 0;

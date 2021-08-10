@@ -7,6 +7,7 @@ import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import Col from 'react-bootstrap/Col';
 import InputField from '../../inputField/InputField';
+import ToastContainer from '../../toasts/ToastContainer';
 // style
 import styles from './login.module.scss';
 // redux
@@ -65,6 +66,9 @@ const Login = () => {
 
   return (
     <div className={styles.pageContainer}>
+      <h6 style={{ color: 'white' }}>
+        ** For Testing: Please use Login: dc-test-user-1 and password: 123
+      </h6>
       <div className={styles.formContainer}>
         <h3 className='text-center'>Log In</h3>
 
@@ -108,10 +112,13 @@ const Login = () => {
           </Button>
           <Form.Text className='text-center'>
             {'Still dont have an account? '}
-            <Link to='/signup'>Sign Up</Link>
+            <Link style={{ color: 'white' }} to='/signup'>
+              Sign Up
+            </Link>
           </Form.Text>
         </Form>
       </div>
+      <ToastContainer />
     </div>
   );
 };
